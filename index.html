@@ -76,6 +76,7 @@
             color: #8597FF;
             text-shadow: 0 0 6px #6970FF;
         }
+        /* Герой с фоновым изображением */
         .hero {
             padding: 60px 0 40px;
             display: flex;
@@ -83,8 +84,25 @@
             justify-content: space-between;
             align-items: center;
             gap: 3rem;
+            position: relative;
+            background: rgba(5, 5, 10, 0.5);
+            border-radius: 40px;
         }
-        .hero-content { flex: 1; }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('001.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.67;
+            pointer-events: none;
+            border-radius: 40px;
+            z-index: -1;
+        }
+        .hero-content { flex: 1; position: relative; z-index: 2; }
         .hero-badge {
             background: rgba(105,112,255,0.2);
             display: inline-block;
@@ -131,6 +149,8 @@
             gap: 1.2rem;
             justify-content: flex-end;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
         .stat-item {
             background: rgba(0,0,0,0.4);
@@ -150,32 +170,15 @@
             color: transparent;
         }
 
-        /* === Карусель аватарок === */
+        /* Карусель аватарок – без надписей */
         .carousel-section {
             margin: 80px 0;
             text-align: center;
-        }
-        .carousel-title {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            display: inline-block;
-            position: relative;
-        }
-        .carousel-title:after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 70%;
-            height: 3px;
-            background: linear-gradient(90deg, #6970FF, #8597FF);
-            border-radius: 4px;
         }
         .carousel-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
         .carousel-slide {
             width: 280px;
@@ -184,22 +187,20 @@
             overflow: hidden;
             border: 3px solid rgba(105,112,255,0.7);
             box-shadow: 0 0 20px rgba(105,112,255,0.5);
-            transition: all 0.4s ease;
+            transition: transform 0.3s ease, border 0.2s;
+            cursor: pointer;
+        }
+        .carousel-slide:hover {
+            transform: scale(1.1);
+            border-color: #8597FF;
+            box-shadow: 0 0 30px rgba(133,151,255,0.8);
         }
         .carousel-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-        }
-        /* плавная смена анимация (будет меняться src, но можно добавить fade) */
-        .carousel-slide {
-            transition: opacity 0.5s ease-in-out;
-        }
-        .carousel-caption {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #b4c2ff;
+            transition: opacity 0.4s ease;
         }
 
         .social-grid {
@@ -290,15 +291,13 @@
         </div>
     </div>
 
-    <!-- Карусель аватарок -->
+    <!-- Карусель аватарок (без надписей) -->
     <div class="carousel-section fade-up delay-1">
-        <h2 class="carousel-title">📸 Мои аватарки</h2>
         <div class="carousel-container">
             <div class="carousel-slide" id="avatarSlide">
                 <img id="avatarImg" src="ava1.jpg" alt="avatar">
             </div>
         </div>
-        <div class="carousel-caption">✨ плавная смена каждые 5 секунд ✨</div>
     </div>
 
     <div id="social" class="fade-up delay-2">
@@ -348,16 +347,11 @@
     document.getElementById('ageValue').innerText = calculateAge(birth);
 
     // Карусель аватарок
-    const avatars = [
-        "ava1.jpg",
-        "ava2.jpg",
-        "ava3.jpg"
-    ];
+    const avatars = ["ava1.jpg", "ava2.jpg", "ava3.jpg"];
     let currentIndex = 0;
     const imgElement = document.getElementById('avatarImg');
     function changeAvatar() {
         currentIndex = (currentIndex + 1) % avatars.length;
-        // добавляем плавное исчезновение-появление
         imgElement.style.opacity = '0';
         setTimeout(() => {
             imgElement.src = avatars[currentIndex];
@@ -365,8 +359,6 @@
         }, 200);
     }
     setInterval(changeAvatar, 5000);
-    // начальная установка opacity
-    imgElement.style.transition = 'opacity 0.4s ease';
     imgElement.style.opacity = '1';
 
     // анимация при скролле
