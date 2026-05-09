@@ -69,9 +69,17 @@
         }
         .nav-links a:hover { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
         h1 { font-size: 2.2rem; margin-bottom: 10px; }
-        .sub { color: #9aabff; margin-bottom: 40px; border-left: 3px solid #6970FF; padding-left: 15px; }
-
-        /* Стиль поста как в Telegram, но с галереей до 3 фото */
+        .sub {
+            color: #9aabff;
+            margin-bottom: 40px;
+            border-left: 3px solid #6970FF;
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        /* Стиль поста */
         .post {
             background: rgba(12, 14, 28, 0.7);
             backdrop-filter: blur(8px);
@@ -101,6 +109,12 @@
             justify-content: center;
             font-weight: bold;
             font-size: 1.5rem;
+            overflow: hidden;
+        }
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .post-author { font-weight: 700; font-size: 1rem; }
         .post-date { font-size: 0.75rem; color: #8f9eff; margin-top: 4px; }
@@ -115,25 +129,31 @@
             text-decoration: none;
             border-bottom: 1px dashed;
         }
-        /* Галерея изображений (до 3) */
+        /* Галерея изображений */
         .post-images {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             margin-top: 16px;
         }
-        .post-images img {
-            max-width: calc(33% - 8px);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+        .post-images a {
             flex: 1;
             min-width: 120px;
-            object-fit: cover;
+        }
+        .post-images img {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
             transition: transform 0.2s;
         }
         .post-images img:hover {
             transform: scale(1.02);
             border-color: #8597FF;
+        }
+        .loader, .error {
+            text-align: center;
+            padding: 40px;
+            color: #9aabff;
         }
         footer {
             text-align: center;
@@ -145,7 +165,7 @@
         @media (max-width: 650px) {
             .navbar { flex-direction: column; align-items: center; }
             .post { padding: 18px; }
-            .post-images img { max-width: 100%; }
+            .post-images a { min-width: 100%; }
         }
     </style>
 </head>
@@ -156,75 +176,33 @@
         <div class="logo"><span class="neon-text">MrSiktyyy</span> ✦</div>
         <div class="nav-links">
             <a href="index.html">Главная</a>
-            <a href="news.html">Новости</a>
+            <a href="news.html" class="active">Новости</a>
             <a href="index.html#social">Контакты</a>
             <a href="https://t.me/unsk1llteam" target="_blank">UnSkill Team</a>
         </div>
     </nav>
 
     <h1>📰 Лента новостей</h1>
-    <div class="sub">Посты от MrSiktyyy — будь в курсе всего</div>
+    <div class="sub" id="updateStatus">
+        <i class="fas fa-sync-alt"></i> Это последние посты из тгк UnSkill Team.
+    </div>
 
-    <div id="postsContainer"></div>
+    <div id="postsContainer">
+        <div class="loader">Загрузка последних постов...</div>
+    </div>
 
     <footer>
-        <p>✉️ Новые посты добавляются через <strong>Python-скрипт</strong> (выбор изображений, текст)</p>
-        <p style="font-size: 0.8rem;">автоматический пуш в GitHub → Vercel обновляет сайт</p>
+        <p><i class="fas fa-telegram"></i> © 2026 — MrSiktyyy · Все права защищены.</p>
     </footer>
 </div>
 
 <script>
-    // --------------------------------------------------------------
-    // МАССИВ ПОСТОВ (обновляется скриптом автоматически)
-    // Каждый пост: { text, date, images: [] } — до 3 ссылок на картинки
-    // --------------------------------------------------------------
-    const postsData = [
-        {
-            text: "Прошу, найдите мне такие же ушки жёлтого цвета, под мои волосы 🧡",
-            date: "5 мая 2026, 18:22",
-            images: []
-        },
-        {
-            text: "Что лучше брать?\n\n🔹 https://www.ozon.ru/product/magnitnaya-mehanicheskaya-klaviatura-furycube-m68-he-mag-pro-switch-igrovaya-belyy-fioletovyy-2414950129/\n\n🔹 https://www.ozon.ru/product/klaviatura-magnitnaya-igrovaya-60-langtu-boom68-3117380242/",
-            date: "3 мая 2026, 14:10",
-            images: []
-        },
-        {
-            text: "ПЕРЕХОДИ СКОРЕЕ НА ЭТОТ САЙТ\n>> https://mrsiktyyyy.vercel.app/ <<",
-            date: "1 мая 2026, 20:45",
-            images: []
-        }
-    ];
-    // --------------------------------------------------------------
-
-    function renderPosts() {
-        const container = document.getElementById('postsContainer');
-        if (!container) return;
-        container.innerHTML = '';
-        postsData.forEach(post => {
-            const postDiv = document.createElement('div');
-            postDiv.className = 'post';
-            let imagesHtml = '';
-            if (post.images && post.images.length > 0) {
-                imagesHtml = '<div class="post-images">' + post.images.map(img => `<img src="${img}" alt="post image">`).join('') + '</div>';
-            }
-            let textWithLinks = post.text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
-            postDiv.innerHTML = `
-                <div class="post-header">
-                    <div class="post-avatar">😺</div>
-                    <div>
-                        <div class="post-author">MrSiktyyy</div>
-                        <div class="post-date">${post.date || 'Недавно'}</div>
-                    </div>
-                </div>
-                <div class="post-text">${textWithLinks.replace(/\n/g, '<br>')}</div>
-                ${imagesHtml}
-            `;
-            container.appendChild(postDiv);
-        });
-    }
-
-    renderPosts();
+    // Аватар автора (используем вашу ava3.png)
+    const AUTHOR_AVATAR = "ava3.png";
+    // ID Telegram-канала (без @)
+    const CHANNEL_NAME = "unsk1llteam";
+    // Сколько последних постов показывать
+    const POSTS_LIMIT = 10;
 
     // Эффект свечения за курсором
     const glow = document.getElementById('cursorGlow');
@@ -238,6 +216,136 @@
         requestAnimationFrame(anim);
     }
     anim();
+
+    /**
+     * Получение постов из Telegram канала через RSSHub + rss2json
+     * 1. RSSHub (rsshub.app) преобразует канал в RSS.
+     * 2. rss2json (api.rss2json.com) преобразует RSS в удобный JSON.
+     */
+    async function fetchTelegramPosts() {
+        const container = document.getElementById('postsContainer');
+        const statusDiv = document.getElementById('updateStatus');
+        
+        try {
+            // Показываем индикатор загрузки
+            container.innerHTML = '<div class="loader"><i class="fas fa-spinner fa-pulse"></i> Загрузка последних постов...</div>';
+
+            // 1. Получаем RSS-ссылку для канала от RSSHub
+            const rssUrl = `https://rsshub.app/telegram/channel/${CHANNEL_NAME}`;
+            
+            // 2. Преобразуем RSS в JSON через бесплатный сервис rss2json
+            //    Добавляем параметр api_key=fake_kee для обхода CORS (сервис отдаёт результат в JSONP, но мы используем fetch + cors-anywhere для надёжности)
+            //    Используем прокси для обхода CORS ограничений браузера
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const jsonApiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+            
+            // Прямой запрос к rss2json (он поддерживает CORS?)
+            const response = await fetch(jsonApiUrl);
+            
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.status !== 'ok') {
+                throw new Error('Не удалось получить данные от RSS');
+            }
+            
+            // 3. Обрабатываем полученные посты
+            const posts = data.items.slice(0, POSTS_LIMIT);
+            
+            if (posts.length === 0) {
+                container.innerHTML = '<div class="error">Пока нет постов в канале.</div>';
+                statusDiv.innerHTML = '<i class="fas fa-info-circle"></i> Постов пока нет.';
+                return;
+            }
+            
+            // 4. Отображаем посты
+            renderPosts(posts);
+            statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Это последние посты из тгк UnSkill Team. (Обновлено: ${new Date().toLocaleString('ru-RU')})`;
+            
+        } catch (error) {
+            console.error('Ошибка загрузки постов:', error);
+            container.innerHTML = `<div class="error">
+                <i class="fas fa-exclamation-triangle"></i> Не удалось загрузить посты.<br>
+                Попробуйте обновить страницу позже. Ошибка: ${error.message}
+            </div>`;
+            statusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка соединения. Попробуйте позже.';
+        }
+    }
+
+    /**
+     * Отображение постов на странице
+     */
+    function renderPosts(posts) {
+        const container = document.getElementById('postsContainer');
+        container.innerHTML = '';
+        
+        posts.forEach(post => {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post';
+            
+            // Обработка даты
+            let pubDate = post.pubDate || post.published || '';
+            let formattedDate = pubDate ? new Date(pubDate).toLocaleString('ru-RU') : 'Дата неизвестна';
+            
+            // Обработка текста (ссылки автоматически становятся кликабельными)
+            let postText = post.description || post.content || post.title || '';
+            // Убираем лишние HTML-теги, если они есть
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = postText;
+            postText = tempDiv.textContent || tempDiv.innerText || postText;
+            
+            // Преобразуем ссылки в тексте в кликабельные
+            postText = postText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+            
+            // Обработка изображений (ищем в контенте, а также в специальном поле enclosure)
+            let images = [];
+            if (post.enclosure && post.enclosure.link) {
+                images.push(post.enclosure.link);
+            }
+            // Также ищем изображения в обычном тексте (например, ссылки на фото)
+            const imgRegex = /(https?:\/\/[^\s]+\.(jpg|jpeg|png|webp))/gi;
+            let match;
+            while ((match = imgRegex.exec(post.description || '')) !== null) {
+                if (!images.includes(match[0])) {
+                    images.push(match[0]);
+                }
+            }
+            
+            // Галерея изображений (первые 3)
+            let imagesHtml = '';
+            if (images.length > 0) {
+                const uniqueImages = [...new Set(images)].slice(0, 3);
+                imagesHtml = '<div class="post-images">' + uniqueImages.map(img => `<a href="${img}" target="_blank"><img src="${img}" alt="Изображение из поста" loading="lazy"></a>`).join('') + '</div>';
+            }
+            
+            // Формируем структуру поста
+            postDiv.innerHTML = `
+                <div class="post-header">
+                    <div class="post-avatar">
+                        <img src="${AUTHOR_AVATAR}" alt="Аватар автора" onerror="this.src='https://placehold.co/48x48/6970FF/white?text=📝'">
+                    </div>
+                    <div>
+                        <div class="post-author">MrSiktyyy</div>
+                        <div class="post-date"><i class="far fa-clock"></i> ${formattedDate}</div>
+                    </div>
+                </div>
+                <div class="post-text">${postText.replace(/\n/g, '<br>')}</div>
+                ${imagesHtml}
+                <div style="margin-top: 12px;">
+                    <a href="${post.link}" target="_blank" style="color: #8597FF; font-size: 0.8rem; text-decoration: none;">
+                        <i class="fab fa-telegram"></i> Смотреть в Telegram →
+                    </a>
+                </div>
+            `;
+            container.appendChild(postDiv);
+        });
+    }
+
+    // Загружаем посты при загрузке страницы
+    document.addEventListener('DOMContentLoaded', fetchTelegramPosts);
 </script>
 </body>
 </html>
