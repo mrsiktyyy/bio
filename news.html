@@ -67,7 +67,7 @@
             font-weight: 500;
             transition: 0.2s;
         }
-        .nav-links a:hover { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
+        .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
         h1 { font-size: 2.2rem; margin-bottom: 10px; }
         .sub {
             color: #9aabff;
@@ -79,7 +79,6 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-        /* Стиль поста */
         .post {
             background: rgba(12, 14, 28, 0.7);
             backdrop-filter: blur(8px);
@@ -103,13 +102,11 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
+            overflow: hidden;
             background: linear-gradient(135deg, #6970FF, #8597FF);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.5rem;
-            overflow: hidden;
         }
         .post-avatar img {
             width: 100%;
@@ -129,7 +126,6 @@
             text-decoration: none;
             border-bottom: 1px dashed;
         }
-        /* Галерея изображений */
         .post-images {
             display: flex;
             flex-wrap: wrap;
@@ -192,16 +188,14 @@
     </div>
 
     <footer>
-        <p><i class="fas fa-telegram"></i> © 2026 — MrSiktyyy · Все права защищены.</p>
+        <p><i class="fab fa-telegram"></i> © 2026 — MrSiktyyy · Все права защищены.</p>
     </footer>
 </div>
 
 <script>
-    // Аватар автора (используем вашу ava3.png)
+    // Аватар автора из корня репозитория
     const AUTHOR_AVATAR = "ava3.png";
-    // ID Telegram-канала (без @)
     const CHANNEL_NAME = "unsk1llteam";
-    // Сколько последних постов показывать
     const POSTS_LIMIT = 10;
 
     // Эффект свечения за курсором
@@ -217,67 +211,87 @@
     }
     anim();
 
-    /**
-     * Получение постов из Telegram канала через RSSHub + rss2json
-     * 1. RSSHub (rsshub.app) преобразует канал в RSS.
-     * 2. rss2json (api.rss2json.com) преобразует RSS в удобный JSON.
-     */
+    // Парсинг RSS через прокси
     async function fetchTelegramPosts() {
         const container = document.getElementById('postsContainer');
         const statusDiv = document.getElementById('updateStatus');
         
         try {
-            // Показываем индикатор загрузки
             container.innerHTML = '<div class="loader"><i class="fas fa-spinner fa-pulse"></i> Загрузка последних постов...</div>';
-
-            // 1. Получаем RSS-ссылку для канала от RSSHub
+            
+            // RSS-ссылка от RSSHub
             const rssUrl = `https://rsshub.app/telegram/channel/${CHANNEL_NAME}`;
+            // Используем публичный прокси для получения контента (обход CORS)
+            const proxy = "https://api.allorigins.win/raw?url=";
+            const response = await fetch(proxy + encodeURIComponent(rssUrl));
             
-            // 2. Преобразуем RSS в JSON через бесплатный сервис rss2json
-            //    Добавляем параметр api_key=fake_kee для обхода CORS (сервис отдаёт результат в JSONP, но мы используем fetch + cors-anywhere для надёжности)
-            //    Используем прокси для обхода CORS ограничений браузера
-            const proxyUrl = 'https://api.allorigins.win/raw?url=';
-            const jsonApiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             
-            // Прямой запрос к rss2json (он поддерживает CORS?)
-            const response = await fetch(jsonApiUrl);
+            const rssText = await response.text();
             
-            if (!response.ok) {
-                throw new Error(`Ошибка HTTP: ${response.status}`);
-            }
+            // Парсим XML
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(rssText, "text/xml");
             
-            const data = await response.json();
+            // Проверка на ошибки парсинга
+            const parseError = xmlDoc.querySelector("parsererror");
+            if (parseError) throw new Error("Ошибка парсинга RSS");
             
-            if (data.status !== 'ok') {
-                throw new Error('Не удалось получить данные от RSS');
-            }
+            // Получаем все элементы <item>
+            const items = xmlDoc.querySelectorAll("item");
+            if (!items.length) throw new Error("Посты не найдены в RSS");
             
-            // 3. Обрабатываем полученные посты
-            const posts = data.items.slice(0, POSTS_LIMIT);
+            // Преобразуем в массив объектов
+            const posts = Array.from(items).slice(0, POSTS_LIMIT).map(item => {
+                // Заголовок
+                const title = item.querySelector("title")?.textContent || "";
+                // Описание (основной текст)
+                let description = item.querySelector("description")?.textContent || "";
+                // Убираем возможные HTML-сущности и теги
+                description = description.replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]*>/g, "");
+                // Дата публикации
+                let pubDate = item.querySelector("pubDate")?.textContent || "";
+                const date = new Date(pubDate);
+                const formattedDate = isNaN(date.getTime()) ? "Дата неизвестна" : date.toLocaleString('ru-RU');
+                // Ссылка на пост в Telegram
+                const link = item.querySelector("link")?.textContent || "";
+                // Извлечение картинок из description (оригинальный HTML внутри CDATA)
+                // Для простоты ищем ссылки на изображения
+                const imgRegex = /(https?:\/\/[^\s]+\.(jpg|jpeg|png|webp))/gi;
+                const images = [];
+                let match;
+                const rawDesc = item.querySelector("description")?.textContent || "";
+                while ((match = imgRegex.exec(rawDesc)) !== null) {
+                    if (!images.includes(match[0])) images.push(match[0]);
+                }
+                // Также можно проверить enclosure
+                const enclosure = item.querySelector("enclosure");
+                if (enclosure && enclosure.getAttribute("url")) {
+                    const encUrl = enclosure.getAttribute("url");
+                    if (!images.includes(encUrl)) images.unshift(encUrl);
+                }
+                
+                return {
+                    title,
+                    text: description || title,
+                    date: formattedDate,
+                    link,
+                    images: images.slice(0, 3)
+                };
+            });
             
-            if (posts.length === 0) {
-                container.innerHTML = '<div class="error">Пока нет постов в канале.</div>';
-                statusDiv.innerHTML = '<i class="fas fa-info-circle"></i> Постов пока нет.';
-                return;
-            }
-            
-            // 4. Отображаем посты
             renderPosts(posts);
-            statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Это последние посты из тгк UnSkill Team. (Обновлено: ${new Date().toLocaleString('ru-RU')})`;
-            
+            statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Это последние посты из тгк UnSkill Team. (обновлено: ${new Date().toLocaleString('ru-RU')})`;
         } catch (error) {
-            console.error('Ошибка загрузки постов:', error);
+            console.error(error);
             container.innerHTML = `<div class="error">
                 <i class="fas fa-exclamation-triangle"></i> Не удалось загрузить посты.<br>
-                Попробуйте обновить страницу позже. Ошибка: ${error.message}
+                Пожалуйста, попробуйте позже. Ошибка: ${error.message}
             </div>`;
             statusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка соединения. Попробуйте позже.';
         }
     }
 
-    /**
-     * Отображение постов на странице
-     */
     function renderPosts(posts) {
         const container = document.getElementById('postsContainer');
         container.innerHTML = '';
@@ -286,42 +300,16 @@
             const postDiv = document.createElement('div');
             postDiv.className = 'post';
             
-            // Обработка даты
-            let pubDate = post.pubDate || post.published || '';
-            let formattedDate = pubDate ? new Date(pubDate).toLocaleString('ru-RU') : 'Дата неизвестна';
-            
-            // Обработка текста (ссылки автоматически становятся кликабельными)
-            let postText = post.description || post.content || post.title || '';
-            // Убираем лишние HTML-теги, если они есть
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = postText;
-            postText = tempDiv.textContent || tempDiv.innerText || postText;
-            
-            // Преобразуем ссылки в тексте в кликабельные
+            // Обработка текста: заменяем ссылки
+            let postText = post.text;
             postText = postText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
             
-            // Обработка изображений (ищем в контенте, а также в специальном поле enclosure)
-            let images = [];
-            if (post.enclosure && post.enclosure.link) {
-                images.push(post.enclosure.link);
-            }
-            // Также ищем изображения в обычном тексте (например, ссылки на фото)
-            const imgRegex = /(https?:\/\/[^\s]+\.(jpg|jpeg|png|webp))/gi;
-            let match;
-            while ((match = imgRegex.exec(post.description || '')) !== null) {
-                if (!images.includes(match[0])) {
-                    images.push(match[0]);
-                }
-            }
-            
-            // Галерея изображений (первые 3)
+            // Галерея изображений
             let imagesHtml = '';
-            if (images.length > 0) {
-                const uniqueImages = [...new Set(images)].slice(0, 3);
-                imagesHtml = '<div class="post-images">' + uniqueImages.map(img => `<a href="${img}" target="_blank"><img src="${img}" alt="Изображение из поста" loading="lazy"></a>`).join('') + '</div>';
+            if (post.images && post.images.length) {
+                imagesHtml = '<div class="post-images">' + post.images.map(img => `<a href="${img}" target="_blank"><img src="${img}" alt="Изображение" loading="lazy"></a>`).join('') + '</div>';
             }
             
-            // Формируем структуру поста
             postDiv.innerHTML = `
                 <div class="post-header">
                     <div class="post-avatar">
@@ -329,22 +317,17 @@
                     </div>
                     <div>
                         <div class="post-author">MrSiktyyy</div>
-                        <div class="post-date"><i class="far fa-clock"></i> ${formattedDate}</div>
+                        <div class="post-date"><i class="far fa-clock"></i> ${post.date}</div>
                     </div>
                 </div>
                 <div class="post-text">${postText.replace(/\n/g, '<br>')}</div>
                 ${imagesHtml}
-                <div style="margin-top: 12px;">
-                    <a href="${post.link}" target="_blank" style="color: #8597FF; font-size: 0.8rem; text-decoration: none;">
-                        <i class="fab fa-telegram"></i> Смотреть в Telegram →
-                    </a>
-                </div>
+                ${post.link ? `<div style="margin-top: 12px;"><a href="${post.link}" target="_blank" style="color: #8597FF; font-size: 0.8rem; text-decoration: none;"><i class="fab fa-telegram"></i> Смотреть в Telegram →</a></div>` : ''}
             `;
             container.appendChild(postDiv);
         });
     }
 
-    // Загружаем посты при загрузке страницы
     document.addEventListener('DOMContentLoaded', fetchTelegramPosts);
 </script>
 </body>
