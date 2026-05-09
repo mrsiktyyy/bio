@@ -3,30 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>MrSiktyyy | Социальные сети, новости, стримы</title>
-    <!-- Google Fonts + Font Awesome 6 -->
+    <title>MrSiktyyy | Социальные сети и галерея</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: default;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: #05050A;
             font-family: 'Inter', sans-serif;
             color: #EFF1FF;
             line-height: 1.5;
             overflow-x: hidden;
-            position: relative;
         }
-
-        /* СИЯНИЕ ПО КРАЯМ */
         body::before {
             content: "";
             position: fixed;
@@ -36,11 +26,9 @@
             height: 100%;
             pointer-events: none;
             z-index: 999;
-            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105, 112, 255, 0.2);
+            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105,112,255,0.2);
             background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(0,0,0,0.5) 100%);
         }
-
-        /* СИЯНИЕ ЗА КУРСОРОМ */
         .cursor-glow {
             position: fixed;
             width: 400px;
@@ -49,12 +37,9 @@
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: transform 0.08s linear;
             z-index: 1000;
             filter: blur(28px);
-            will-change: transform;
         }
-
         .container {
             max-width: 1280px;
             margin: 0 auto;
@@ -62,8 +47,6 @@
             position: relative;
             z-index: 10;
         }
-
-        /* Неоновые градиенты */
         .neon-text {
             background: linear-gradient(135deg, #6970FF 0%, #8597FF 100%);
             background-clip: text;
@@ -71,103 +54,6 @@
             color: transparent;
             font-weight: 800;
         }
-
-        h1, h2, h3 {
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block;
-        }
-        h2:after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 70%;
-            height: 3px;
-            background: linear-gradient(90deg, #6970FF, #8597FF);
-            border-radius: 4px;
-        }
-
-        /* Кнопки и карточки */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(20, 22, 45, 0.6);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(105, 112, 255, 0.4);
-            padding: 12px 28px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.25s ease;
-            color: #fff;
-            text-decoration: none;
-            box-shadow: 0 0 8px rgba(105,112,255,0.2);
-        }
-        .btn i {
-            font-size: 1.2rem;
-            color: #8597FF;
-        }
-        .btn:hover {
-            background: linear-gradient(135deg, rgba(105,112,255,0.8), rgba(133,151,255,0.7));
-            border-color: transparent;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px -8px rgba(105,112,255,0.5);
-            color: white;
-        }
-        .btn-primary {
-            background: linear-gradient(105deg, #6970FF, #8597FF);
-            border: none;
-            box-shadow: 0 4px 15px rgba(105,112,255,0.4);
-        }
-        .btn-primary i {
-            color: white;
-        }
-
-        /* Карточки */
-        .card-glow {
-            background: rgba(12, 14, 28, 0.65);
-            backdrop-filter: blur(10px);
-            border-radius: 28px;
-            border: 1px solid rgba(105, 112, 255, 0.3);
-            padding: 1.5rem;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: 0 10px 25px -10px rgba(0,0,0,0.5);
-            height: 100%;
-        }
-        .card-glow:hover {
-            border-color: #8597FF;
-            transform: translateY(-6px);
-            box-shadow: 0 20px 35px -12px rgba(105,112,255,0.3);
-            background: rgba(20, 22, 48, 0.75);
-        }
-
-        /* Сетки */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.8rem;
-        }
-        .social-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        /* Навигация */
         .navbar {
             padding: 25px 0 20px;
             display: flex;
@@ -178,14 +64,8 @@
             border-bottom: 1px solid rgba(133,151,255,0.2);
             margin-bottom: 30px;
         }
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
+        .logo { font-size: 1.8rem; font-weight: 800; }
+        .nav-links { display: flex; gap: 2rem; }
         .nav-links a {
             text-decoration: none;
             color: #ccd6ff;
@@ -196,8 +76,6 @@
             color: #8597FF;
             text-shadow: 0 0 6px #6970FF;
         }
-
-        /* Hero */
         .hero {
             padding: 60px 0 40px;
             display: flex;
@@ -206,9 +84,7 @@
             align-items: center;
             gap: 3rem;
         }
-        .hero-content {
-            flex: 1;
-        }
+        .hero-content { flex: 1; }
         .hero-badge {
             background: rgba(105,112,255,0.2);
             display: inline-block;
@@ -219,21 +95,35 @@
             margin-bottom: 20px;
             backdrop-filter: blur(4px);
         }
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.2; }
         .hero p {
             font-size: 1.1rem;
             color: #bcceff;
             max-width: 550px;
             margin-bottom: 32px;
         }
-        .hero-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
+        .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(20,22,45,0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(105,112,255,0.4);
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 0 8px rgba(105,112,255,0.2);
+        }
+        .btn-primary { background: linear-gradient(105deg, #6970FF, #8597FF); border: none; box-shadow: 0 4px 15px rgba(105,112,255,0.4); }
+        .btn:hover {
+            background: linear-gradient(135deg, rgba(105,112,255,0.8), rgba(133,151,255,0.7));
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px -8px rgba(105,112,255,0.5);
         }
         .hero-stats {
             flex: 0.8;
@@ -260,18 +150,67 @@
             color: transparent;
         }
 
-        .section {
+        /* === Карусель аватарок === */
+        .carousel-section {
             margin: 80px 0;
-        }
-        .section-sub {
             text-align: center;
-            max-width: 700px;
-            margin: 0 auto 2.5rem auto;
+        }
+        .carousel-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            position: relative;
+        }
+        .carousel-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 70%;
+            height: 3px;
+            background: linear-gradient(90deg, #6970FF, #8597FF);
+            border-radius: 4px;
+        }
+        .carousel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .carousel-slide {
+            width: 280px;
+            height: 280px;
+            border-radius: 32px;
+            overflow: hidden;
+            border: 3px solid rgba(105,112,255,0.7);
+            box-shadow: 0 0 20px rgba(105,112,255,0.5);
+            transition: all 0.4s ease;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* плавная смена анимация (будет меняться src, но можно добавить fade) */
+        .carousel-slide {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .carousel-caption {
+            margin-top: 20px;
+            font-size: 0.9rem;
             color: #b4c2ff;
         }
 
+        .social-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
         .social-card {
-            background: rgba(15, 17, 32, 0.7);
+            background: rgba(15,17,32,0.7);
             backdrop-filter: blur(6px);
             border-radius: 60px;
             padding: 12px 28px;
@@ -284,61 +223,30 @@
             color: #fff;
             font-weight: 500;
         }
-        .social-card i {
-            font-size: 1.6rem;
-            color: #8597FF;
-        }
+        .social-card i { font-size: 1.6rem; color: #8597FF; }
         .social-card:hover {
             background: linear-gradient(135deg, #6970FF30, #8597FF30);
             border-color: #8597FF;
             transform: scale(1.02);
             box-shadow: 0 0 15px rgba(105,112,255,0.4);
         }
-
         footer {
             text-align: center;
             padding: 40px 0 50px;
             border-top: 1px solid rgba(133,151,255,0.2);
             margin-top: 60px;
         }
-        .footer-top {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-            color: #d0ddff;
-        }
-        .footer-copy {
-            font-size: 0.85rem;
-            color: #8f9eff;
-        }
+        .footer-top { font-size: 1rem; font-weight: 500; margin-bottom: 12px; color: #d0ddff; }
+        .footer-copy { font-size: 0.85rem; color: #8f9eff; }
 
         @media (max-width: 850px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-            .hero p {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero-buttons {
-                justify-content: center;
-            }
-            .hero-stats {
-                justify-content: center;
-            }
-            .navbar {
-                flex-direction: column;
-                align-items: center;
-            }
-            h1 {
-                font-size: 2.5rem !important;
-            }
-            .container {
-                padding: 0 20px;
-            }
+            .hero { flex-direction: column; text-align: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .navbar { flex-direction: column; align-items: center; }
+            h1 { font-size: 2.5rem !important; }
+            .carousel-slide { width: 200px; height: 200px; }
         }
-
         .fade-up {
             opacity: 0;
             transform: translateY(25px);
@@ -349,105 +257,65 @@
         }
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0c18; }
-        ::-webkit-scrollbar-thumb { background: #6970FF; border-radius: 10px; }
     </style>
 </head>
 <body>
-
 <div class="cursor-glow" id="cursorGlow"></div>
-
 <div class="container">
     <nav class="navbar fade-up">
-        <div class="logo"><span class="neon-text">MrSiktyyy</span> <span style="font-weight: 400;">✦</span></div>
+        <div class="logo"><span class="neon-text">MrSiktyyy</span> ✦</div>
         <div class="nav-links">
-            <a href="#about">Основа</a>
+            <a href="index.html">Главная</a>
+            <a href="news.html">Новости</a>
             <a href="#social">Контакты</a>
             <a href="https://t.me/unsk1llteam" target="_blank">UnSkill Team</a>
         </div>
     </nav>
 
-    <!-- Hero -->
     <div class="hero">
         <div class="hero-content fade-up">
-            <div class="hero-badge"><i class="fab fa-telegram" style="margin-right: 6px;"></i> Социальные сети MrSiktyyy</div>
+            <div class="hero-badge"><i class="fab fa-telegram"></i> Социальные сети MrSiktyyy</div>
             <h1><span class="neon-text">MrSiktyyy</span> <br>Основная информация</h1>
             <p>Страница о MrSiktyyy - Социальные сети, новости, и много другое! Зовут Иван, играю в разные игры, а остальное узнаешь на стримах или в канале клана UnSkill Team.</p>
             <div class="hero-buttons">
-                <a href="https://www.instagram.com/mrsiktyyy/" target="_blank" class="btn"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://www.twitch.tv/mrs1kty" target="_blank" class="btn btn-primary"><i class="fab fa-twitch"></i> Twitch</a>
-                <a href="https://www.youtube.com/@MrS1kyyy" target="_blank" class="btn"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://www.instagram.com/mrsiktyyy/" class="btn"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://www.twitch.tv/mrs1kty" class="btn btn-primary"><i class="fab fa-twitch"></i> Twitch</a>
+                <a href="https://www.youtube.com/@MrS1kyyy" class="btn"><i class="fab fa-youtube"></i> YouTube</a>
             </div>
         </div>
-        <div class="hero-stats fade-up delay-1" id="ageStats">
-            <div class="stat-item"><div class="stat-number">🔥 СВЕЖИЕ</div><div style="font-size: 0.8rem;">новости</div></div>
-            <div class="stat-item"><div class="stat-number" id="ageValue">--</div><div style="font-size: 0.8rem;">лет</div></div>
-            <div class="stat-item"><div class="stat-number">500+</div><div style="font-size: 0.8rem;">подписчиков</div></div>
-        </div>
-    </div>
-
-    <!-- Секция ОСНОВА (бывший функционал) -->
-    <div id="about" class="section">
-        <h2 class="fade-up">⚡ Основа</h2>
-        <p class="section-sub fade-up delay-1">на момент 9-11 мая в 2026 году</p>
-        <div class="grid-3">
-            <div class="card-glow fade-up delay-1">
-                <i class="fas fa-user-astronaut" style="font-size: 2rem; color:#8597FF; margin-bottom: 15px; display: inline-block;"></i>
-                <h3>Иван Акбашев</h3>
-                <p>День рождения 7 августа 2011 года, живу в Тюмени, стримлю игры.</p>
-            </div>
-            <div class="card-glow fade-up delay-2">
-                <i class="fas fa-clock" style="font-size: 2rem; color:#8597FF; margin-bottom: 15px;"></i>
-                <h3>Свободное время</h3>
-                <p>Я занят в будни с 7:30 до 14:05, в выходные обычно я свободен всегда и готов активно общаться с вами.</p>
-            </div>
-            <div class="card-glow fade-up delay-1">
-                <i class="fas fa-code" style="font-size: 2rem; color:#8597FF; margin-bottom: 15px;"></i>
-                <h3>Любимое</h3>
-                <p>Занимаюсь программированием, нравится бадминтон и футбол.</p>
-            </div>
+        <div class="hero-stats fade-up delay-1">
+            <div class="stat-item"><div class="stat-number">🔥 СВЕЖИЕ</div><div>новости</div></div>
+            <div class="stat-item"><div class="stat-number" id="ageValue">--</div><div>лет</div></div>
+            <div class="stat-item"><div class="stat-number">500+</div><div>подписчиков</div></div>
         </div>
     </div>
 
-    <!-- Две карточки: Telegram UnSkill Team и Живые трансляции -->
-    <div class="section">
-        <div class="grid-2">
-            <div class="card-glow fade-up">
-                <i class="fab fa-telegram" style="font-size: 2.3rem; color:#27a7e7;"></i>
-                <h3 style="margin-top: 12px;">📢 Telegram UnSkill Team</h3>
-                <p>Посты от участников команды интересны, советую подписаться и следить за нами. Скоро возможно будем участвовать в турнирах CS2.</p>
-                <a href="https://t.me/unsk1llteam" target="_blank" style="color:#8597FF; margin-top: 12px; display: inline-block;">t.me/unsk1llteam →</a>
+    <!-- Карусель аватарок -->
+    <div class="carousel-section fade-up delay-1">
+        <h2 class="carousel-title">📸 Мои аватарки</h2>
+        <div class="carousel-container">
+            <div class="carousel-slide" id="avatarSlide">
+                <img id="avatarImg" src="images/ava1.jpg" alt="avatar">
             </div>
-            <div class="card-glow fade-up delay-1">
-                <i class="fas fa-live" style="font-size: 2.3rem; color:#9146FF;"></i>
-                <h3 style="margin-top: 12px;">🎥 Живые трансляции</h3>
-                <p>Общение со зрителями, розыгрыши, турниры, разговоры и прочее. Заходи на Twitch, будет весело!</p>
-                <a href="https://www.twitch.tv/mrs1kty" target="_blank" style="color:#8597FF;">twitch.tv/mrs1kty →</a>
-            </div>
+        </div>
+        <div class="carousel-caption">✨ плавная смена каждые 5 секунд ✨</div>
+    </div>
+
+    <div id="social" class="fade-up delay-2">
+        <h2 style="font-size: 2rem;">🌐 Все соцсети</h2>
+        <div class="social-grid">
+            <a href="https://t.me/MrSikty" class="social-card"><i class="fab fa-telegram"></i> @MrSikty</a>
+            <a href="https://www.instagram.com/mrsiktyyy/" class="social-card"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://www.twitch.tv/mrs1kty" class="social-card"><i class="fab fa-twitch"></i> Twitch</a>
+            <a href="https://www.youtube.com/@MrS1kyyy" class="social-card"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="https://steamcommunity.com/id/mrsikty/" class="social-card"><i class="fab fa-steam"></i> Steam</a>
+            <a href="https://discord.gg/NAHBZFxQMR" class="social-card"><i class="fab fa-discord"></i> Discord</a>
+        </div>
+        <div style="display: flex; justify-content: center; margin: 30px 0;">
+            <a href="https://t.me/unsk1llteam" class="btn"><i class="fab fa-telegram"></i> Клан UnSkill Team</a>
         </div>
     </div>
 
-    <!-- Социальные сети (все ссылки) -->
-    <div id="social" class="section">
-        <h2 class="fade-up">🌐 Все соцсети</h2>
-        <p class="section-sub fade-up delay-1">Быть на связи легко — подписывайся везде!</p>
-        <div class="social-grid fade-up delay-2">
-            <a href="https://t.me/MrSikty" class="social-card" target="_blank"><i class="fab fa-telegram"></i> <span>@MrSikty</span></a>
-            <a href="https://www.instagram.com/mrsiktyyy/" class="social-card" target="_blank"><i class="fab fa-instagram"></i> <span>Instagram</span></a>
-            <a href="https://www.twitch.tv/mrs1kty" class="social-card" target="_blank"><i class="fab fa-twitch"></i> <span>Twitch</span></a>
-            <a href="https://www.youtube.com/@MrS1kyyy" class="social-card" target="_blank"><i class="fab fa-youtube"></i> <span>YouTube</span></a>
-            <a href="https://steamcommunity.com/id/mrsikty/" class="social-card" target="_blank"><i class="fab fa-steam"></i> <span>Steam</span></a>
-            <a href="https://discord.gg/NAHBZFxQMR" class="social-card" target="_blank"><i class="fab fa-discord"></i> <span>Discord</span></a>
-        </div>
-        <div style="display: flex; justify-content: center; margin-top: 40px;">
-            <a href="https://t.me/unsk1llteam" class="btn" style="background: #1f2a4e;"><i class="fab fa-telegram"></i> Клан UnSkill Team</a>
-        </div>
-    </div>
-
-    <!-- Footer -->
     <footer>
         <div class="footer-top">✨ MrSiktyyy - тот, кто играет во всё, с ним интересно, весело и всегда позитивно!</div>
         <div class="footer-copy">© 2026 - сайт создан для продвижения стримера mrSiktyyy. Все права защищены.</div>
@@ -457,36 +325,51 @@
 <script>
     // Сияние за курсором
     const glow = document.getElementById('cursorGlow');
-    let mouseX = 0, mouseY = 0;
-    let glowX = 0, glowY = 0;
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
+    let mx = 0, my = 0, gx = 0, gy = 0;
+    document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
     function animateGlow() {
-        glowX += (mouseX - glowX) * 0.12;
-        glowY += (mouseY - glowY) * 0.12;
-        glow.style.left = glowX + 'px';
-        glow.style.top = glowY + 'px';
+        gx += (mx - gx) * 0.12;
+        gy += (my - gy) * 0.12;
+        glow.style.left = gx + 'px';
+        glow.style.top = gy + 'px';
         requestAnimationFrame(animateGlow);
     }
     animateGlow();
 
-    // Возраст: родился 7 августа 2011, вычисляем полные года на сегодня
+    // возраст
     function calculateAge(birthDate) {
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
         const m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
         return age;
     }
-    const birth = new Date(2011, 7, 7); // 7 августа 2011 (месяц 7 = август)
-    const age = calculateAge(birth);
-    document.getElementById('ageValue').innerText = age;
+    const birth = new Date(2011, 7, 7);
+    document.getElementById('ageValue').innerText = calculateAge(birth);
 
-    // Анимация появления при скролле (для элементов с fade-up)
+    // Карусель аватарок
+    const avatars = [
+        "images/ava1.jpg",
+        "images/ava2.jpg",
+        "images/ava3.jpg"
+    ];
+    let currentIndex = 0;
+    const imgElement = document.getElementById('avatarImg');
+    function changeAvatar() {
+        currentIndex = (currentIndex + 1) % avatars.length;
+        // добавляем плавное исчезновение-появление
+        imgElement.style.opacity = '0';
+        setTimeout(() => {
+            imgElement.src = avatars[currentIndex];
+            imgElement.style.opacity = '1';
+        }, 200);
+    }
+    setInterval(changeAvatar, 5000);
+    // начальная установка opacity
+    imgElement.style.transition = 'opacity 0.4s ease';
+    imgElement.style.opacity = '1';
+
+    // анимация при скролле
     const fadeElements = document.querySelectorAll('.fade-up');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -500,10 +383,8 @@
         el.style.animationPlayState = 'paused';
         observer.observe(el);
     });
-    // Запускаем для уже видимых
     fadeElements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
+        if (el.getBoundingClientRect().top < window.innerHeight - 50) {
             el.style.animationPlayState = 'running';
             observer.unobserve(el);
         }
