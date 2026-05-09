@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Все стили остаются как в предыдущей версии */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #05050A;
@@ -198,6 +199,21 @@
     const CHANNEL_NAME = "unsk1llteam";
     const POSTS_LIMIT = 10;
 
+    // Список альтернативных RSS-источников (RSSHub инстансы) – если один не работает, пробуем следующий
+    const RSS_SOURCES = [
+        `https://rsshub.app/telegram/channel/${CHANNEL_NAME}`,
+        `https://rsshub.bili.xyz/telegram/channel/${CHANNEL_NAME}`,
+        `https://rsshub.fly.dev/telegram/channel/${CHANNEL_NAME}`,
+        `https://tg.i-c-a.su/rss/channel/${CHANNEL_NAME}`  // альтернативный сервис (не RSSHub, но работает)
+    ];
+
+    // Список прокси для обхода CORS
+    const PROXIES = [
+        (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+        (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+        (url) => `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`
+    ];
+
     // Эффект свечения за курсором
     const glow = document.getElementById('cursorGlow');
     let mx = 0, my = 0, gx = 0, gy = 0;
@@ -211,7 +227,47 @@
     }
     anim();
 
-    // Парсинг RSS через прокси
+    async function fetchWithTimeout(url, timeout = 8000) {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(url, { signal: controller.signal });
+            clearTimeout(id);
+            return response;
+        } catch (err) {
+            clearTimeout(id);
+            throw err;
+        }
+    }
+
+    async function tryFetchRSS() {
+        for (let rssUrl of RSS_SOURCES) {
+            for (let proxyBuilder of PROXIES) {
+                const proxyUrl = proxyBuilder(rssUrl);
+                try {
+                    console.log(`Пробуем: ${proxyUrl}`);
+                    const response = await fetchWithTimeout(proxyUrl, 10000);
+                    if (!response.ok) continue;
+                    const text = await response.text();
+                    // Проверяем, похоже ли на XML
+                    if (text.trim().startsWith('<?xml') || text.includes('<rss') || text.includes('<feed')) {
+                        // Пробуем распарсить
+                        const parser = new DOMParser();
+                        const xmlDoc = parser.parseFromString(text, "text/xml");
+                        const parseError = xmlDoc.querySelector("parsererror");
+                        if (!parseError && xmlDoc.querySelectorAll("item").length > 0) {
+                            console.log(`Успех с источником: ${rssUrl} через прокси ${proxyBuilder}`);
+                            return xmlDoc;
+                        }
+                    }
+                } catch (e) {
+                    console.warn(`Ошибка при запросе ${proxyUrl}:`, e);
+                }
+            }
+        }
+        throw new Error("Не удалось получить RSS ни с одного источника");
+    }
+
     async function fetchTelegramPosts() {
         const container = document.getElementById('postsContainer');
         const statusDiv = document.getElementById('updateStatus');
@@ -219,44 +275,19 @@
         try {
             container.innerHTML = '<div class="loader"><i class="fas fa-spinner fa-pulse"></i> Загрузка последних постов...</div>';
             
-            // RSS-ссылка от RSSHub
-            const rssUrl = `https://rsshub.app/telegram/channel/${CHANNEL_NAME}`;
-            // Используем публичный прокси для получения контента (обход CORS)
-            const proxy = "https://api.allorigins.win/raw?url=";
-            const response = await fetch(proxy + encodeURIComponent(rssUrl));
-            
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const rssText = await response.text();
-            
-            // Парсим XML
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(rssText, "text/xml");
-            
-            // Проверка на ошибки парсинга
-            const parseError = xmlDoc.querySelector("parsererror");
-            if (parseError) throw new Error("Ошибка парсинга RSS");
-            
-            // Получаем все элементы <item>
+            const xmlDoc = await tryFetchRSS();
             const items = xmlDoc.querySelectorAll("item");
-            if (!items.length) throw new Error("Посты не найдены в RSS");
+            if (items.length === 0) throw new Error("Посты не найдены");
             
-            // Преобразуем в массив объектов
             const posts = Array.from(items).slice(0, POSTS_LIMIT).map(item => {
-                // Заголовок
-                const title = item.querySelector("title")?.textContent || "";
-                // Описание (основной текст)
+                let title = item.querySelector("title")?.textContent || "";
                 let description = item.querySelector("description")?.textContent || "";
-                // Убираем возможные HTML-сущности и теги
                 description = description.replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]*>/g, "");
-                // Дата публикации
                 let pubDate = item.querySelector("pubDate")?.textContent || "";
                 const date = new Date(pubDate);
                 const formattedDate = isNaN(date.getTime()) ? "Дата неизвестна" : date.toLocaleString('ru-RU');
-                // Ссылка на пост в Telegram
-                const link = item.querySelector("link")?.textContent || "";
-                // Извлечение картинок из description (оригинальный HTML внутри CDATA)
-                // Для простоты ищем ссылки на изображения
+                let link = item.querySelector("link")?.textContent || "";
+                // Извлечение изображений
                 const imgRegex = /(https?:\/\/[^\s]+\.(jpg|jpeg|png|webp))/gi;
                 const images = [];
                 let match;
@@ -264,13 +295,11 @@
                 while ((match = imgRegex.exec(rawDesc)) !== null) {
                     if (!images.includes(match[0])) images.push(match[0]);
                 }
-                // Также можно проверить enclosure
                 const enclosure = item.querySelector("enclosure");
                 if (enclosure && enclosure.getAttribute("url")) {
                     const encUrl = enclosure.getAttribute("url");
                     if (!images.includes(encUrl)) images.unshift(encUrl);
                 }
-                
                 return {
                     title,
                     text: description || title,
@@ -285,31 +314,26 @@
         } catch (error) {
             console.error(error);
             container.innerHTML = `<div class="error">
-                <i class="fas fa-exclamation-triangle"></i> Не удалось загрузить посты.<br>
-                Пожалуйста, попробуйте позже. Ошибка: ${error.message}
+                <i class="fab fa-telegram"></i> Не удалось загрузить посты из Telegram.<br>
+                Попробуйте позже или проверьте, что канал <strong>@${CHANNEL_NAME}</strong> публичный.<br>
+                <span style="font-size:0.8rem;">Детали: ${error.message}</span>
             </div>`;
-            statusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка соединения. Попробуйте позже.';
+            statusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка соединения. Возможно, временные проблемы RSS-сервиса.';
         }
     }
 
     function renderPosts(posts) {
         const container = document.getElementById('postsContainer');
         container.innerHTML = '';
-        
         posts.forEach(post => {
             const postDiv = document.createElement('div');
             postDiv.className = 'post';
-            
-            // Обработка текста: заменяем ссылки
             let postText = post.text;
             postText = postText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-            
-            // Галерея изображений
             let imagesHtml = '';
             if (post.images && post.images.length) {
                 imagesHtml = '<div class="post-images">' + post.images.map(img => `<a href="${img}" target="_blank"><img src="${img}" alt="Изображение" loading="lazy"></a>`).join('') + '</div>';
             }
-            
             postDiv.innerHTML = `
                 <div class="post-header">
                     <div class="post-avatar">
