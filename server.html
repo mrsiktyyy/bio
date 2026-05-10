@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft сервер — MrSiktyyy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #05050A;
+            font-family: 'Inter', sans-serif;
+            color: #EFF1FF;
+            line-height: 1.5;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105,112,255,0.2);
+        }
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(105,112,255,0.35), rgba(133,151,255,0.12) 45%, transparent 75%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            filter: blur(28px);
+            z-index: 1000;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .navbar {
+            padding: 25px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(133,151,255,0.2);
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .logo { font-size: 1.6rem; font-weight: 800; }
+        .neon-text {
+            background: linear-gradient(135deg, #6970FF, #8597FF);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a {
+            text-decoration: none;
+            color: #ccd6ff;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
+
+        .server-card {
+            background: rgba(12, 14, 28, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 1px solid rgba(105,112,255,0.4);
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+        .server-status {
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
+        }
+        .online { background: rgba(0,200,100,0.2); border: 1px solid #00cc66; color: #00ff99; box-shadow: 0 0 10px #00cc6640; }
+        .offline { background: rgba(255,50,50,0.2); border: 1px solid #ff4444; color: #ff7777; }
+        .server-ip {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #8597FF);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 20px 0;
+            word-break: break-all;
+        }
+        .server-description {
+            background: rgba(0,0,0,0.5);
+            border-radius: 28px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            border-left: 4px solid #8597FF;
+            color: #d0ddff;
+        }
+        .players-stats {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            color: #bfc9ff;
+        }
+        .progress-container {
+            margin: 20px 0;
+            text-align: left;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #b4c2ff;
+        }
+        .progress-bar-bg {
+            background: rgba(255,255,255,0.1);
+            border-radius: 60px;
+            height: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(105,112,255,0.4);
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #6970FF, #8597FF);
+            border-radius: 60px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 8px #6970FF;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        .btn-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(30, 35, 70, 0.8);
+            border: 1px solid rgba(105,112,255,0.5);
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            text-decoration: none;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .btn-copy:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px -8px #6970FF;
+            background: linear-gradient(105deg, #6970FF, #8597FF);
+            border-color: transparent;
+        }
+        footer {
+            text-align: center;
+            padding: 30px 0 40px;
+            border-top: 1px solid rgba(133,151,255,0.2);
+            margin-top: 60px;
+        }
+        @media (max-width: 650px) {
+            .navbar { flex-direction: column; align-items: center; }
+            .server-ip { font-size: 1.3rem; }
+            .server-card { padding: 24px; }
+        }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeUp 0.7s cubic-bezier(0.2,0.9,0.4,1.1) forwards;
+        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="container">
+    <nav class="navbar fade-up">
+        <div class="logo"><span class="neon-text">MrSiktyyy</span> ✦</div>
+        <div class="nav-links">
+            <a href="index.html">Главная</a>
+            <a href="news.html">Новости</a>
+            <a href="server.html" class="active">Minecraft server</a>
+            <a href="https://t.me/unsk1llteam" target="_blank">UnSkill Team</a>
+        </div>
+    </nav>
+
+    <div class="server-card fade-up">
+        <h1 style="font-size: 2rem; margin-bottom: 10px;"><i class="fas fa-cube"></i> Aternos сервер</h1>
+        <div id="statusBadge" class="server-status offline">⏳ Проверка...</div>
+        <div class="server-ip" id="serverIp">MrSiktyyy.aternos.me</div>
+        
+        <!-- Описание сервера вместо MOTD -->
+        <div class="server-description">
+            <i class="fas fa-info-circle" style="margin-right: 8px; color:#8597FF;"></i> 
+            Это сервер Майнкрафт для простого выживания. Тут нет вайпов, или они очень редкие. Я не стал добавлять много плагинов, достаточно основы — авторизация, рынок, античит и прочее базовое. Нет приватов — анархия, есть рынок /ah — экономика. Мир с размерами 7500 на 7500 блоков достаточно большой для максимального онлайна в 100 людей. Желаю всем гриферского настроения на этом проекте!
+        </div>
+        
+        <div id="playersStats" class="players-stats"></div>
+        
+        <div class="progress-container">
+            <div class="progress-label">
+                <span><i class="fas fa-user-friends"></i> Онлайн игроков</span>
+                <span id="playersCount">0</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button id="copyIpButton" class="btn-copy"><i class="fas fa-copy"></i> Скопировать IP</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-top">✨ Сервер на Aternos · IP: MrSiktyyy.aternos.me</div>
+        <div class="footer-copy">© 2026 — MrSiktyyy. Все права защищены.</div>
+    </footer>
+</div>
+
+<script>
+    // ========== НАСТРОЙКИ ==========
+    const SERVER_ADDRESS = "MrSiktyyy.aternos.me";
+    const SERVER_PORT = 25565;
+    const MAX_PLAYERS = 100;
+    // ===============================
+
+    const API_URL = `https://api.mcsrvstat.us/2/${SERVER_ADDRESS}:${SERVER_PORT}`;
+
+    const statusBadge = document.getElementById('statusBadge');
+    const serverIpSpan = document.getElementById('serverIp');
+    const playersStatsDiv = document.getElementById('playersStats');
+    const playersCountSpan = document.getElementById('playersCount');
+    const progressFill = document.getElementById('progressFill');
+    const copyBtn = document.getElementById('copyIpButton');
+
+    serverIpSpan.innerText = SERVER_ADDRESS;
+
+    // Кнопка копирования IP
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(SERVER_ADDRESS).then(() => {
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+            }, 1500);
+        }).catch(() => {
+            alert('Не удалось скопировать IP: ' + SERVER_ADDRESS);
+        });
+    });
+
+    async function fetchServerStatus() {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            
+            const online = data.online === true;
+            
+            if (online) {
+                statusBadge.className = "server-status online";
+                statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> 🟢 СЕРВЕР ОНЛАЙН';
+                
+                // Получаем количество игроков (если API вернул)
+                let playersOnline = 0;
+                let playersMax = MAX_PLAYERS;
+                if (data.players && typeof data.players.online === 'number') {
+                    playersOnline = data.players.online;
+                }
+                if (data.players && data.players.max) {
+                    playersMax = data.players.max;
+                }
+                
+                playersStatsDiv.innerHTML = `<i class="fas fa-users"></i> Игроки: ${playersOnline} / ${playersMax}`;
+                playersCountSpan.innerText = playersOnline;
+                const fillPercent = Math.min(100, (playersOnline / MAX_PLAYERS) * 100);
+                progressFill.style.width = `${fillPercent}%`;
+            } else {
+                statusBadge.className = "server-status offline";
+                statusBadge.innerHTML = '<i class="fas fa-power-off"></i> 🔴 СЕРВЕР ОФФЛАЙН';
+                playersStatsDiv.innerHTML = '<i class="fas fa-hourglass-half"></i> Сервер выключен';
+                playersCountSpan.innerText = "0";
+                progressFill.style.width = "0%";
+            }
+        } catch (error) {
+            console.error("Ошибка проверки статуса:", error);
+            statusBadge.className = "server-status offline";
+            statusBadge.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Ошибка связи';
+            playersStatsDiv.innerHTML = '<i class="fas fa-question-circle"></i> Не удалось получить данные';
+            playersCountSpan.innerText = "?";
+            progressFill.style.width = "0%";
+        }
+    }
+
+    // Эффект свечения за курсором
+    const glow = document.getElementById('cursorGlow');
+    let mx = 0, my = 0, gx = 0, gy = 0;
+    document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+    function animateGlow() {
+        gx += (mx - gx) * 0.12;
+        gy += (my - gy) * 0.12;
+        glow.style.left = gx + 'px';
+        glow.style.top = gy + 'px';
+        requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+
+    fetchServerStatus();
+    setInterval(fetchServerStatus, 30000);
+</script>
+</body>
+</html>
