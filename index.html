@@ -16,7 +16,23 @@
             color: #EFF1FF;
             line-height: 1.5;
             overflow-x: hidden;
+            position: relative;
         }
+        /* Общий фон для всего сайта — 11.png (прозрачный слой) */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('11.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Сияние по краям поверх всего */
         body::before {
             content: "";
             position: fixed;
@@ -63,6 +79,8 @@
             gap: 20px;
             border-bottom: 1px solid rgba(133,151,255,0.2);
             margin-bottom: 30px;
+            position: relative;
+            z-index: 20;
         }
         .logo { font-size: 1.8rem; font-weight: 800; }
         .nav-links { display: flex; gap: 2rem; }
@@ -74,34 +92,44 @@
         }
         .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
 
-        /* Герой с фоновым изображением 001.png — увеличен в 1.3 раза, полупрозрачный */
+        /* Герой с фоном 001.png — шире, текст и кнопки по центру */
         .hero {
-            padding: 60px 0 40px;
+            padding: 80px 0 60px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 3rem;
+            gap: 4rem;
             position: relative;
-            border-radius: 40px;
+            border-radius: 50px;
             overflow: hidden;
+            margin: 20px 0;
+            background: rgba(5, 5, 10, 0.3);
+            backdrop-filter: blur(2px);
         }
         .hero::before {
             content: "";
             position: absolute;
-            top: -15%;
-            left: -15%;
-            right: -15%;
-            bottom: -15%;
+            top: -20%;
+            left: -20%;
+            right: -20%;
+            bottom: -20%;
             background: url('001.png') no-repeat center center;
             background-size: cover;
-            transform: scale(1.3);
+            transform: scale(1.4);
             opacity: 0.4;
             pointer-events: none;
             z-index: -1;
-            filter: brightness(0.7);
+            filter: brightness(0.8) blur(1px);
         }
-        .hero-content { flex: 1; position: relative; z-index: 2; }
+        .hero-content {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
         .hero-badge {
             background: rgba(105,112,255,0.2);
             display: inline-block;
@@ -112,16 +140,19 @@
             margin-bottom: 20px;
             backdrop-filter: blur(4px);
         }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.2; position: relative; z-index: 2; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.2; }
         .hero p {
             font-size: 1.1rem;
             color: #bcceff;
             max-width: 550px;
-            margin-bottom: 32px;
-            position: relative;
-            z-index: 2;
+            margin: 0 auto 32px auto;
         }
-        .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; position: relative; z-index: 2; }
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
         .btn {
             display: inline-flex;
             align-items: center;
@@ -148,7 +179,7 @@
             flex: 0.8;
             display: flex;
             gap: 1.2rem;
-            justify-content: flex-end;
+            justify-content: center;
             flex-wrap: wrap;
             position: relative;
             z-index: 2;
@@ -171,8 +202,7 @@
             color: transparent;
         }
 
-        /* Карусель аватарок */
-        .carousel-section { margin: 80px 0; text-align: center; }
+        .carousel-section { margin: 80px 0; text-align: center; position: relative; z-index: 15; }
         .carousel-container { display: flex; justify-content: center; align-items: center; }
         .carousel-slide {
             width: 280px;
@@ -187,15 +217,16 @@
         .carousel-slide:hover { transform: scale(1.1); border-color: #8597FF; box-shadow: 0 0 30px rgba(133,151,255,0.8); }
         .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.4s ease; }
 
-        /* Блок соцсетей с фоном 032.png */
+        /* Блок соцсетей с фоном 032.png — он перекрывает общий фон */
         .social-section {
             position: relative;
             border-radius: 48px;
             padding: 40px 30px;
             margin: 60px 0;
             overflow: hidden;
-            background: rgba(12, 14, 28, 0.4);
+            background: rgba(12, 14, 28, 0.5);
             backdrop-filter: blur(4px);
+            z-index: 15;
         }
         .social-section::before {
             content: "";
@@ -206,11 +237,11 @@
             bottom: -20%;
             background: url('032.png') no-repeat center center;
             background-size: cover;
-            transform: scale(1.3);
-            opacity: 0.35;
+            transform: scale(1.2);
+            opacity: 0.5;
             pointer-events: none;
             z-index: -1;
-            filter: brightness(0.8) contrast(1.1);
+            filter: brightness(0.9) contrast(1.05);
         }
         .social-grid {
             display: flex;
@@ -247,16 +278,17 @@
             padding: 40px 0 50px;
             border-top: 1px solid rgba(133,151,255,0.2);
             margin-top: 60px;
+            position: relative;
+            z-index: 15;
         }
         .footer-top { font-size: 1rem; font-weight: 500; margin-bottom: 12px; color: #d0ddff; }
         .footer-copy { font-size: 0.85rem; color: #8f9eff; }
 
         @media (max-width: 850px) {
-            .hero { flex-direction: column; text-align: center; }
-            .hero-buttons { justify-content: center; }
+            .hero { flex-direction: column; text-align: center; padding: 50px 0; }
+            .hero h1 { font-size: 2.5rem !important; }
             .hero-stats { justify-content: center; }
             .navbar { flex-direction: column; align-items: center; }
-            h1 { font-size: 2.5rem !important; }
             .carousel-slide { width: 200px; height: 200px; }
             .social-section { padding: 30px 20px; }
         }
@@ -309,7 +341,6 @@
         </div>
     </div>
 
-    <!-- Блок соцсетей с фоном 032.png -->
     <div class="social-section fade-up delay-2">
         <h2 style="font-size: 2rem; text-align: center;">🌐 Все соцсети</h2>
         <div class="social-grid">
