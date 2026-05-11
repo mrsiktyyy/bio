@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новости — MrSiktyyy</title>
+    <title>Народы Сибири — Ханты | MrSiktyyy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Все стили остаются как в предыдущей версии */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #05050A;
             font-family: 'Inter', sans-serif;
             color: #EFF1FF;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         body::before {
             content: "";
@@ -39,9 +38,9 @@
             z-index: 1000;
         }
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
             position: relative;
             z-index: 10;
         }
@@ -51,8 +50,9 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(133,151,255,0.2);
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             flex-wrap: wrap;
+            gap: 16px;
         }
         .logo { font-size: 1.6rem; font-weight: 800; }
         .neon-text {
@@ -68,291 +68,185 @@
             font-weight: 500;
             transition: 0.2s;
         }
-        .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
-        h1 { font-size: 2.2rem; margin-bottom: 10px; }
-        .sub {
-            color: #9aabff;
-            margin-bottom: 40px;
-            border-left: 3px solid #6970FF;
-            padding-left: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .post {
-            background: rgba(12, 14, 28, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 28px;
+        .nav-links a:hover { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
+        
+        /* Пост-статья */
+        .post-article {
+            background: rgba(12, 14, 28, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 36px;
             border: 1px solid rgba(105,112,255,0.35);
-            padding: 24px;
-            margin-bottom: 32px;
+            overflow: hidden;
+            margin: 20px 0 50px;
             transition: 0.2s;
         }
-        .post:hover {
+        .post-article:hover {
             border-color: #8597FF;
-            box-shadow: 0 10px 25px rgba(105,112,255,0.2);
+            box-shadow: 0 15px 35px rgba(105,112,255,0.15);
         }
         .post-header {
+            padding: 28px 32px 16px 32px;
+            border-bottom: 1px solid rgba(133,151,255,0.15);
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 14px;
         }
         .post-avatar {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            overflow: hidden;
             background: linear-gradient(135deg, #6970FF, #8597FF);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.6rem;
         }
-        .post-avatar img {
+        .post-author {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #eef3ff;
+        }
+        .post-date {
+            font-size: 0.75rem;
+            color: #8a9eff;
+            margin-top: 4px;
+        }
+        .post-image {
             width: 100%;
-            height: 100%;
+            max-height: 480px;
             object-fit: cover;
+            border-bottom: 1px solid rgba(133,151,255,0.2);
         }
-        .post-author { font-weight: 700; font-size: 1rem; }
-        .post-date { font-size: 0.75rem; color: #8f9eff; margin-top: 4px; }
+        .post-content {
+            padding: 28px 32px 36px 32px;
+        }
+        .post-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(125deg, #FFF, #b8c4ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
         .post-text {
-            font-size: 1rem;
-            margin: 16px 0;
-            white-space: pre-wrap;
-            word-break: break-word;
+            font-size: 1.02rem;
+            color: #dde3ff;
+            line-height: 1.65;
         }
-        .post-text a {
-            color: #8597FF;
-            text-decoration: none;
-            border-bottom: 1px dashed;
+        .post-text p {
+            margin-bottom: 18px;
         }
-        .post-images {
+        .highlight {
+            color: #b3a6ff;
+            font-weight: 500;
+            border-left: 3px solid #8597FF;
+            padding-left: 16px;
+            margin: 20px 0;
+            font-style: normal;
+        }
+        .footer-note {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(133,151,255,0.3);
+            font-size: 0.85rem;
+            color: #99a9ff;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 16px;
-        }
-        .post-images a {
-            flex: 1;
-            min-width: 120px;
-        }
-        .post-images img {
-            width: 100%;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s;
-        }
-        .post-images img:hover {
-            transform: scale(1.02);
-            border-color: #8597FF;
-        }
-        .loader, .error {
-            text-align: center;
-            padding: 40px;
-            color: #9aabff;
         }
         footer {
             text-align: center;
             padding: 30px 0 40px;
             border-top: 1px solid rgba(133,151,255,0.2);
-            margin-top: 50px;
+            margin-top: 20px;
             color: #8f9eff;
         }
-        @media (max-width: 650px) {
+        @media (max-width: 700px) {
+            .post-header, .post-content { padding: 20px; }
+            .post-title { font-size: 1.5rem; }
             .navbar { flex-direction: column; align-items: center; }
-            .post { padding: 18px; }
-            .post-images a { min-width: 100%; }
         }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 <div class="cursor-glow" id="cursorGlow"></div>
 <div class="container">
-    <nav class="navbar">
+    <nav class="navbar fade-up">
         <div class="logo"><span class="neon-text">MrSiktyyy</span> ✦</div>
         <div class="nav-links">
             <a href="index.html">Главная</a>
             <a href="news.html" class="active">Новости</a>
-            <a href="index.html#social">Контакты</a>
+            <a href="server.html">Minecraft server</a>
             <a href="https://t.me/unsk1llteam" target="_blank">UnSkill Team</a>
         </div>
     </nav>
 
-    <h1>📰 Лента новостей</h1>
-    <div class="sub" id="updateStatus">
-        <i class="fas fa-sync-alt"></i> Это последние посты из тгк UnSkill Team.
-    </div>
-
-    <div id="postsContainer">
-        <div class="loader">Загрузка последних постов...</div>
+    <!-- Один пост = статья о хантах -->
+    <div class="post-article fade-up">
+        <div class="post-header">
+            <div class="post-avatar">📘</div>
+            <div>
+                <div class="post-author">MrSiktyyy</div>
+                <div class="post-date"><i class="far fa-calendar-alt"></i> 12 мая 2026 · Домашняя работа по географии</div>
+            </div>
+        </div>
+        
+        <!-- Фото народа (020.png лежит в корне репозитория) -->
+        <img class="post-image" id="ethnicPhoto" src="020.png" alt="Ханты – народ Сибири" onerror="this.src='https://placehold.co/1000x500/1e223a/8597FF?text=Фото+народа+Ханты'">
+        
+        <div class="post-content">
+            <h1 class="post-title">Ханты — хранители тайги и рек</h1>
+            <div class="post-text">
+                <p><strong>Ханты</strong> – это один из коренных народов Западной Сибири. Они живут в основном в Ханты-Мансийском и Ямало-Ненецком округах, а ещё немного – на севере Томской области. Их земли — это бескрайняя тайга, полноводные реки и холодные болота, где природа остаётся почти нетронутой.</p>
+                
+                <p>Если открыть карту, то ханты расселились широко: от реки Демьянки и Васюгана на юге до самой Обской губы на севере. Раньше, в древности, их предки жили на ещё большей территории — от низовий Оби до Барабинских степей и от Енисея до самого Зауралья. В бассейнах рек Северная Сосьва, Ляпин, Пелым и Конда до сих пор можно найти старинные стойбища.</p>
+                
+                <div class="highlight">
+                    <i class="fas fa-feather-alt" style="margin-right: 8px; color:#8597FF;"></i> 
+                    Интересно, что учёные считают: культура хантов сложилась из двух ветвей. Местные таёжные охотники и рыболовы встретились с кочевыми уграми, которые пришли с южных степей примерно в I тысячелетии до нашей эры. Так и родился народ, сумевший сохранить свой язык и традиции.
+                </div>
+                
+                <p>По мнению исследователей, в конце II – начале I тысячелетия до нашей эры произошёл распад древней угорской общности. Тогда и начали формироваться предки современных хантов, манси и венгров. Каждая группа пошла своим путём, но ханты остались в сибирской тайге, приспособились к суровому климату и научились жить в гармонии с природой.</p>
+                
+                <p>Сегодня ханты – это не только прошлое. Они сохраняют оленеводство, рыболовство, резьбу по кости и дереву. Их шаманские песни, орнаменты и легенды до сих пор передаются из поколения в поколение. Многие современные ханты живут в городах, но при этом помнят свои корни и возвращаются в стойбища, чтобы отпраздновать медвежий праздник или покормить духов реки.</p>
+                
+                <p>Эта работа — небольшая попытка рассказать о народе, который тысячелетиями остаётся частью Сибири. Надеюсь, тебе было интересно узнать о хантах так же, как и мне.</p>
+            </div>
+            <div class="footer-note">
+                <span><i class="fas fa-map-marker-alt"></i> Западная Сибирь, бассейн Оби</span>
+                <span><i class="fas fa-users"></i> численность ~31 тыс. человек</span>
+                <span><i class="fas fa-tree"></i> традиции: оленеводство, рыболовство</span>
+            </div>
+        </div>
     </div>
 
     <footer>
         <p><i class="fab fa-telegram"></i> © 2026 — MrSiktyyy · Все права защищены.</p>
+        <p style="font-size: 0.75rem; margin-top: 8px;">Работа по географии: народы Западной Сибири</p>
     </footer>
 </div>
 
 <script>
-    // Аватар автора из корня репозитория
-    const AUTHOR_AVATAR = "ava3.png";
-    const CHANNEL_NAME = "unsk1llteam";
-    const POSTS_LIMIT = 10;
-
-    // Список альтернативных RSS-источников (RSSHub инстансы) – если один не работает, пробуем следующий
-    const RSS_SOURCES = [
-        `https://rsshub.app/telegram/channel/${CHANNEL_NAME}`,
-        `https://rsshub.bili.xyz/telegram/channel/${CHANNEL_NAME}`,
-        `https://rsshub.fly.dev/telegram/channel/${CHANNEL_NAME}`,
-        `https://tg.i-c-a.su/rss/channel/${CHANNEL_NAME}`  // альтернативный сервис (не RSSHub, но работает)
-    ];
-
-    // Список прокси для обхода CORS
-    const PROXIES = [
-        (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-        (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-        (url) => `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`
-    ];
-
-    // Эффект свечения за курсором
+    // Свечение за курсором
     const glow = document.getElementById('cursorGlow');
     let mx = 0, my = 0, gx = 0, gy = 0;
     document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
-    function anim() {
+    function animateGlow() {
         gx += (mx - gx) * 0.12;
         gy += (my - gy) * 0.12;
         glow.style.left = gx + 'px';
         glow.style.top = gy + 'px';
-        requestAnimationFrame(anim);
+        requestAnimationFrame(animateGlow);
     }
-    anim();
-
-    async function fetchWithTimeout(url, timeout = 8000) {
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), timeout);
-        try {
-            const response = await fetch(url, { signal: controller.signal });
-            clearTimeout(id);
-            return response;
-        } catch (err) {
-            clearTimeout(id);
-            throw err;
-        }
-    }
-
-    async function tryFetchRSS() {
-        for (let rssUrl of RSS_SOURCES) {
-            for (let proxyBuilder of PROXIES) {
-                const proxyUrl = proxyBuilder(rssUrl);
-                try {
-                    console.log(`Пробуем: ${proxyUrl}`);
-                    const response = await fetchWithTimeout(proxyUrl, 10000);
-                    if (!response.ok) continue;
-                    const text = await response.text();
-                    // Проверяем, похоже ли на XML
-                    if (text.trim().startsWith('<?xml') || text.includes('<rss') || text.includes('<feed')) {
-                        // Пробуем распарсить
-                        const parser = new DOMParser();
-                        const xmlDoc = parser.parseFromString(text, "text/xml");
-                        const parseError = xmlDoc.querySelector("parsererror");
-                        if (!parseError && xmlDoc.querySelectorAll("item").length > 0) {
-                            console.log(`Успех с источником: ${rssUrl} через прокси ${proxyBuilder}`);
-                            return xmlDoc;
-                        }
-                    }
-                } catch (e) {
-                    console.warn(`Ошибка при запросе ${proxyUrl}:`, e);
-                }
-            }
-        }
-        throw new Error("Не удалось получить RSS ни с одного источника");
-    }
-
-    async function fetchTelegramPosts() {
-        const container = document.getElementById('postsContainer');
-        const statusDiv = document.getElementById('updateStatus');
-        
-        try {
-            container.innerHTML = '<div class="loader"><i class="fas fa-spinner fa-pulse"></i> Загрузка последних постов...</div>';
-            
-            const xmlDoc = await tryFetchRSS();
-            const items = xmlDoc.querySelectorAll("item");
-            if (items.length === 0) throw new Error("Посты не найдены");
-            
-            const posts = Array.from(items).slice(0, POSTS_LIMIT).map(item => {
-                let title = item.querySelector("title")?.textContent || "";
-                let description = item.querySelector("description")?.textContent || "";
-                description = description.replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]*>/g, "");
-                let pubDate = item.querySelector("pubDate")?.textContent || "";
-                const date = new Date(pubDate);
-                const formattedDate = isNaN(date.getTime()) ? "Дата неизвестна" : date.toLocaleString('ru-RU');
-                let link = item.querySelector("link")?.textContent || "";
-                // Извлечение изображений
-                const imgRegex = /(https?:\/\/[^\s]+\.(jpg|jpeg|png|webp))/gi;
-                const images = [];
-                let match;
-                const rawDesc = item.querySelector("description")?.textContent || "";
-                while ((match = imgRegex.exec(rawDesc)) !== null) {
-                    if (!images.includes(match[0])) images.push(match[0]);
-                }
-                const enclosure = item.querySelector("enclosure");
-                if (enclosure && enclosure.getAttribute("url")) {
-                    const encUrl = enclosure.getAttribute("url");
-                    if (!images.includes(encUrl)) images.unshift(encUrl);
-                }
-                return {
-                    title,
-                    text: description || title,
-                    date: formattedDate,
-                    link,
-                    images: images.slice(0, 3)
-                };
-            });
-            
-            renderPosts(posts);
-            statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Это последние посты из тгк UnSkill Team. (обновлено: ${new Date().toLocaleString('ru-RU')})`;
-        } catch (error) {
-            console.error(error);
-            container.innerHTML = `<div class="error">
-                <i class="fab fa-telegram"></i> Не удалось загрузить посты из Telegram.<br>
-                Попробуйте позже или проверьте, что канал <strong>@${CHANNEL_NAME}</strong> публичный.<br>
-                <span style="font-size:0.8rem;">Детали: ${error.message}</span>
-            </div>`;
-            statusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ошибка соединения. Возможно, временные проблемы RSS-сервиса.';
-        }
-    }
-
-    function renderPosts(posts) {
-        const container = document.getElementById('postsContainer');
-        container.innerHTML = '';
-        posts.forEach(post => {
-            const postDiv = document.createElement('div');
-            postDiv.className = 'post';
-            let postText = post.text;
-            postText = postText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-            let imagesHtml = '';
-            if (post.images && post.images.length) {
-                imagesHtml = '<div class="post-images">' + post.images.map(img => `<a href="${img}" target="_blank"><img src="${img}" alt="Изображение" loading="lazy"></a>`).join('') + '</div>';
-            }
-            postDiv.innerHTML = `
-                <div class="post-header">
-                    <div class="post-avatar">
-                        <img src="${AUTHOR_AVATAR}" alt="Аватар автора" onerror="this.src='https://placehold.co/48x48/6970FF/white?text=📝'">
-                    </div>
-                    <div>
-                        <div class="post-author">MrSiktyyy</div>
-                        <div class="post-date"><i class="far fa-clock"></i> ${post.date}</div>
-                    </div>
-                </div>
-                <div class="post-text">${postText.replace(/\n/g, '<br>')}</div>
-                ${imagesHtml}
-                ${post.link ? `<div style="margin-top: 12px;"><a href="${post.link}" target="_blank" style="color: #8597FF; font-size: 0.8rem; text-decoration: none;"><i class="fab fa-telegram"></i> Смотреть в Telegram →</a></div>` : ''}
-            `;
-            container.appendChild(postDiv);
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', fetchTelegramPosts);
+    animateGlow();
 </script>
 </body>
 </html>
