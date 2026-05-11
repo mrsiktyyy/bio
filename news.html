@@ -70,7 +70,6 @@
         }
         .nav-links a:hover { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
         
-        /* Пост-статья */
         .post-article {
             background: rgba(12, 14, 28, 0.6);
             backdrop-filter: blur(10px);
@@ -145,17 +144,6 @@
             margin: 20px 0;
             font-style: normal;
         }
-        .footer-note {
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px dashed rgba(133,151,255,0.3);
-            font-size: 0.85rem;
-            color: #99a9ff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
         footer {
             text-align: center;
             padding: 30px 0 40px;
@@ -189,7 +177,6 @@
         </div>
     </nav>
 
-    <!-- Один пост = статья о хантах -->
     <div class="post-article fade-up">
         <div class="post-header">
             <div class="post-avatar">📘</div>
@@ -199,7 +186,6 @@
             </div>
         </div>
         
-        <!-- Фото народа (020.png лежит в корне репозитория) -->
         <img class="post-image" id="ethnicPhoto" src="020.png" alt="Ханты – народ Сибири" onerror="this.src='https://placehold.co/1000x500/1e223a/8597FF?text=Фото+народа+Ханты'">
         
         <div class="post-content">
@@ -220,22 +206,15 @@
                 
                 <p>Эта работа — небольшая попытка рассказать о народе, который тысячелетиями остаётся частью Сибири. Надеюсь, тебе было интересно узнать о хантах так же, как и мне.</p>
             </div>
-            <div class="footer-note">
-                <span><i class="fas fa-map-marker-alt"></i> Западная Сибирь, бассейн Оби</span>
-                <span><i class="fas fa-users"></i> численность ~31 тыс. человек</span>
-                <span><i class="fas fa-tree"></i> традиции: оленеводство, рыболовство</span>
-            </div>
         </div>
     </div>
 
     <footer>
         <p><i class="fab fa-telegram"></i> © 2026 — MrSiktyyy · Все права защищены.</p>
-        <p style="font-size: 0.75rem; margin-top: 8px;">Работа по географии: народы Западной Сибири</p>
     </footer>
 </div>
 
 <script>
-    // Свечение за курсором
     const glow = document.getElementById('cursorGlow');
     let mx = 0, my = 0, gx = 0, gy = 0;
     document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
