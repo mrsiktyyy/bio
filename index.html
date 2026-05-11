@@ -17,8 +17,9 @@
             line-height: 1.5;
             overflow-x: hidden;
             position: relative;
+            min-height: 100vh;
         }
-        /* Общий фон для всего сайта — 11.png (прозрачный слой) */
+        /* Общий фон для всего сайта — 11.png (фиксированный, перевёрнутый вертикально) */
         body::after {
             content: "";
             position: fixed;
@@ -31,6 +32,8 @@
             opacity: 0.25;
             pointer-events: none;
             z-index: 0;
+            transform: scaleY(-1);
+            transform-origin: center;
         }
         /* Сияние по краям поверх всего */
         body::before {
@@ -92,7 +95,7 @@
         }
         .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
 
-        /* Герой с фоном 001.png — шире, текст и кнопки по центру */
+        /* Герой с фоном 001.png — без масштабирования, видно весь рисунок */
         .hero {
             padding: 80px 0 60px;
             display: flex;
@@ -110,17 +113,16 @@
         .hero::before {
             content: "";
             position: absolute;
-            top: -20%;
-            left: -20%;
-            right: -20%;
-            bottom: -20%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url('001.png') no-repeat center center;
-            background-size: cover;
-            transform: scale(1.4);
+            background-size: contain;
             opacity: 0.4;
             pointer-events: none;
             z-index: -1;
-            filter: brightness(0.8) blur(1px);
+            filter: brightness(0.8);
         }
         .hero-content {
             flex: 1;
@@ -217,7 +219,7 @@
         .carousel-slide:hover { transform: scale(1.1); border-color: #8597FF; box-shadow: 0 0 30px rgba(133,151,255,0.8); }
         .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.4s ease; }
 
-        /* Блок соцсетей с фоном 032.png — он перекрывает общий фон */
+        /* Блок соцсетей с фоном 032.png — перекрывает общий фон */
         .social-section {
             position: relative;
             border-radius: 48px;
@@ -231,13 +233,12 @@
         .social-section::before {
             content: "";
             position: absolute;
-            top: -20%;
-            left: -20%;
-            right: -20%;
-            bottom: -20%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url('032.png') no-repeat center center;
             background-size: cover;
-            transform: scale(1.2);
             opacity: 0.5;
             pointer-events: none;
             z-index: -1;
