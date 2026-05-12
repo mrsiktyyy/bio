@@ -45,6 +45,33 @@
             transform: scaleY(-1);
             transform-origin: center;
         }
+        .light-source-1, .light-source-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+            filter: blur(60px);
+            animation: floatLight 20s infinite alternate ease-in-out;
+        }
+        .light-source-1 {
+            background: radial-gradient(circle, rgba(105,112,255,0.4), rgba(133,151,255,0));
+            top: 10%;
+            left: -10%;
+        }
+        .light-source-2 {
+            background: radial-gradient(circle, rgba(133,151,255,0.35), rgba(105,112,255,0));
+            bottom: 5%;
+            right: -10%;
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+        @keyframes floatLight {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+            100% { transform: translate(10%, 15%) scale(1.2); opacity: 0.4; }
+        }
         .cursor-glow {
             position: fixed;
             width: 400px;
@@ -73,7 +100,16 @@
             flex-wrap: wrap;
             gap: 16px;
         }
-        .logo { font-size: 1.9rem; font-weight: 800; }
+        .logo {
+            font-size: 1.9rem;
+            font-weight: 800;
+            font-style: italic;
+            animation: subtleGlow 3s infinite alternate;
+        }
+        @keyframes subtleGlow {
+            0% { text-shadow: 0 0 0px rgba(133,151,255,0); opacity: 0.9; }
+            100% { text-shadow: 0 0 5px rgba(133,151,255,0.3); opacity: 1; }
+        }
         .neon-text {
             background: linear-gradient(135deg, #6970FF, #8597FF);
             background-clip: text;
@@ -85,32 +121,15 @@
             text-decoration: none;
             color: #ccd6ff;
             font-weight: 500;
-            transition: 0.2s;
+            transition: all 0.3s ease;
         }
-        .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
+        .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; transform: scale(1.05); }
 
-        .page-header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-        .page-header h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #FFF, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .page-header p {
-            color: #9aabff;
-            margin-top: 12px;
-        }
+        .page-header { text-align: center; margin-bottom: 48px; }
+        .page-header h1 { font-size: 2.5rem; background: linear-gradient(135deg, #FFF, #b8c4ff); background-clip: text; -webkit-background-clip: text; color: transparent; }
+        .page-header p { color: #9aabff; margin-top: 12px; }
 
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 32px;
-            margin: 40px 0;
-        }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px; margin: 40px 0; }
         .member-card {
             background: rgba(12, 14, 28, 0.6);
             backdrop-filter: blur(10px);
@@ -118,82 +137,28 @@
             border: 1px solid rgba(105,112,255,0.35);
             padding: 28px 20px;
             text-align: center;
-            transition: 0.25s;
+            transition: all 0.3s cubic-bezier(0.2,0.9,0.4,1.1);
         }
         .member-card:hover {
             border-color: #8597FF;
-            transform: translateY(-6px);
-            box-shadow: 0 15px 30px rgba(105,112,255,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(105,112,255,0.2);
         }
-        .member-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6970FF, #8597FF);
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .member-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .member-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(125deg, #FFF, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 8px;
-        }
-        .member-role {
-            display: inline-block;
-            background: rgba(105,112,255,0.2);
-            padding: 4px 16px;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #8597FF;
-            margin-bottom: 16px;
-        }
-        .member-bio {
-            font-size: 0.9rem;
-            color: #bdc7ff;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        .member-social {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-        }
+        .member-avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #6970FF, #8597FF); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; transition: transform 0.3s; }
+        .member-card:hover .member-avatar { transform: scale(1.05); }
+        .member-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .member-name { font-size: 1.5rem; font-weight: 700; background: linear-gradient(125deg, #FFF, #b8c4ff); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 8px; transition: 0.2s; }
+        .member-role { display: inline-block; background: rgba(105,112,255,0.2); padding: 4px 16px; border-radius: 40px; font-size: 0.75rem; font-weight: 600; color: #8597FF; margin-bottom: 16px; }
+        .member-bio { font-size: 0.9rem; color: #bdc7ff; line-height: 1.5; margin-bottom: 20px; }
+        .member-social { display: flex; justify-content: center; gap: 16px; }
         .member-social a {
             color: #8a9eff;
             font-size: 1.2rem;
-            transition: 0.2s;
+            transition: all 0.2s;
         }
-        .member-social a:hover {
-            color: #8597FF;
-            transform: scale(1.1);
-        }
-        .social-text-link {
-            display: inline-block;
-            background: rgba(105,112,255,0.2);
-            padding: 6px 18px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            color: #8597FF;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-        .social-text-link:hover {
-            background: rgba(105,112,255,0.4);
-            color: white;
-        }
+        .member-social a:hover { color: #8597FF; transform: scale(1.2); }
+        .social-text-link { display: inline-block; background: rgba(105,112,255,0.2); padding: 6px 18px; border-radius: 40px; font-size: 0.85rem; color: #8597FF; text-decoration: none; transition: all 0.3s; }
+        .social-text-link:hover { background: rgba(105,112,255,0.4); color: white; transform: scale(1.05); }
 
         .quote-block {
             background: rgba(30,35,70,0.4);
@@ -204,27 +169,30 @@
             border-left: 4px solid #8597FF;
             font-style: italic;
             color: #ccd9ff;
+            transition: all 0.3s;
         }
+        .quote-block:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
-        footer {
-            text-align: center;
-            padding: 30px 0 40px;
-            border-top: 1px solid rgba(133,151,255,0.2);
-            margin-top: 40px;
-            color: #8f9eff;
-        }
+        footer { text-align: center; padding: 30px 0 40px; border-top: 1px solid rgba(133,151,255,0.2); margin-top: 40px; color: #8f9eff; }
+        @media (max-width: 700px) { .navbar { flex-direction: column; align-items: center; } .team-grid { gap: 20px; } .member-card { padding: 20px; } }
 
-        @media (max-width: 700px) {
-            .navbar { flex-direction: column; align-items: center; }
-            .team-grid { gap: 20px; }
-            .member-card { padding: 20px; }
+        /* Глобальная анимация появления за 2 секунды */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeUp 2s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
     </style>
 </head>
 <body>
+<div class="light-source-1"></div>
+<div class="light-source-2"></div>
 <div class="cursor-glow" id="cursorGlow"></div>
 <div class="container">
-    <nav class="navbar">
+    <nav class="navbar fade-up">
         <div class="logo"><span class="neon-text">MrSiktyyy</span> ✦</div>
         <div class="nav-links">
             <a href="/">Главная</a>
@@ -234,30 +202,23 @@
         </div>
     </nav>
 
-    <div class="page-header">
+    <div class="page-header fade-up">
         <h1>⚡ UnSkill Team</h1>
         <p>Участники клана UnSkill Team. Разработчики.</p>
     </div>
 
-    <div class="team-grid">
+    <div class="team-grid fade-up delay-1">
         <!-- MrSiktyyy -->
         <div class="member-card">
-            <div class="member-avatar">
-                <img src="posts/ava3.png" alt="MrSiktyyy" onerror="this.parentElement.innerHTML='👑'">
-            </div>
+            <div class="member-avatar"><img src="posts/ava3.png" alt="MrSiktyyy" onerror="this.parentElement.innerHTML='👑'"></div>
             <div class="member-name">MrSiktyyy</div>
             <div class="member-role">Основатель · Веб-разработчик · Стример</div>
             <div class="member-bio">Создатель сайта, сервера и всего этого движения.</div>
-            <div class="member-social">
-                <a href="/" class="social-text-link"><i class="fas fa-globe"></i> Соц. сети</a>
-            </div>
+            <div class="member-social"><a href="/" class="social-text-link"><i class="fas fa-globe"></i> Соц. сети</a></div>
         </div>
-
         <!-- zeyrix -->
         <div class="member-card">
-            <div class="member-avatar">
-                <img src="posts/ava4.png" alt="zeyrix" onerror="this.parentElement.innerHTML='🤝'">
-            </div>
+            <div class="member-avatar"><img src="posts/ava4.png" alt="zeyrix" onerror="this.parentElement.innerHTML='🤝'"></div>
             <div class="member-name">zeyrix</div>
             <div class="member-role">Главный помощник · Веб-разработчик · Стример</div>
             <div class="member-bio">Помогает в разработке сайта. Страница Майнкрафт сервера - его работа.</div>
@@ -267,12 +228,9 @@
                 <a href="https://www.twitch.tv/zeyrix1515" target="_blank"><i class="fab fa-twitch"></i></a>
             </div>
         </div>
-
         <!-- Griha228 -->
         <div class="member-card">
-            <div class="member-avatar">
-                <img src="posts/ava5.png" alt="Griha228" onerror="this.parentElement.innerHTML='👮'">
-            </div>
+            <div class="member-avatar"><img src="posts/ava5.png" alt="Griha228" onerror="this.parentElement.innerHTML='👮'"></div>
             <div class="member-name">Griha228</div>
             <div class="member-role">Тестировщик · Строитель Minecraft сервера</div>
             <div class="member-bio">В основном следит за поведением игроков на сервере. Можно называть дядей полицейским.</div>
@@ -282,29 +240,22 @@
                 <a href="https://discord.gg/NAHBZFxQMR" target="_blank"><i class="fab fa-discord"></i></a>
             </div>
         </div>
-
         <!-- Kelliya -->
         <div class="member-card">
-            <div class="member-avatar">
-                <img src="posts/ava6.png" alt="Kelliya" onerror="this.parentElement.innerHTML='🔧'">
-            </div>
+            <div class="member-avatar"><img src="posts/ava6.png" alt="Kelliya" onerror="this.parentElement.innerHTML='🔧'"></div>
             <div class="member-name">Kelliya</div>
             <div class="member-role">Гл. Админ Discord-сервера · Тестировщик</div>
             <div class="member-bio">Следит за порядком на нашем Discord-сервере. Кстати, там больше всего активности и общения с разработчиками.</div>
-            <div class="member-social">
-            <a href="https://discord.gg/NAHBZFxQMR" target="_blank"><i class="fab fa-discord"></i></a>
-        </div>
-                <!-- Ссылок нет, оставляем пустым -->
-            </div>
+            <div class="member-social"><a href="https://discord.gg/NAHBZFxQMR" target="_blank"><i class="fab fa-discord"></i></a></div>
         </div>
     </div>
 
-    <div class="quote-block">
+    <div class="quote-block fade-up delay-2">
         <i class="fas fa-quote-left" style="margin-right: 10px; color:#8597FF;"></i>
         Мы — команда энтузиастов, которые создают уютное место для игры и творчества. Каждый участник ценен, и мы всегда рады новым идеям!
     </div>
 
-    <footer>
+    <footer class="fade-up">
         <p><i class="fab fa-telegram"></i> © 2026 — UnSkill Team · Все права защищены.</p>
         <p style="font-size: 0.75rem; margin-top: 8px;">Хочешь присоединиться? Напиши в Telegram @MrSikty</p>
     </footer>

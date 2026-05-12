@@ -20,7 +20,7 @@
             position: relative;
             min-height: 100vh;
         }
-        /* Общий фон для всего сайта — 11.png (фиксированный, перевёрнутый вертикально) */
+        /* Общий фон */
         body::after {
             content: "";
             position: fixed;
@@ -36,7 +36,7 @@
             transform: scaleY(-1);
             transform-origin: center;
         }
-        /* Сияние по краям поверх всего */
+        /* Сияние по краям */
         body::before {
             content: "";
             position: fixed;
@@ -48,6 +48,34 @@
             z-index: 999;
             box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105,112,255,0.2);
             background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(0,0,0,0.5) 100%);
+        }
+        /* Дополнительные источники света */
+        .light-source-1, .light-source-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+            filter: blur(60px);
+            animation: floatLight 20s infinite alternate ease-in-out;
+        }
+        .light-source-1 {
+            background: radial-gradient(circle, rgba(105,112,255,0.4), rgba(133,151,255,0));
+            top: 10%;
+            left: -10%;
+        }
+        .light-source-2 {
+            background: radial-gradient(circle, rgba(133,151,255,0.35), rgba(105,112,255,0));
+            bottom: 5%;
+            right: -10%;
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+        @keyframes floatLight {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+            100% { transform: translate(10%, 15%) scale(1.2); opacity: 0.4; }
         }
         .cursor-glow {
             position: fixed;
@@ -86,17 +114,25 @@
             position: relative;
             z-index: 20;
         }
-        .logo { font-size: 1.9rem; font-weight: 800; }
+        .logo {
+            font-size: 1.9rem;
+            font-weight: 800;
+            font-style: italic;
+            animation: subtleGlow 3s infinite alternate;
+        }
+        @keyframes subtleGlow {
+            0% { text-shadow: 0 0 0px rgba(133,151,255,0); opacity: 0.9; }
+            100% { text-shadow: 0 0 5px rgba(133,151,255,0.3); opacity: 1; }
+        }
         .nav-links { display: flex; gap: 2rem; }
         .nav-links a {
             text-decoration: none;
             color: #ccd6ff;
             font-weight: 500;
-            transition: 0.2s;
+            transition: all 0.3s ease;
         }
-        .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
+        .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; transform: scale(1.05); }
 
-        /* Герой с фоном 001.png — без масштабирования, видно весь рисунок */
         .hero {
             padding: 80px 0 60px;
             display: flex;
@@ -125,14 +161,7 @@
             z-index: -1;
             filter: brightness(0.8);
         }
-        .hero-content {
-            flex: 1;
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .hero-content { flex: 1; position: relative; z-index: 2; text-align: center; max-width: 600px; margin: 0 auto; }
         .hero-badge {
             background: rgba(105,112,255,0.2);
             display: inline-block;
@@ -144,18 +173,8 @@
             backdrop-filter: blur(4px);
         }
         .hero h1 { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.2; }
-        .hero p {
-            font-size: 1.1rem;
-            color: #bcceff;
-            max-width: 550px;
-            margin: 0 auto 32px auto;
-        }
-        .hero-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-        }
+        .hero p { font-size: 1.1rem; color: #bcceff; max-width: 550px; margin: 0 auto 32px auto; }
+        .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
         .btn {
             display: inline-flex;
             align-items: center;
@@ -167,26 +186,14 @@
             border-radius: 60px;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.2,0.9,0.4,1.1);
             color: #fff;
             text-decoration: none;
             box-shadow: 0 0 8px rgba(105,112,255,0.2);
         }
         .btn-primary { background: linear-gradient(105deg, #6970FF, #8597FF); border: none; box-shadow: 0 4px 15px rgba(105,112,255,0.4); }
-        .btn:hover {
-            background: linear-gradient(135deg, rgba(105,112,255,0.8), rgba(133,151,255,0.7));
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px -8px rgba(105,112,255,0.5);
-        }
-        .hero-stats {
-            flex: 0.8;
-            display: flex;
-            gap: 1.2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
-        }
+        .btn:hover { background: linear-gradient(135deg, rgba(105,112,255,0.8), rgba(133,151,255,0.7)); transform: translateY(-3px); box-shadow: 0 12px 25px -8px rgba(105,112,255,0.5); }
+        .hero-stats { flex: 0.8; display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2; }
         .stat-item {
             background: rgba(0,0,0,0.4);
             backdrop-filter: blur(6px);
@@ -195,32 +202,21 @@
             text-align: center;
             min-width: 120px;
             border: 1px solid rgba(105,112,255,0.4);
+            transition: all 0.3s ease;
         }
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg,#fff,#8597FF);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+        .stat-item:hover { transform: translateY(-5px); border-color: #8597FF; box-shadow: 0 0 15px rgba(105,112,255,0.3); }
+        .stat-number { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg,#fff,#8597FF); background-clip: text; -webkit-background-clip: text; color: transparent; }
 
         .carousel-section { margin: 80px 0; text-align: center; position: relative; z-index: 15; }
-        .carousel-container { display: flex; justify-content: center; align-items: center; }
         .carousel-slide {
-            width: 280px;
-            height: 280px;
-            border-radius: 32px;
-            overflow: hidden;
-            border: 3px solid rgba(105,112,255,0.7);
-            box-shadow: 0 0 20px rgba(105,112,255,0.5);
-            transition: transform 0.3s ease, border 0.2s;
+            width: 280px; height: 280px; border-radius: 32px; overflow: hidden;
+            border: 3px solid rgba(105,112,255,0.7); box-shadow: 0 0 20px rgba(105,112,255,0.5);
+            transition: all 0.4s cubic-bezier(0.2,0.9,0.4,1.1);
             cursor: pointer;
         }
         .carousel-slide:hover { transform: scale(1.1); border-color: #8597FF; box-shadow: 0 0 30px rgba(133,151,255,0.8); }
         .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.4s ease; }
 
-        /* Блок соцсетей с фоном 032.png — перекрывает общий фон */
         .social-section {
             position: relative;
             border-radius: 48px;
@@ -234,10 +230,7 @@
         .social-section::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: url('032.png') no-repeat center center;
             background-size: cover;
             opacity: 0.5;
@@ -245,15 +238,7 @@
             z-index: -1;
             filter: brightness(0.9) contrast(1.05);
         }
-        .social-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
-            position: relative;
-            z-index: 2;
-        }
+        .social-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 2rem 0; position: relative; z-index: 2; }
         .social-card {
             background: rgba(15,17,32,0.7);
             backdrop-filter: blur(6px);
@@ -262,42 +247,31 @@
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            transition: 0.2s;
+            transition: all 0.3s ease;
             border: 1px solid rgba(105,112,255,0.3);
             text-decoration: none;
             color: #fff;
             font-weight: 500;
         }
-        .social-card i { font-size: 1.6rem; color: #8597FF; }
-        .social-card:hover {
-            background: linear-gradient(135deg, #6970FF30, #8597FF30);
-            border-color: #8597FF;
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(105,112,255,0.4);
-        }
-        footer {
-            text-align: center;
-            padding: 40px 0 50px;
-            border-top: 1px solid rgba(133,151,255,0.2);
-            margin-top: 60px;
-            position: relative;
-            z-index: 15;
-        }
+        .social-card i { font-size: 1.6rem; color: #8597FF; transition: transform 0.2s; }
+        .social-card:hover { background: linear-gradient(135deg, #6970FF30, #8597FF30); border-color: #8597FF; transform: scale(1.02); box-shadow: 0 0 15px rgba(105,112,255,0.4); }
+        .social-card:hover i { transform: rotate(5deg); }
+
+        footer { text-align: center; padding: 40px 0 50px; border-top: 1px solid rgba(133,151,255,0.2); margin-top: 60px; position: relative; z-index: 15; }
         .footer-top { font-size: 1rem; font-weight: 500; margin-bottom: 12px; color: #d0ddff; }
         .footer-copy { font-size: 0.85rem; color: #8f9eff; }
 
         @media (max-width: 850px) {
             .hero { flex-direction: column; text-align: center; padding: 50px 0; }
             .hero h1 { font-size: 2.5rem !important; }
-            .hero-stats { justify-content: center; }
             .navbar { flex-direction: column; align-items: center; }
             .carousel-slide { width: 200px; height: 200px; }
-            .social-section { padding: 30px 20px; }
         }
+        /* Глобальная анимация появления за 2 секунды */
         .fade-up {
             opacity: 0;
             transform: translateY(25px);
-            animation: fadeUp 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+            animation: fadeUp 2s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         .delay-1 { animation-delay: 0.1s; }
@@ -305,6 +279,8 @@
     </style>
 </head>
 <body>
+<div class="light-source-1"></div>
+<div class="light-source-2"></div>
 <div class="cursor-glow" id="cursorGlow"></div>
 <div class="container">
     <nav class="navbar fade-up">
@@ -331,7 +307,7 @@
         <div class="hero-stats fade-up delay-1">
             <div class="stat-item"><div class="stat-number">🔥 СВЕЖИЕ</div><div>новости</div></div>
             <div class="stat-item">
-            <div class="stat-number" style="font-size: 1.6rem;">Акбашев Иван</div>
+                <div class="stat-number" style="font-size: 1.6rem;">Акбашев Иван</div>
                 <div><span id="ageValue">--</span> лет</div>
             </div>
             <div class="stat-item"><div class="stat-number">500+</div><div>подписчиков</div></div>
@@ -404,25 +380,7 @@
     setInterval(changeAvatar, 5000);
     imgElement.style.opacity = '1';
 
-    const fadeElements = document.querySelectorAll('.fade-up');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animationPlayState = 'running';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    fadeElements.forEach(el => {
-        el.style.animationPlayState = 'paused';
-        observer.observe(el);
-    });
-    fadeElements.forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight - 50) {
-            el.style.animationPlayState = 'running';
-            observer.unobserve(el);
-        }
-    });
+    // Все элементы уже имеют fade-up, они появятся автоматически
 </script>
 </body>
 </html>
