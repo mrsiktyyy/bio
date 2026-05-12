@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>UnSkill Team — команда разработчиков и геймеров</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #05050A;
+            font-family: 'Inter', sans-serif;
+            color: #EFF1FF;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        body::-webkit-scrollbar { width: 0px; background: transparent; }
+        body { scrollbar-width: none; -ms-overflow-style: none; }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105,112,255,0.2);
+        }
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(105,112,255,0.35), rgba(133,151,255,0.12) 45%, transparent 75%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            filter: blur(28px);
+            z-index: 1000;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+        .navbar {
+            padding: 25px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(133,151,255,0.2);
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo { font-size: 1.6rem; font-weight: 800; }
+        .neon-text {
+            background: linear-gradient(135deg, #6970FF, #8597FF);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a {
+            text-decoration: none;
+            color: #ccd6ff;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #8597FF; text-shadow: 0 0 6px #6970FF; }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #FFF, #b8c4ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .page-header p {
+            color: #9aabff;
+            margin-top: 12px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 40px 0;
+        }
+        .member-card {
+            background: rgba(12, 14, 28, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            border: 1px solid rgba(105,112,255,0.35);
+            padding: 28px 20px;
+            text-align: center;
+            transition: 0.25s;
+        }
+        .member-card:hover {
+            border-color: #8597FF;
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(105,112,255,0.2);
+        }
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6970FF, #8597FF);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .member-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(125deg, #FFF, #b8c4ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+        .member-role {
+            display: inline-block;
+            background: rgba(105,112,255,0.2);
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #8597FF;
+            margin-bottom: 16px;
+        }
+        .member-bio {
+            font-size: 0.9rem;
+            color: #bdc7ff;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        .member-social a {
+            color: #8a9eff;
+            font-size: 1.2rem;
+            transition: 0.2s;
+        }
+        .member-social a:hover {
+            color: #8597FF;
+            transform: scale(1.1);
+        }
+        .social-text-link {
+            display: inline-block;
+            background: rgba(105,112,255,0.2);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #8597FF;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .social-text-link:hover {
+            background: rgba(105,112,255,0.4);
+            color: white;
+        }
+
+        .quote-block {
+            background: rgba(30,35,70,0.4);
+            border-radius: 28px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            border-left: 4px solid #8597FF;
+            font-style: italic;
+            color: #ccd9ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0 40px;
+            border-top: 1px solid rgba(133,151,255,0.2);
+            margin-top: 40px;
+            color: #8f9eff;
+        }
+
+        @media (max-width: 700px) {
+            .navbar { flex-direction: column; align-items: center; }
+            .team-grid { gap: 20px; }
+            .member-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="container">
+    <nav class="navbar">
+        <div class="logo"><span class="neon-text">MrSiktyyy</span> ✦</div>
+        <div class="nav-links">
+            <a href="/">Главная</a>
+            <a href="/news">Новости</a>
+            <a href="/server">Minecraft server</a>
+            <a href="/team" class="active">UnSkill Team</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>⚡ UnSkill Team</h1>
+        <p>Участники клана UnSkill Team. Разработчики.</p>
+    </div>
+
+    <div class="team-grid">
+        <!-- MrSiktyyy -->
+        <div class="member-card">
+            <div class="member-avatar">
+                <img src="ava3.png" alt="MrSiktyyy" onerror="this.parentElement.innerHTML='👑'">
+            </div>
+            <div class="member-name">MrSiktyyy</div>
+            <div class="member-role">Основатель · Веб-разработчик · Стример</div>
+            <div class="member-bio">Создатель сайта, сервера и всего этого движения.</div>
+            <div class="member-social">
+                <a href="/" class="social-text-link"><i class="fas fa-globe"></i> Соц. сети</a>
+            </div>
+        </div>
+
+        <!-- zeyrix -->
+        <div class="member-card">
+            <div class="member-avatar">
+                <img src="posts/ava4.png" alt="zeyrix" onerror="this.parentElement.innerHTML='🤝'">
+            </div>
+            <div class="member-name">zeyrix</div>
+            <div class="member-role">Главный помощник · Веб-разработчик · Стример</div>
+            <div class="member-bio">Помогает в разработке сайта. Страница Майнкрафт сервера - его работа.</div>
+            <div class="member-social">
+                <a href="https://t.me/zeyrix15" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://www.tiktok.com/@zeyrix.prime" target="_blank"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+
+        <!-- Griha228 -->
+        <div class="member-card">
+            <div class="member-avatar">
+                <img src="posts/ava5.png" alt="Griha228" onerror="this.parentElement.innerHTML='👮'">
+            </div>
+            <div class="member-name">Griha228</div>
+            <div class="member-role">Тестировщик · Строитель Minecraft сервера</div>
+            <div class="member-bio">В основном следит за поведением игроков на сервере. Можно называть дядей полицейским.</div>
+            <div class="member-social">
+                <!-- Ссылок нет, оставляем пустым -->
+            </div>
+        </div>
+
+        <!-- Kelliya -->
+        <div class="member-card">
+            <div class="member-avatar">
+                <img src="posts/ava6.png" alt="Kelliya" onerror="this.parentElement.innerHTML='🔧'">
+            </div>
+            <div class="member-name">Kelliya</div>
+            <div class="member-role">Гл. Админ Discord-сервера · Тестировщик</div>
+            <div class="member-bio">Следит за порядком на нашем Discord-сервере. Кстати, там больше всего активности и общения с разработчиками.</div>
+            <div class="member-social">
+                <!-- Ссылок нет, оставляем пустым -->
+            </div>
+        </div>
+    </div>
+
+    <div class="quote-block">
+        <i class="fas fa-quote-left" style="margin-right: 10px; color:#8597FF;"></i>
+        Мы — команда энтузиастов, которые создают уютное место для игры и творчества. Каждый участник ценен, и мы всегда рады новым идеям!
+    </div>
+
+    <footer>
+        <p><i class="fab fa-telegram"></i> © 2026 — UnSkill Team · Все права защищены.</p>
+        <p style="font-size: 0.75rem; margin-top: 8px;">Хочешь присоединиться? Напиши в Telegram @MrSikty</p>
+    </footer>
+</div>
+
+<script>
+    const glow = document.getElementById('cursorGlow');
+    let mx = 0, my = 0, gx = 0, gy = 0;
+    document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+    function animateGlow() {
+        gx += (mx - gx) * 0.12;
+        gy += (my - gy) * 0.12;
+        glow.style.left = gx + 'px';
+        glow.style.top = gy + 'px';
+        requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+</script>
+</body>
+</html>
