@@ -215,12 +215,7 @@
         footer { text-align: center; padding: 30px 0 40px; border-top: 1px solid rgba(133,151,255,0.2); margin-top: 20px; color: #8f9eff; }
         @media (max-width: 650px) { .navbar { flex-direction: column; align-items: center; } .post { padding: 18px; } .post-title { font-size: 1.3rem; } .modal-content { padding: 20px; } }
 
-        /* Глобальная анимация появления за 2 секунды */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(25px);
-            animation: fadeUp 2s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
-        }
+        .fade-up { opacity: 0; transform: translateY(25px); animation: fadeUp 2s cubic-bezier(0.2,0.9,0.4,1.1) forwards; }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.2s; }
@@ -267,7 +262,9 @@
 <script>
     const AUTHOR_AVATAR = "ava3.jpg";
     const POSTS_PER_PAGE = 5;
-    const postsData = [ /* посты как у тебя, без изменений */ 
+    const modal = document.getElementById('postModal');
+    
+    const postsData = [
         {
             "title": "Три дня разработки: как создавался этот сайт",
             "text": "Доброго времени суток! Сегодня третий день, как я веду разработку этого веб-проекта. Идея пришла спонтанно — я решил попробовать себя в веб-разработке, вдохновившись современными минималистичными интерфейсами. Поскольку сейчас время искусственного интеллекта, я обратился к нейросети DeepSeek. Она отлично справляется с поиском информации и написанием кода, а отсутствие генерации изображений меня не смущает — это не входило в задачи. DeepSeek постоянно обновляется, поэтому выбор пал на неё.\n\nЗа первый вечер я сделал только каркас: простую главную страницу, никакого фона, никакой анимации. Страница новостей тоже не работала — бесконечная загрузка, технически она отсутствовала. Сайт был сырым.\n\nНа второй день добавил рабочий модуль новостей, создал страницу Minecraft-сервера и инициировал сам сервер. Конечно, он ещё не готов, но прогресс очевиден. Тогда же появились фоновые изображения, исправлены ключевые баги — визуальная составляющая улучшилась.\n\nТретий день — сегодня. Утром был в школе, завтра тоже учёба, домашние задания. В будни времени мало, поэтому моя активность ограничится фиксом мелких ошибок и постепенным рефакторингом. Сегодня я полностью переработал страницу команды: теперь вместо обычной ссылки на Telegram — полноценный раздел с разработчиками и админами, их социальными сетями. Планирую дорабатывать и дальше.\n\nНа уроке информатики подошёл к учителю — он похвалил, но указал на некрасивый URL: раньше сайт отображался как «mrsiktyyy.vercel.app/index.html», что неправильно с точки зрения архитектуры. Я оперативно это исправил. Теперь:\n• mrsiktyyy.vercel.app — Главная\n• mrsiktyyy.vercel.app/news — Новости\n• и так далее.\n\nНа этом пока всё. Надеюсь, вам было интересно узнать о зарождении этого проекта, о людях, которые над ним работают, и о процессе. Всем хорошего настроения и чистого кода!",
@@ -293,23 +290,145 @@
             "media": ["posts/post2.png"]
         }
     ];
+
     let currentPage = 1;
     const totalPosts = postsData.length;
     const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
 
-    function getFileType(url) { /* ... */ }
-    function renderPostCard(post, index) { /* ... */ }
-    function renderCurrentPage() { /* ... */ }
-    function renderPagination() { /* ... */ }
-    function goToPage(page) { /* ... */ }
-    function openPostModal(index) { /* ... */ }
-    function closeModal() { /* ... */ }
-    window.onclick = function(event) { if (event.target === modal) closeModal(); };
+    function getFileType(url) {
+        const ext = url.split('.').pop().toLowerCase();
+        if (['png','jpg','jpeg','gif','webp'].includes(ext)) return 'image';
+        if (['mp4','webm','mov'].includes(ext)) return 'video';
+        return 'file';
+    }
+
+    function renderPostCard(post, index) {
+        const preview = post.text.length > 250 ? post.text.substring(0, 250) + '...' : post.text;
+        let mediaPreview = '';
+        if (post.media && post.media.length > 0) {
+            const firstMedia = post.media[0];
+            const type = getFileType(firstMedia);
+            if (type === 'image') {
+                mediaPreview = `<img src="${firstMedia}" class="preview-media" style="max-width:100%; max-height:160px; border-radius:20px; margin:12px 0;" onerror="this.style.display='none'">`;
+            }
+        }
+        return `
+            <div class="post" data-post-index="${index}">
+                <div class="post-header">
+                    <div class="post-avatar">
+                        <img src="${AUTHOR_AVATAR}" alt="Аватар" onerror="this.src='https://placehold.co/52x52/6970FF/white?text=📝'">
+                    </div>
+                    <div>
+                        <div class="post-author">MrSiktyyy</div>
+                        <div class="post-date"><i class="far fa-clock"></i> ${post.date}</div>
+                    </div>
+                </div>
+                <div class="post-title" onclick="openPostModal(${index})">${post.title}</div>
+                ${mediaPreview}
+                <div class="post-preview">${preview.replace(/\n/g, ' ')}</div>
+                <div class="read-more" onclick="openPostModal(${index})">
+                    <i class="fas fa-expand-alt"></i> Читать полностью
+                </div>
+            </div>
+        `;
+    }
+
+    function renderCurrentPage() {
+        const container = document.getElementById('postsContainer');
+        if (!container) return;
+        if (totalPosts === 0) {
+            container.innerHTML = '<div class="post"><p style="text-align:center;">Пока нет постов. Скоро появятся!</p></div>';
+            document.getElementById('paginationContainer').innerHTML = '';
+            document.getElementById('pageInfo').innerHTML = '';
+            return;
+        }
+        const start = (currentPage - 1) * POSTS_PER_PAGE;
+        const end = start + POSTS_PER_PAGE;
+        const pagePosts = postsData.slice(start, end);
+        container.innerHTML = '';
+        pagePosts.forEach((post, idx) => {
+            container.innerHTML += renderPostCard(post, start + idx);
+        });
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const pagContainer = document.getElementById('paginationContainer');
+        const infoContainer = document.getElementById('pageInfo');
+        if (totalPages <= 1) {
+            pagContainer.innerHTML = '';
+            infoContainer.innerHTML = '';
+            return;
+        }
+        let buttonsHtml = '';
+        if (currentPage > 1) {
+            buttonsHtml += `<button class="page-btn" onclick="goToPage(${currentPage - 1})">◀ Назад</button>`;
+        } else {
+            buttonsHtml += `<button class="page-btn" disabled>◀ Назад</button>`;
+        }
+        buttonsHtml += `<span style="color:#8a9eff; padding:0 12px;">${currentPage} / ${totalPages}</span>`;
+        if (currentPage < totalPages) {
+            buttonsHtml += `<button class="page-btn" onclick="goToPage(${currentPage + 1})">Дальше ▶</button>`;
+        } else {
+            buttonsHtml += `<button class="page-btn" disabled>Дальше ▶</button>`;
+        }
+        pagContainer.innerHTML = buttonsHtml;
+        infoContainer.innerHTML = `📄 Всего постов: ${totalPosts} | Страница ${currentPage} из ${totalPages}`;
+    }
+
+    function goToPage(page) {
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        renderCurrentPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openPostModal(index) {
+        const post = postsData[index];
+        if (!post) return;
+        document.getElementById('modalTitle').innerHTML = post.title;
+        let mediaHtml = '';
+        if (post.media && post.media.length > 0) {
+            for (let url of post.media) {
+                const type = getFileType(url);
+                if (type === 'image') {
+                    mediaHtml += `<img src="${url}" alt="изображение" style="max-width:100%; border-radius: 24px; margin-bottom: 10px;" onerror="this.style.display='none'">`;
+                } else if (type === 'video') {
+                    mediaHtml += `<video controls src="${url}" style="max-width:100%; border-radius: 24px;"></video>`;
+                } else {
+                    mediaHtml += `<a href="${url}" target="_blank" style="color:#8597FF;">📎 Скачать файл</a>`;
+                }
+            }
+        }
+        document.getElementById('modalMedia').innerHTML = mediaHtml;
+        let textWithLinks = post.text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+        document.getElementById('modalText').innerHTML = textWithLinks.replace(/\n/g, '<br>');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = function(event) {
+        if (event.target === modal) closeModal();
+    };
+
+    // Свечение за курсором (перенесено сюда, чтобы не потерять)
     const glow = document.getElementById('cursorGlow');
     let mx = 0, my = 0, gx = 0, gy = 0;
     document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
-    function animateGlow() { gx += (mx - gx) * 0.12; gy += (my - gy) * 0.12; glow.style.left = gx + 'px'; glow.style.top = gy + 'px'; requestAnimationFrame(animateGlow); }
+    function animateGlow() {
+        gx += (mx - gx) * 0.12;
+        gy += (my - gy) * 0.12;
+        glow.style.left = gx + 'px';
+        glow.style.top = gy + 'px';
+        requestAnimationFrame(animateGlow);
+    }
     animateGlow();
+
     renderCurrentPage();
 </script>
 </body>
