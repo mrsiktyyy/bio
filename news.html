@@ -303,9 +303,43 @@
         }
     ];
 
-    let currentPage = 1;
+    // ===== НОВАЯ ФУНКЦИОНАЛЬНОСТЬ: ЧПУ ДЛЯ СТРАНИЦ =====
+    function getPageFromURL() {
+        const match = window.location.pathname.match(/^\/news\/(\d+)$/);
+        if (match) {
+            const page = parseInt(match[1], 10);
+            return isNaN(page) ? 1 : page;
+        }
+        return 1; // /news или /news/ → первая страница
+    }
+
+    let currentPage = getPageFromURL();
     const totalPosts = postsData.length;
     const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+
+    // Корректируем currentPage, если он выходит за пределы
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    // Функция перехода на страницу с обновлением URL
+    function goToPage(page) {
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        // Обновляем URL без перезагрузки страницы
+        const newUrl = page === 1 ? '/news' : `/news/${page}`;
+        history.pushState(null, '', newUrl);
+        renderCurrentPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Обработчик кнопок браузера «назад/вперёд»
+    window.addEventListener('popstate', () => {
+        currentPage = getPageFromURL();
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        renderCurrentPage();
+    });
+    // ===== КОНЕЦ НОВОЙ ФУНКЦИОНАЛЬНОСТИ =====
 
     function getFileType(url) {
         const ext = url.split('.').pop().toLowerCase();
@@ -388,13 +422,6 @@
         infoContainer.innerHTML = `📄 Всего постов: ${totalPosts} | Страница ${currentPage} из ${totalPages}`;
     }
 
-    function goToPage(page) {
-        if (page < 1 || page > totalPages) return;
-        currentPage = page;
-        renderCurrentPage();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     function openPostModal(index) {
         const post = postsData[index];
         if (!post) return;
@@ -428,7 +455,7 @@
         if (event.target === modal) closeModal();
     };
 
-    // Свечение за курсором (перенесено сюда, чтобы не потерять)
+    // Свечение за курсором
     const glow = document.getElementById('cursorGlow');
     let mx = 0, my = 0, gx = 0, gy = 0;
     document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
