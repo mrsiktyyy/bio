@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <base href="/">
     <title>Новости | Посты</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +39,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('11.png') no-repeat center center;
+            background: url('/11.png') no-repeat center center;
             background-size: cover;
             opacity: 0.25;
             pointer-events: none;
@@ -260,7 +261,7 @@
 </div>
 
 <script>
-    const AUTHOR_AVATAR = "ava3.jpg";
+    const AUTHOR_AVATAR = "/ava3.jpg";
     const POSTS_PER_PAGE = 5;
     const modal = document.getElementById('postModal');
     
@@ -303,43 +304,36 @@
         }
     ];
 
-    // ===== НОВАЯ ФУНКЦИОНАЛЬНОСТЬ: ЧПУ ДЛЯ СТРАНИЦ =====
     function getPageFromURL() {
         const match = window.location.pathname.match(/^\/news\/(\d+)$/);
         if (match) {
             const page = parseInt(match[1], 10);
             return isNaN(page) ? 1 : page;
         }
-        return 1; // /news или /news/ → первая страница
+        return 1;
     }
 
     let currentPage = getPageFromURL();
     const totalPosts = postsData.length;
     const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
-
-    // Корректируем currentPage, если он выходит за пределы
     if (currentPage > totalPages) currentPage = totalPages;
     if (currentPage < 1) currentPage = 1;
 
-    // Функция перехода на страницу с обновлением URL
     function goToPage(page) {
         if (page < 1 || page > totalPages) return;
         currentPage = page;
-        // Обновляем URL без перезагрузки страницы
         const newUrl = page === 1 ? '/news' : `/news/${page}`;
         history.pushState(null, '', newUrl);
         renderCurrentPage();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Обработчик кнопок браузера «назад/вперёд»
     window.addEventListener('popstate', () => {
         currentPage = getPageFromURL();
         if (currentPage < 1) currentPage = 1;
         if (currentPage > totalPages) currentPage = totalPages;
         renderCurrentPage();
     });
-    // ===== КОНЕЦ НОВОЙ ФУНКЦИОНАЛЬНОСТИ =====
 
     function getFileType(url) {
         const ext = url.split('.').pop().toLowerCase();
@@ -455,7 +449,6 @@
         if (event.target === modal) closeModal();
     };
 
-    // Свечение за курсором
     const glow = document.getElementById('cursorGlow');
     let mx = 0, my = 0, gx = 0, gy = 0;
     document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
