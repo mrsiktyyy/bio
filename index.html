@@ -98,13 +98,16 @@
         }
         .sidebar .logo-link {
             display: block;
+            width: 100%;
             margin-bottom: 8px;
             border-bottom: 1px solid #2a2a2d;
             padding-bottom: 12px;
         }
         .sidebar .logo-link img {
-            max-width: 160px;
+            width: 100%;
             height: auto;
+            max-height: 100px;
+            object-fit: contain;
             display: block;
         }
         .sidebar nav ul {
@@ -347,7 +350,7 @@
 
     <aside class="sidebar" id="sidebar">
         <a href="/" class="logo-link">
-            <img src="logo.png" alt="Phoenix Team Logo" class="site-logo">
+            <img src="logo.png" alt="Phoenix Team Logo">
         </a>
         <nav>
             <ul>
@@ -398,7 +401,6 @@
     </div>
 
     <script>
-        // ── Гамбургер ──
         const hamburger = document.getElementById('hamburgerBtn');
         const sidebar = document.getElementById('sidebar');
         hamburger.addEventListener('click', () => {
@@ -412,10 +414,14 @@
             }
         });
 
-        // ── Курсор ──
         const glow = document.getElementById('cursorGlow');
-        let mx = 0, my = 0, gx = 0, gy = 0;
-        document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+        let mx = 0,
+            my = 0,
+            gx = 0,
+            gy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX;
+            my = e.clientY; });
+
         function animateGlow() {
             gx += (mx - gx) * 0.12;
             gy += (my - gy) * 0.12;
