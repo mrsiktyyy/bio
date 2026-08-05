@@ -4,25 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <base href="/" />
-    <title>Новости | MrSiktyyy</title>
+    <title>Новости | PHX</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="icon" type="image/png" href="/favicon2.png" />
     <style>
-        /* (Стили почти такие же, как на главной, с небольшими отличиями) */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            background: #0b0e1a;
-            font-family: 'Inter', sans-serif;
-            color: #eaeef7;
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
+            background: #1e1e1e;
+            color: #ffffff;
+            line-height: 1.5;
             overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
         }
         body::-webkit-scrollbar {
             width: 0;
@@ -31,192 +32,202 @@
         body {
             scrollbar-width: none;
         }
-        body::before {
-            content: "";
+
+        .light-source {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105, 112, 255, 0.15);
-        }
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('/11.png') no-repeat center center;
-            background-size: cover;
-            opacity: 0.12;
-            pointer-events: none;
-            z-index: 0;
-            transform: scaleY(-1);
-        }
-        .light-source-1,
-        .light-source-2 {
-            position: fixed;
-            width: 500px;
-            height: 500px;
+            width: 600px;
+            height: 600px;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 1;
-            opacity: 0.2;
-            filter: blur(70px);
-            animation: floatLight 20s infinite alternate ease-in-out;
+            z-index: 0;
+            opacity: 0.08;
+            filter: blur(80px);
+            animation: floatLight 22s infinite alternate ease-in-out;
         }
         .light-source-1 {
-            background: radial-gradient(circle, rgba(105, 112, 255, 0.4), rgba(133, 151, 255, 0));
-            top: 5%;
+            background: radial-gradient(circle, #0088ff, transparent);
+            top: -10%;
             left: -10%;
         }
         .light-source-2 {
-            background: radial-gradient(circle, rgba(133, 151, 255, 0.35), rgba(105, 112, 255, 0));
-            bottom: 5%;
+            background: radial-gradient(circle, #0088ff, transparent);
+            bottom: -10%;
             right: -10%;
-            animation-duration: 25s;
-            animation-delay: -5s;
+            animation-duration: 26s;
+            animation-delay: -4s;
         }
         @keyframes floatLight {
             0% {
                 transform: translate(0, 0) scale(1);
-                opacity: 0.15;
+                opacity: 0.05;
             }
             100% {
-                transform: translate(8%, 12%) scale(1.2);
-                opacity: 0.3;
+                transform: translate(10%, 15%) scale(1.3);
+                opacity: 0.12;
             }
         }
+
         .cursor-glow {
             position: fixed;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(105, 112, 255, 0.25) 0%, rgba(133, 151, 255, 0.08) 50%, transparent 75%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 136, 255, 0.15), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            filter: blur(35px);
+            filter: blur(40px);
             z-index: 1000;
-        }
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 30px;
-            position: relative;
-            z-index: 10;
-        }
-        .navbar {
-            padding: 25px 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            border-bottom: 1px solid rgba(133, 151, 255, 0.15);
-            margin-bottom: 30px;
-        }
-        .logo {
-            font-size: 2.2rem;
-            font-weight: 900;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(135deg, #6970ff, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
-            animation: logoGlow 3s infinite alternate;
-        }
-        @keyframes logoGlow {
-            0% {
-                text-shadow: 0 0 5px rgba(105, 112, 255, 0.2);
-            }
-            100% {
-                text-shadow: 0 0 20px rgba(105, 112, 255, 0.5);
-            }
-        }
-        .nav-links {
-            display: flex;
-            gap: 2.2rem;
-            flex-wrap: wrap;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #a8b6e6;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            position: relative;
-            font-size: 0.95rem;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #6970ff, #8597ff);
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        .nav-links a:hover {
-            color: #d4ddff;
-        }
-        .nav-links a.active {
-            color: #8597ff;
-            text-shadow: 0 0 10px rgba(105, 112, 255, 0.4);
-        }
-        .nav-links a.active::after {
-            width: 100%;
+            transition: none;
         }
 
-        h1 {
-            font-size: 2.2rem;
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 6px;
-            background: linear-gradient(135deg, #fff, #b8c4ff);
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: #222222;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+            border-right: 1px solid #333333;
+            transition: transform 0.3s ease;
+        }
+        .sidebar .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #0088ff, #00ccff);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            padding: 8px 0 12px;
+            border-bottom: 1px solid #333333;
+            margin-bottom: 8px;
         }
-        .sub {
-            color: #a0b4e6;
-            border-left: 3px solid #6970ff;
-            padding-left: 18px;
-            margin-bottom: 40px;
-            font-weight: 300;
-            font-size: 1rem;
+        .sidebar nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
-        .post {
-            background: rgba(12, 15, 32, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 32px;
-            border: 1px solid rgba(105, 112, 255, 0.15);
-            padding: 28px;
-            margin-bottom: 30px;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-        .post:hover {
-            border-color: #8597ff;
-            transform: translateY(-6px);
-            box-shadow: 0 15px 30px rgba(105, 112, 255, 0.15);
-        }
-        .post-header {
+        .sidebar nav ul li a {
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 20px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .sidebar nav ul li a i {
+            width: 24px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .sidebar nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+        .sidebar nav ul li a.active {
+            background: #0077ff;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+        }
+
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 0 30px 40px;
+            background: #1e1e1e;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid #333333;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .top-bar .hamburger {
+            display: none;
+            font-size: 1.6rem;
+            color: #aaaaaa;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .top-bar .hamburger:hover {
+            color: #ffffff;
+        }
+        .top-bar .page-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .top-bar .page-title span {
+            color: #0088ff;
+        }
+        .top-bar .user-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #aaaaaa;
+        }
+        .top-bar .user-area i {
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .top-bar .user-area i:hover {
+            color: #ffffff;
+        }
+
+        /* Новости */
+        .sub {
+            color: #aaaaaa;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .post {
+            background: #282828;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #333333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+        .post:hover {
+            border-color: #0088ff;
+            box-shadow: 0 8px 24px rgba(0, 136, 255, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
         }
         .post-avatar {
-            width: 52px;
-            height: 52px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             overflow: hidden;
-            background: linear-gradient(135deg, #6970ff, #8597ff);
+            border: 2px solid #444444;
         }
         .post-avatar img {
             width: 100%;
@@ -224,222 +235,213 @@
             object-fit: cover;
         }
         .post-author {
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: #eef3ff;
+            font-weight: 600;
+            font-size: 1rem;
         }
         .post-date {
             font-size: 0.75rem;
-            color: #8a9eff;
+            color: #aaaaaa;
             margin-top: 2px;
         }
+
         .post-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            margin: 16px 0 12px 0;
-            background: linear-gradient(125deg, #fff, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+            color: #ffffff;
+            margin: 12px 0 10px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: 0.2s;
         }
         .post-title:hover {
-            opacity: 0.8;
-            transform: translateX(4px);
-            text-shadow: 0 0 12px rgba(105, 112, 255, 0.3);
+            color: #0088ff;
         }
+
         .post-preview {
+            color: #cccccc;
             font-size: 0.95rem;
-            color: #b8c6ee;
-            line-height: 1.7;
-            margin: 12px 0;
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
         .preview-media {
             max-width: 100%;
-            max-height: 160px;
-            border-radius: 20px;
+            max-height: 180px;
+            border-radius: 8px;
             margin: 12px 0;
             object-fit: cover;
-            transition: transform 0.3s;
+            border: 1px solid #333333;
         }
-        .preview-media:hover {
-            transform: scale(1.02);
-        }
+
         .read-more {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: rgba(105, 112, 255, 0.15);
-            padding: 8px 22px;
+            gap: 8px;
+            padding: 6px 18px;
             border-radius: 40px;
             font-size: 0.85rem;
-            color: #8597ff;
+            color: #0088ff;
+            background: rgba(0, 136, 255, 0.1);
+            border: 1px solid rgba(0, 136, 255, 0.2);
             cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(105, 112, 255, 0.2);
-            margin-top: 12px;
+            transition: 0.3s;
             font-weight: 500;
         }
         .read-more:hover {
-            background: rgba(105, 112, 255, 0.3);
-            color: #fff;
-            transform: translateY(-2px);
+            background: rgba(0, 136, 255, 0.2);
+            color: #ffffff;
         }
+
         .pagination {
             display: flex;
             justify-content: center;
             gap: 16px;
-            margin: 40px 0 30px;
+            margin: 30px 0;
         }
         .page-btn {
-            background: rgba(20, 24, 50, 0.7);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(105, 112, 255, 0.25);
-            padding: 10px 28px;
+            padding: 8px 24px;
             border-radius: 40px;
-            font-weight: 600;
-            color: #ccd6ff;
+            background: #333333;
+            color: #aaaaaa;
+            border: none;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
+            transition: 0.2s;
         }
         .page-btn:hover:not(:disabled) {
-            background: rgba(105, 112, 255, 0.3);
-            border-color: #8597ff;
-            color: white;
-            transform: translateY(-2px);
+            background: #444444;
+            color: #ffffff;
         }
         .page-btn:disabled {
-            opacity: 0.25;
+            opacity: 0.3;
             cursor: not-allowed;
         }
         .page-info {
             text-align: center;
-            color: #8a9eff;
+            color: #888888;
             font-size: 0.85rem;
             margin-top: 10px;
         }
-        .modal {
+
+        /* Модалка */
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
-            overflow-y: auto;
             padding: 20px;
         }
-        .modal-content {
-            max-width: 720px;
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: #282828;
+            border-radius: 16px;
+            border: 1px solid #333333;
+            max-width: 640px;
             width: 100%;
-            background: rgba(10, 12, 28, 0.95);
-            border-radius: 36px;
-            border: 1px solid rgba(105, 112, 255, 0.3);
-            padding: 30px;
+            padding: 32px 28px;
             position: relative;
+            animation: modalFade 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
-            animation: modalFadeIn 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
-        .modal-content::-webkit-scrollbar {
-            width: 4px;
-        }
-        .modal-content::-webkit-scrollbar-track {
-            background: #1e223a;
-            border-radius: 4px;
-        }
-        .modal-content::-webkit-scrollbar-thumb {
-            background: #6970ff;
-            border-radius: 4px;
-        }
-        @keyframes modalFadeIn {
+        @keyframes modalFade {
             from {
                 opacity: 0;
-                transform: scale(0.95);
+                transform: scale(0.95) translateY(20px);
             }
             to {
                 opacity: 1;
-                transform: scale(1);
+                transform: scale(1) translateY(0);
             }
         }
         .modal-close {
             position: absolute;
-            top: 18px;
-            right: 24px;
-            font-size: 30px;
+            top: 16px;
+            right: 22px;
+            font-size: 28px;
+            color: #aaaaaa;
             cursor: pointer;
-            color: #8597ff;
             transition: 0.2s;
+            line-height: 1;
         }
         .modal-close:hover {
-            color: white;
+            color: #ffffff;
             transform: rotate(90deg);
         }
         .modal-title {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            background: linear-gradient(125deg, #fff, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 20px;
+            color: #ffffff;
+            margin-bottom: 16px;
             padding-right: 30px;
-            font-family: 'Orbitron', sans-serif;
         }
         .modal-media {
             display: flex;
             flex-wrap: wrap;
-            gap: 14px;
-            margin: 20px 0;
+            gap: 12px;
+            margin: 16px 0;
         }
         .modal-media img,
         .modal-media video {
             max-width: 100%;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.2s;
-        }
-        .modal-media img:hover {
-            transform: scale(1.02);
+            border-radius: 8px;
+            border: 1px solid #333333;
         }
         .modal-text {
-            font-size: 1rem;
-            color: #d6dff5;
-            line-height: 1.75;
+            font-size: 0.95rem;
+            color: #cccccc;
+            line-height: 1.7;
             white-space: pre-wrap;
         }
+
         footer {
             text-align: center;
-            padding: 30px 0 40px;
-            border-top: 1px solid rgba(133, 151, 255, 0.1);
-            margin-top: 20px;
-            color: #7a8fc9;
+            padding: 30px 0 10px;
+            border-top: 1px solid #333333;
+            margin-top: 40px;
+            color: #666666;
+            font-size: 0.8rem;
         }
-        @media (max-width: 650px) {
-            .navbar {
-                flex-direction: column;
-                align-items: center;
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
             }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main {
+                margin-left: 0;
+                padding: 0 20px 30px;
+            }
+            .top-bar .hamburger {
+                display: block;
+            }
+        }
+        @media (max-width: 600px) {
             .post {
-                padding: 18px;
+                padding: 16px;
             }
             .post-title {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
-            .modal-content {
+            .modal-box {
                 padding: 20px;
             }
         }
+
         .fade-up {
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
         }
         @keyframes fadeUp {
             to {
@@ -448,44 +450,57 @@
             }
         }
         .delay-1 {
-            animation-delay: 0.1s;
+            animation-delay: 0.05s;
         }
         .delay-2 {
-            animation-delay: 0.2s;
+            animation-delay: 0.1s;
         }
     </style>
 </head>
 <body>
-    <div class="light-source-1"></div>
-    <div class="light-source-2"></div>
+    <div class="light-source light-source-1"></div>
+    <div class="light-source light-source-2"></div>
     <div class="cursor-glow" id="cursorGlow"></div>
-    <div class="container">
-        <nav class="navbar fade-up">
-            <div class="logo">✦ MrSiktyyy</div>
-            <div class="nav-links">
-                <a href="/">Главная</a>
-                <a href="/news" class="active">Новости</a>
-                <a href="/phoenix">Phoenix</a>
-                <a href="/unskillteam">Команда</a>
-            </div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">✦ PHX</div>
+        <nav>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="/news" class="active"><i class="fas fa-newspaper"></i> Новости</a></li>
+                <li><a href="/phoenix"><i class="fas fa-fire"></i> Phoenix</a></li>
+                <li><a href="/unskillteam"><i class="fas fa-discord"></i> Discord Server</a></li>
+            </ul>
         </nav>
+    </aside>
 
-        <h1 class="fade-up">📰 Лента новостей</h1>
-        <div class="sub fade-up delay-1">Новости, обновления и анонсы от MrSiktyyy</div>
+    <main class="main">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">Новости <span>PHX</span></div>
+            <div class="user-area">
+                <i class="fas fa-bell" title="Уведомления"></i>
+                <i class="fas fa-user-circle" title="Профиль" style="font-size:1.8rem;"></i>
+            </div>
+        </header>
 
-        <div id="postsContainer" class="fade-up delay-2"></div>
+        <div class="sub fade-up">Новости, обновления и анонсы от PHX</div>
+
+        <div id="postsContainer" class="fade-up delay-1"></div>
         <div id="paginationContainer" class="pagination"></div>
         <div id="pageInfo" class="page-info"></div>
 
-        <footer class="fade-up">
-            <p><i class="fab fa-telegram"></i> © 2026 — MrSiktyyy · Все права защищены.</p>
+        <footer>
+            <p>© 2026 — PHX · Все права защищены.</p>
         </footer>
-    </div>
+    </main>
 
-    <!-- Модальное окно -->
-    <div id="postModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
+    <!-- Модалка -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <span class="modal-close" id="modalClose">&times;</span>
             <div class="modal-title" id="modalTitle"></div>
             <div id="modalMedia" class="modal-media"></div>
             <div id="modalText" class="modal-text"></div>
@@ -493,10 +508,10 @@
     </div>
 
     <script>
-        // (Код новостей полностью сохранён, только поменял AUTHOR_AVATAR на корректный путь)
+        // ── Данные постов (полностью скопированы из старого news.html) ──
         const AUTHOR_AVATAR = "/ava3.jpg";
         const POSTS_PER_PAGE = 5;
-        const modal = document.getElementById('postModal');
+        const modal = document.getElementById('modalOverlay');
 
         const postsData = [{
             "title": "Кроссворд по ОБЗР: первая помощь",
@@ -535,6 +550,7 @@
             "media": ["posts/post2.png"]
         }];
 
+        // ── Логика пагинации ──
         function getPageFromURL() {
             const match = window.location.pathname.match(/^\/news\/(\d+)$/);
             if (match) {
@@ -581,14 +597,14 @@
                 const type = getFileType(firstMedia);
                 if (type === 'image') {
                     mediaPreview =
-                        `<img src="${firstMedia}" class="preview-media" style="max-width:100%; max-height:160px; border-radius:20px; margin:12px 0;" onerror="this.style.display='none'">`;
+                        `<img src="${firstMedia}" class="preview-media" style="max-width:100%; max-height:160px; border-radius:8px; margin:12px 0;" onerror="this.style.display='none'">`;
                 }
             }
             return `
                 <div class="post" data-post-index="${index}">
                     <div class="post-header">
                         <div class="post-avatar">
-                            <img src="${AUTHOR_AVATAR}" alt="Аватар" onerror="this.src='https://placehold.co/52x52/6970FF/white?text=📝'">
+                            <img src="${AUTHOR_AVATAR}" alt="Аватар" onerror="this.src='https://placehold.co/44x44/0088FF/white?text=PHX'">
                         </div>
                         <div>
                             <div class="post-author">MrSiktyyy</div>
@@ -609,7 +625,7 @@
             const container = document.getElementById('postsContainer');
             if (!container) return;
             if (totalPosts === 0) {
-                container.innerHTML = '<div class="post"><p style="text-align:center;">Пока нет постов. Скоро появятся!</p></div>';
+                container.innerHTML = '<div class="post"><p style="text-align:center; color:#888;">Пока нет постов. Скоро появятся!</p></div>';
                 document.getElementById('paginationContainer').innerHTML = '';
                 document.getElementById('pageInfo').innerHTML = '';
                 return;
@@ -638,7 +654,7 @@
             } else {
                 buttonsHtml += `<button class="page-btn" disabled>◀ Назад</button>`;
             }
-            buttonsHtml += `<span style="color:#8a9eff; padding:0 12px;">${currentPage} / ${totalPages}</span>`;
+            buttonsHtml += `<span style="color:#888; padding:0 12px;">${currentPage} / ${totalPages}</span>`;
             if (currentPage < totalPages) {
                 buttonsHtml += `<button class="page-btn" onclick="goToPage(${currentPage + 1})">Дальше ▶</button>`;
             } else {
@@ -648,6 +664,7 @@
             infoContainer.innerHTML = `📄 Всего постов: ${totalPosts} | Страница ${currentPage} из ${totalPages}`;
         }
 
+        // ── Модалка ──
         function openPostModal(index) {
             const post = postsData[index];
             if (!post) return;
@@ -658,30 +675,49 @@
                     const type = getFileType(url);
                     if (type === 'image') {
                         mediaHtml +=
-                            `<img src="${url}" alt="изображение" style="max-width:100%; border-radius: 24px; margin-bottom: 10px;" onerror="this.style.display='none'">`;
+                            `<img src="${url}" alt="изображение" style="max-width:100%; border-radius:8px; margin-bottom:10px;" onerror="this.style.display='none'">`;
                     } else if (type === 'video') {
-                        mediaHtml += `<video controls src="${url}" style="max-width:100%; border-radius: 24px;"></video>`;
+                        mediaHtml += `<video controls src="${url}" style="max-width:100%; border-radius:8px;"></video>`;
                     } else {
-                        mediaHtml += `<a href="${url}" target="_blank" style="color:#8597FF;">📎 Скачать файл</a>`;
+                        mediaHtml += `<a href="${url}" target="_blank" style="color:#0088FF;">📎 Скачать файл</a>`;
                     }
                 }
             }
             document.getElementById('modalMedia').innerHTML = mediaHtml;
             let textWithLinks = post.text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
             document.getElementById('modalText').innerHTML = textWithLinks.replace(/\n/g, '<br>');
-            modal.style.display = 'flex';
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
-        window.onclick = function(event) {
-            if (event.target === modal) closeModal();
-        };
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
 
+        // ── Гамбургер ──
+        const hamburgerNews = document.getElementById('hamburgerBtn');
+        const sidebarNews = document.getElementById('sidebar');
+        hamburgerNews.addEventListener('click', () => {
+            sidebarNews.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                if (!sidebarNews.contains(e.target) && e.target !== hamburgerNews && !hamburgerNews.contains(e.target)) {
+                    sidebarNews.classList.remove('open');
+                }
+            }
+        });
+
+        // ── Курсор ──
         const glow = document.getElementById('cursorGlow');
         let mx = 0,
             my = 0,

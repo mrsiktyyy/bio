@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>Команда проекта | MrSiktyyy</title>
+    <title>Discord Server | PHX</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="icon" type="image/png" href="/favicon2.png" />
     <style>
         * {
             margin: 0;
@@ -15,11 +16,13 @@
             box-sizing: border-box;
         }
         body {
-            background: #0b0e1a;
-            font-family: 'Inter', sans-serif;
-            color: #eaeef7;
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
+            background: #1e1e1e;
+            color: #ffffff;
+            line-height: 1.5;
             overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
         }
         body::-webkit-scrollbar {
             width: 0;
@@ -28,302 +31,264 @@
         body {
             scrollbar-width: none;
         }
-        body::before {
-            content: "";
+
+        .light-source {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105, 112, 255, 0.15);
-        }
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('11.png') no-repeat center center;
-            background-size: cover;
-            opacity: 0.12;
-            pointer-events: none;
-            z-index: 0;
-            transform: scaleY(-1);
-        }
-        .light-source-1,
-        .light-source-2 {
-            position: fixed;
-            width: 500px;
-            height: 500px;
+            width: 600px;
+            height: 600px;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 1;
-            opacity: 0.2;
-            filter: blur(70px);
-            animation: floatLight 20s infinite alternate ease-in-out;
+            z-index: 0;
+            opacity: 0.08;
+            filter: blur(80px);
+            animation: floatLight 22s infinite alternate ease-in-out;
         }
         .light-source-1 {
-            background: radial-gradient(circle, rgba(105, 112, 255, 0.4), rgba(133, 151, 255, 0));
-            top: 5%;
+            background: radial-gradient(circle, #0088ff, transparent);
+            top: -10%;
             left: -10%;
         }
         .light-source-2 {
-            background: radial-gradient(circle, rgba(133, 151, 255, 0.35), rgba(105, 112, 255, 0));
-            bottom: 5%;
+            background: radial-gradient(circle, #0088ff, transparent);
+            bottom: -10%;
             right: -10%;
-            animation-duration: 25s;
-            animation-delay: -5s;
+            animation-duration: 26s;
+            animation-delay: -4s;
         }
         @keyframes floatLight {
             0% {
                 transform: translate(0, 0) scale(1);
-                opacity: 0.15;
+                opacity: 0.05;
             }
             100% {
-                transform: translate(8%, 12%) scale(1.2);
-                opacity: 0.3;
+                transform: translate(10%, 15%) scale(1.3);
+                opacity: 0.12;
             }
         }
+
         .cursor-glow {
             position: fixed;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(105, 112, 255, 0.25) 0%, rgba(133, 151, 255, 0.08) 50%, transparent 75%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 136, 255, 0.15), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            filter: blur(35px);
+            filter: blur(40px);
             z-index: 1000;
-        }
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 30px;
-            position: relative;
-            z-index: 10;
-        }
-        .navbar {
-            padding: 25px 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            border-bottom: 1px solid rgba(133, 151, 255, 0.15);
-            margin-bottom: 30px;
-        }
-        .logo {
-            font-size: 2.2rem;
-            font-weight: 900;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(135deg, #6970ff, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
-            animation: logoGlow 3s infinite alternate;
-        }
-        @keyframes logoGlow {
-            0% {
-                text-shadow: 0 0 5px rgba(105, 112, 255, 0.2);
-            }
-            100% {
-                text-shadow: 0 0 20px rgba(105, 112, 255, 0.5);
-            }
-        }
-        .nav-links {
-            display: flex;
-            gap: 2.2rem;
-            flex-wrap: wrap;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #a8b6e6;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            position: relative;
-            font-size: 0.95rem;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #6970ff, #8597ff);
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        .nav-links a:hover {
-            color: #d4ddff;
-        }
-        .nav-links a.active {
-            color: #8597ff;
-            text-shadow: 0 0 10px rgba(105, 112, 255, 0.4);
-        }
-        .nav-links a.active::after {
-            width: 100%;
+            transition: none;
         }
 
-        .page-header {
-            text-align: center;
-            margin-bottom: 48px;
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: #222222;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+            border-right: 1px solid #333333;
+            transition: transform 0.3s ease;
         }
-        .page-header h1 {
-            font-size: 2.8rem;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(135deg, #fff, #b8c4ff);
+        .sidebar .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #0088ff, #00ccff);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            padding: 8px 0 12px;
+            border-bottom: 1px solid #333333;
             margin-bottom: 8px;
         }
-        .page-header p {
-            color: #a0b4e6;
-            font-size: 1.1rem;
+        .sidebar nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 32px;
-            margin: 40px 0;
-        }
-        .member-card {
-            background: rgba(12, 15, 32, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 32px;
-            border: 1px solid rgba(105, 112, 255, 0.15);
-            padding: 28px 20px;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-        .member-card:hover {
-            border-color: #8597ff;
-            transform: translateY(-8px);
-            box-shadow: 0 20px 35px rgba(105, 112, 255, 0.2);
-        }
-        .member-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6970ff, #8597ff);
-            margin: 0 auto 20px;
+        .sidebar nav ul li a {
             display: flex;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-        .member-card:hover .member-avatar {
-            transform: scale(1.05);
-        }
-        .member-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .member-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(125deg, #fff, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 6px;
-        }
-        .member-role {
-            display: inline-block;
-            background: rgba(105, 112, 255, 0.15);
-            padding: 4px 18px;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #8597ff;
-            margin-bottom: 14px;
-            border: 1px solid rgba(105, 112, 255, 0.15);
-        }
-        .member-bio {
-            font-size: 0.9rem;
-            color: #b8c6ee;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .member-social {
-            display: flex;
-            justify-content: center;
             gap: 16px;
-        }
-        .member-social a {
-            color: #8a9eff;
-            font-size: 1.3rem;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
             transition: all 0.2s;
         }
-        .member-social a:hover {
-            color: #8597ff;
-            transform: scale(1.2) rotate(4deg);
-        }
-        .social-text-link {
-            display: inline-block;
-            background: rgba(105, 112, 255, 0.15);
-            padding: 6px 20px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            color: #8597ff;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: 1px solid rgba(105, 112, 255, 0.15);
-        }
-        .social-text-link:hover {
-            background: rgba(105, 112, 255, 0.3);
-            color: white;
-            transform: scale(1.05);
-        }
-        .quote-block {
-            background: rgba(12, 15, 32, 0.5);
-            border-radius: 28px;
-            padding: 30px;
-            margin: 40px 0;
+        .sidebar nav ul li a i {
+            width: 24px;
             text-align: center;
-            border-left: 4px solid #8597ff;
-            font-style: italic;
-            color: #b8c6ee;
-            transition: all 0.3s;
+            font-size: 1.2rem;
         }
-        .quote-block:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        .sidebar nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
         }
+        .sidebar nav ul li a.active {
+            background: #0077ff;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+        }
+
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 0 30px 40px;
+            background: #1e1e1e;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid #333333;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 16px;
+            width: 100%;
+        }
+        .top-bar .hamburger {
+            display: none;
+            font-size: 1.6rem;
+            color: #aaaaaa;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .top-bar .hamburger:hover {
+            color: #ffffff;
+        }
+        .top-bar .page-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .top-bar .page-title span {
+            color: #0088ff;
+        }
+        .top-bar .user-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #aaaaaa;
+        }
+        .top-bar .user-area i {
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .top-bar .user-area i:hover {
+            color: #ffffff;
+        }
+
+        .discord-card {
+            background: #282828;
+            border-radius: 16px;
+            padding: 40px 32px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #333333;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+        .discord-card .icon {
+            font-size: 4rem;
+            color: #5865f2;
+            margin-bottom: 16px;
+        }
+        .discord-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+        .discord-card p {
+            color: #aaaaaa;
+            margin-bottom: 24px;
+            font-size: 1rem;
+        }
+        .discord-card .invite-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 36px;
+            background: #5865f2;
+            border-radius: 40px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .discord-card .invite-btn:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(88, 101, 242, 0.3);
+        }
+        .discord-card .invite-btn i {
+            font-size: 1.4rem;
+        }
+
         footer {
             text-align: center;
-            padding: 30px 0 40px;
-            border-top: 1px solid rgba(133, 151, 255, 0.1);
+            padding: 30px 0 10px;
+            border-top: 1px solid #333333;
             margin-top: 40px;
-            color: #7a8fc9;
+            color: #666666;
+            font-size: 0.8rem;
+            width: 100%;
         }
-        @media (max-width: 700px) {
-            .navbar {
-                flex-direction: column;
-                align-items: center;
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
             }
-            .team-grid {
-                gap: 20px;
+            .sidebar.open {
+                transform: translateX(0);
             }
-            .member-card {
-                padding: 20px;
+            .main {
+                margin-left: 0;
+                padding: 0 20px 30px;
+            }
+            .top-bar .hamburger {
+                display: block;
+            }
+            .discord-card {
+                padding: 30px 20px;
             }
         }
+        @media (max-width: 600px) {
+            .discord-card h2 {
+                font-size: 1.4rem;
+            }
+            .discord-card .invite-btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
+
         .fade-up {
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
         }
         @keyframes fadeUp {
             to {
@@ -332,88 +297,69 @@
             }
         }
         .delay-1 {
-            animation-delay: 0.1s;
-        }
-        .delay-2 {
-            animation-delay: 0.2s;
+            animation-delay: 0.05s;
         }
     </style>
 </head>
 <body>
-    <div class="light-source-1"></div>
-    <div class="light-source-2"></div>
+    <div class="light-source light-source-1"></div>
+    <div class="light-source light-source-2"></div>
     <div class="cursor-glow" id="cursorGlow"></div>
-    <div class="container">
-        <nav class="navbar fade-up">
-            <div class="logo">✦ MrSiktyyy</div>
-            <div class="nav-links">
-                <a href="/">Главная</a>
-                <a href="/news">Новости</a>
-                <a href="/phoenix">Phoenix</a>
-                <a href="/unskillteam" class="active">Команда</a>
-            </div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">✦ PHX</div>
+        <nav>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                <li><a href="/phoenix"><i class="fas fa-fire"></i> Phoenix</a></li>
+                <li><a href="/unskillteam" class="active"><i class="fas fa-discord"></i> Discord Server</a></li>
+            </ul>
         </nav>
+    </aside>
 
-        <div class="page-header fade-up">
-            <h1>👥 Команда проекта</h1>
-            <p>Люди, благодаря которым существует этот сайт и всё вокруг.</p>
+    <main class="main">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">Discord <span>Server</span></div>
+            <div class="user-area">
+                <i class="fas fa-bell" title="Уведомления"></i>
+                <i class="fas fa-user-circle" title="Профиль" style="font-size:1.8rem;"></i>
+            </div>
+        </header>
+
+        <div class="discord-card fade-up">
+            <div class="icon"><i class="fab fa-discord"></i></div>
+            <h2>Присоединяйся к нам!</h2>
+            <p>Общайся с командой, следи за новостями и участвуй в жизни PHX.</p>
+            <a href="https://discord.com/invite/kvd35a3Std" class="invite-btn" target="_blank">
+                <i class="fab fa-discord"></i> Присоединиться
+            </a>
         </div>
 
-        <div class="team-grid fade-up delay-1">
-            <!-- MrSiktyyy -->
-            <div class="member-card">
-                <div class="member-avatar"><img src="posts/ava3.png" alt="MrSiktyyy" onerror="this.parentElement.innerHTML='👑'"></div>
-                <div class="member-name">MrSiktyyy</div>
-                <div class="member-role">Основатель · Веб-разработчик · Стример</div>
-                <div class="member-bio">Создатель сайта, сервера и всего этого движения.</div>
-                <div class="member-social"><a href="/" class="social-text-link"><i class="fas fa-globe"></i> Соц. сети</a></div>
-            </div>
-            <!-- zeyrix -->
-            <div class="member-card">
-                <div class="member-avatar"><img src="posts/ava4.png" alt="zeyrix" onerror="this.parentElement.innerHTML='🤝'"></div>
-                <div class="member-name">zeyrix</div>
-                <div class="member-role">Главный помощник · Веб-разработчик</div>
-                <div class="member-bio">Помогает в разработке сайта. Страница Phoenix — его рук дело.</div>
-                <div class="member-social">
-                    <a href="https://t.me/zeyrix15" target="_blank"><i class="fab fa-telegram"></i></a>
-                    <a href="https://www.tiktok.com/@zeyrix.prime" target="_blank"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://www.twitch.tv/zeyrix1515" target="_blank"><i class="fab fa-twitch"></i></a>
-                </div>
-            </div>
-            <!-- Griha228 -->
-            <div class="member-card">
-                <div class="member-avatar"><img src="posts/ava5.png" alt="Griha228" onerror="this.parentElement.innerHTML='👮'"></div>
-                <div class="member-name">Griha228</div>
-                <div class="member-role">Тестировщик</div>
-                <div class="member-bio">Следит за качеством и помогает находить баги.</div>
-                <div class="member-social">
-                    <a href="https://t.me/MrSiktyTt" target="_blank"><i class="fab fa-telegram"></i></a>
-                    <a href="https://www.twitch.tv/mrsiktytt" target="_blank"><i class="fab fa-twitch"></i></a>
-                    <a href="https://discord.gg/NAHBZFxQMR" target="_blank"><i class="fab fa-discord"></i></a>
-                </div>
-            </div>
-            <!-- Kelliya -->
-            <div class="member-card">
-                <div class="member-avatar"><img src="posts/ava6.png" alt="Kelliya" onerror="this.parentElement.innerHTML='🔧'"></div>
-                <div class="member-name">Kelliya</div>
-                <div class="member-role">Гл. Админ Discord · Тестировщик</div>
-                <div class="member-bio">Следит за порядком на Discord-сервере, где всё общение.</div>
-                <div class="member-social"><a href="https://discord.gg/NAHBZFxQMR" target="_blank"><i class="fab fa-discord"></i></a></div>
-            </div>
-        </div>
-
-        <div class="quote-block fade-up delay-2">
-            <i class="fas fa-quote-left" style="margin-right: 10px; color:#8597FF;"></i>
-            Мы — команда энтузиастов, которые создают уютное место для игры и творчества. Каждый участник ценен, и мы всегда рады новым идеям!
-        </div>
-
-        <footer class="fade-up">
-            <p><i class="fab fa-telegram"></i> © 2026 — Команда проекта · Все права защищены.</p>
-            <p style="font-size: 0.75rem; margin-top: 8px;">Хочешь присоединиться? Напиши в Telegram @MrSikty</p>
+        <footer>
+            <p>© 2026 — PHX · Все права защищены.</p>
         </footer>
-    </div>
+    </main>
 
     <script>
+        // ── Гамбургер ──
+        const hamburger = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                if (!sidebar.contains(e.target) && e.target !== hamburger && !hamburger.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // ── Курсор ──
         const glow = document.getElementById('cursorGlow');
         let mx = 0,
             my = 0,

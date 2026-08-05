@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>Главная | MrSiktyyy</title>
+    <title>Главная | PHX</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <style>
@@ -17,12 +17,12 @@
             box-sizing: border-box;
         }
         body {
-            background-color: #0b0e1a;
-            font-family: 'Inter', sans-serif;
-            color: #eaeef7;
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
+            background: #1e1e1e;
+            color: #ffffff;
+            line-height: 1.5;
             overflow-x: hidden;
-            position: relative;
+            display: flex;
             min-height: 100vh;
         }
         body::-webkit-scrollbar {
@@ -31,357 +31,280 @@
         }
         body {
             scrollbar-width: none;
-            -ms-overflow-style: none;
         }
 
-        /* ── Фоновые слои ── */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('11.png') no-repeat center center;
-            background-size: cover;
-            opacity: 0.12;
-            pointer-events: none;
-            z-index: 0;
-            transform: scaleY(-1);
-        }
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105, 112, 255, 0.15);
-        }
-
-        /* ── Световые пятна ── */
-        .light-source-1,
-        .light-source-2 {
+        /* ── Фоновое свечение ── */
+        .light-source {
             position: fixed;
             width: 600px;
             height: 600px;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 1;
-            opacity: 0.25;
+            z-index: 0;
+            opacity: 0.08;
             filter: blur(80px);
             animation: floatLight 22s infinite alternate ease-in-out;
         }
         .light-source-1 {
-            background: radial-gradient(circle, rgba(105, 112, 255, 0.5), rgba(133, 151, 255, 0));
+            background: radial-gradient(circle, #0088ff, transparent);
             top: -10%;
-            left: -15%;
+            left: -10%;
         }
         .light-source-2 {
-            background: radial-gradient(circle, rgba(133, 151, 255, 0.4), rgba(105, 112, 255, 0));
-            bottom: -5%;
-            right: -15%;
+            background: radial-gradient(circle, #0088ff, transparent);
+            bottom: -10%;
+            right: -10%;
             animation-duration: 26s;
             animation-delay: -4s;
         }
         @keyframes floatLight {
             0% {
                 transform: translate(0, 0) scale(1);
-                opacity: 0.2;
+                opacity: 0.05;
             }
             100% {
-                transform: translate(12%, 18%) scale(1.3);
-                opacity: 0.4;
+                transform: translate(10%, 15%) scale(1.3);
+                opacity: 0.12;
             }
         }
 
-        /* ── Частицы (звёзды) ── */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #8597ff;
-            border-radius: 50%;
-            opacity: 0.4;
-            animation: floatParticle 18s infinite alternate ease-in-out;
-        }
-        @keyframes floatParticle {
-            0% {
-                transform: translate(0, 0) scale(0.8);
-                opacity: 0.2;
-            }
-            100% {
-                transform: translate(40px, -60px) scale(1.4);
-                opacity: 0.6;
-            }
-        }
-
+        /* ── Свечение курсора ── */
         .cursor-glow {
             position: fixed;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(105, 112, 255, 0.3) 0%, rgba(133, 151, 255, 0.08) 50%, transparent 75%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 136, 255, 0.15), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
+            filter: blur(40px);
             z-index: 1000;
-            filter: blur(35px);
+            transition: none;
         }
 
-        /* ── Container ── */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 30px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* ── Navbar ── */
-        .navbar {
-            padding: 25px 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            border-bottom: 1px solid rgba(133, 151, 255, 0.15);
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 20;
-        }
-        .logo {
-            font-size: 2.2rem;
-            font-weight: 900;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(135deg, #6970ff, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
-            animation: logoGlow 3s infinite alternate;
-        }
-        @keyframes logoGlow {
-            0% {
-                text-shadow: 0 0 5px rgba(105, 112, 255, 0.2);
-            }
-            100% {
-                text-shadow: 0 0 20px rgba(105, 112, 255, 0.5);
-            }
-        }
-        .nav-links {
-            display: flex;
-            gap: 2.2rem;
-            flex-wrap: wrap;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #a8b6e6;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            position: relative;
-            font-size: 0.95rem;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
+        /* ── Боковое меню ── */
+        .sidebar {
+            position: fixed;
+            top: 0;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #6970ff, #8597ff);
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        .nav-links a:hover {
-            color: #d4ddff;
-            transform: translateY(-1px);
-        }
-        .nav-links a.active {
-            color: #8597ff;
-            text-shadow: 0 0 10px rgba(105, 112, 255, 0.4);
-        }
-        .nav-links a.active::after {
-            width: 100%;
-        }
-
-        /* ── Hero ── */
-        .hero {
-            padding: 60px 0 40px;
+            width: 280px;
+            height: 100vh;
+            background: #222222;
+            padding: 24px 16px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 4rem;
-            position: relative;
-            border-radius: 40px;
-            margin: 20px 0;
-            background: rgba(11, 14, 30, 0.4);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(105, 112, 255, 0.1);
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+            border-right: 1px solid #333333;
+            transition: transform 0.3s ease;
         }
-        .hero-content {
-            flex: 1;
-            max-width: 560px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(105, 112, 255, 0.15);
-            padding: 6px 22px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #8597ff;
-            border: 1px solid rgba(105, 112, 255, 0.3);
-            backdrop-filter: blur(4px);
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-        .hero h1 {
-            font-size: clamp(2.5rem, 7vw, 4.2rem);
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 18px;
-            font-family: 'Orbitron', sans-serif;
-        }
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, #6970ff, #b8c4ff);
+        .sidebar .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #0088ff, #00ccff);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            padding: 8px 0 12px;
+            border-bottom: 1px solid #333333;
+            margin-bottom: 8px;
         }
-        .hero p {
-            font-size: 1.05rem;
-            color: #b0c0ee;
-            max-width: 500px;
-            margin: 0 auto 32px;
-            line-height: 1.7;
-        }
-        .hero-buttons {
+        .sidebar nav ul {
+            list-style: none;
             display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
         }
-        .btn {
-            display: inline-flex;
+        .sidebar nav ul li a {
+            display: flex;
             align-items: center;
-            gap: 10px;
-            background: rgba(20, 24, 50, 0.7);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(105, 112, 255, 0.3);
-            padding: 12px 28px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            color: #fff;
+            gap: 16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #aaaaaa;
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            letter-spacing: 0.3px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s;
         }
-        .btn i {
+        .sidebar nav ul li a i {
+            width: 24px;
+            text-align: center;
             font-size: 1.2rem;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #6970ff, #8597ff);
-            border: none;
-            box-shadow: 0 6px 20px rgba(105, 112, 255, 0.35);
+        .sidebar nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
         }
-        .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(105, 112, 255, 0.5);
+        .sidebar nav ul li a.active {
+            background: #0077ff;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
         }
-        .btn:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(135deg, rgba(105, 112, 255, 0.3), rgba(133, 151, 255, 0.2));
-            border-color: #8597ff;
-            box-shadow: 0 8px 25px rgba(105, 112, 255, 0.25);
-        }
-        .hero-stats {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            z-index: 2;
+
+        /* ── Основная область ── */
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 0 30px 40px;
+            background: #1e1e1e;
+            min-height: 100vh;
             position: relative;
+            z-index: 1;
         }
-        .stat-item {
-            background: rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 16px 24px;
-            text-align: center;
-            min-width: 130px;
-            border: 1px solid rgba(105, 112, 255, 0.2);
-            transition: all 0.3s ease;
+
+        /* ── Верхняя панель ── */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid #333333;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
-        .stat-item:hover {
-            transform: translateY(-6px);
-            border-color: #8597ff;
-            box-shadow: 0 0 20px rgba(105, 112, 255, 0.2);
+        .top-bar .hamburger {
+            display: none;
+            font-size: 1.6rem;
+            color: #aaaaaa;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
         }
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(135deg, #fff, #8597ff);
+        .top-bar .hamburger:hover {
+            color: #ffffff;
+        }
+        .top-bar .page-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .top-bar .page-title span {
+            color: #0088ff;
+        }
+        .top-bar .user-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #aaaaaa;
+        }
+        .top-bar .user-area i {
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .top-bar .user-area i:hover {
+            color: #ffffff;
+        }
+
+        /* ── Контент главной ── */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .hero-info {
+            flex: 1;
+            min-width: 280px;
+        }
+        .hero-info h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .hero-info h1 span {
+            background: linear-gradient(135deg, #0088ff, #00ccff);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
-        .stat-label {
-            font-size: 0.75rem;
-            color: #a5b6e6;
-            margin-top: 4px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+        .hero-info .subtitle {
+            font-size: 1.1rem;
+            color: #aaaaaa;
+            margin-bottom: 16px;
         }
-        .stat-item .fa-icon {
-            color: #8597ff;
-            margin-right: 6px;
+        .hero-info .bio {
+            color: #cccccc;
+            max-width: 500px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .hero-info .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .hero-info .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: #333333;
+            border-radius: 40px;
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
             font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .hero-info .social-links a:hover {
+            background: #444444;
+            color: #ffffff;
+        }
+        .hero-info .social-links a i {
+            font-size: 1.2rem;
         }
 
-        /* ── Carousel (avatar) ── */
-        .carousel-section {
-            margin: 60px 0 40px;
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            flex: 0 0 auto;
+        }
+        .stat-item {
+            background: #282828;
+            padding: 16px 24px;
+            border-radius: 12px;
             text-align: center;
-            position: relative;
-            z-index: 15;
+            min-width: 120px;
+            border: 1px solid #333333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .stat-item .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0088ff;
+        }
+        .stat-item .stat-label {
+            font-size: 0.8rem;
+            color: #aaaaaa;
+            margin-top: 4px;
+        }
+
+        /* Карусель аватарок */
+        .carousel-section {
+            text-align: center;
+            margin: 20px 0 40px;
         }
         .carousel-slide {
-            width: 260px;
-            height: 260px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             overflow: hidden;
             margin: 0 auto;
-            border: 4px solid rgba(105, 112, 255, 0.6);
-            box-shadow: 0 0 35px rgba(105, 112, 255, 0.3);
-            transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            cursor: pointer;
+            border: 2px solid #444444;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: 0.3s;
         }
         .carousel-slide:hover {
-            transform: scale(1.05) rotate(2deg);
-            border-color: #8597ff;
-            box-shadow: 0 0 55px rgba(133, 151, 255, 0.5);
+            border-color: #0088ff;
+            box-shadow: 0 0 30px rgba(0, 136, 255, 0.2);
         }
         .carousel-slide img {
             width: 100%;
@@ -391,109 +314,63 @@
             transition: opacity 0.5s ease;
         }
 
-        /* ── Social section ── */
-        .social-section {
-            border-radius: 40px;
-            padding: 40px 30px;
-            margin: 50px 0;
-            background: rgba(12, 15, 32, 0.5);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(105, 112, 255, 0.1);
-            position: relative;
-            z-index: 15;
-            overflow: hidden;
-        }
-        .social-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('032.png') no-repeat center center;
-            background-size: cover;
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: -1;
-        }
-        .social-section h2 {
-            font-size: 2rem;
-            text-align: center;
-            font-weight: 700;
-            margin-bottom: 1.8rem;
-            background: linear-gradient(135deg, #fff, #b8c4ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            font-family: 'Orbitron', sans-serif;
-        }
-        .social-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.2rem;
-            margin: 0 0 1.5rem 0;
-        }
-        .social-card {
-            background: rgba(18, 22, 45, 0.7);
-            backdrop-filter: blur(6px);
-            border-radius: 60px;
-            padding: 12px 28px;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            border: 1px solid rgba(105, 112, 255, 0.2);
-            text-decoration: none;
-            color: #eaeef7;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        .social-card i {
-            font-size: 1.6rem;
-            color: #8597ff;
-            transition: transform 0.3s;
-        }
-        .social-card:hover {
-            background: linear-gradient(135deg, rgba(105, 112, 255, 0.25), rgba(133, 151, 255, 0.15));
-            border-color: #8597ff;
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(105, 112, 255, 0.25);
-        }
-        .social-card:hover i {
-            transform: rotate(6deg) scale(1.1);
-        }
-        .social-extra {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
         /* ── Footer ── */
         footer {
             text-align: center;
-            padding: 40px 0 50px;
-            border-top: 1px solid rgba(133, 151, 255, 0.1);
-            margin-top: 60px;
-            position: relative;
-            z-index: 15;
-        }
-        .footer-top {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #b8c8f0;
-            margin-bottom: 10px;
-        }
-        .footer-copy {
+            padding: 30px 0 10px;
+            border-top: 1px solid #333333;
+            margin-top: 40px;
+            color: #666666;
             font-size: 0.8rem;
-            color: #7a8fc9;
         }
 
-        /* ── Анимации появления ── */
+        /* ── Адаптив ── */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main {
+                margin-left: 0;
+                padding: 0 20px 30px;
+            }
+            .top-bar .hamburger {
+                display: block;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-info .social-links {
+                justify-content: center;
+            }
+            .hero-info .bio {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        @media (max-width: 600px) {
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            .stat-item {
+                width: 100%;
+                max-width: 200px;
+            }
+            .carousel-slide {
+                width: 140px;
+                height: 140px;
+            }
+        }
+
+        /* ── Анимация появления ── */
         .fade-up {
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
         }
         @keyframes fadeUp {
             to {
@@ -502,156 +379,107 @@
             }
         }
         .delay-1 {
-            animation-delay: 0.1s;
+            animation-delay: 0.05s;
         }
         .delay-2 {
-            animation-delay: 0.2s;
+            animation-delay: 0.1s;
         }
         .delay-3 {
-            animation-delay: 0.35s;
-        }
-
-        /* ── Адаптив ── */
-        @media (max-width: 850px) {
-            .hero {
-                flex-direction: column;
-                padding: 40px 0;
-                gap: 2rem;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .navbar {
-                flex-direction: column;
-                align-items: center;
-            }
-            .nav-links {
-                justify-content: center;
-            }
-            .carousel-slide {
-                width: 200px;
-                height: 200px;
-            }
-            .stat-item {
-                min-width: 100px;
-                padding: 12px 18px;
-            }
-            .stat-number {
-                font-size: 1.6rem;
-            }
-        }
-        @media (max-width: 480px) {
-            .hero-buttons .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            .social-card {
-                padding: 10px 18px;
-                font-size: 0.85rem;
-            }
+            animation-delay: 0.15s;
         }
     </style>
 </head>
 <body>
-    <!-- Световые пятна -->
-    <div class="light-source-1"></div>
-    <div class="light-source-2"></div>
-    <!-- Частицы -->
-    <div class="particles" id="particles"></div>
-    <!-- Свечение курсора -->
+    <div class="light-source light-source-1"></div>
+    <div class="light-source light-source-2"></div>
     <div class="cursor-glow" id="cursorGlow"></div>
 
-    <div class="container">
-        <!-- Navbar -->
-        <nav class="navbar fade-up">
-            <div class="logo">✦ MrSiktyyy</div>
-            <div class="nav-links">
-                <a href="/" class="active">Главная</a>
-                <a href="/news">Новости</a>
-                <a href="/phoenix">Phoenix</a>
-                <a href="/unskillteam">Команда</a>
-            </div>
+    <!-- Боковое меню -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">✦ PHX</div>
+        <nav>
+            <ul>
+                <li><a href="/" class="active"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                <li><a href="/phoenix"><i class="fas fa-fire"></i> Phoenix</a></li>
+                <li><a href="/unskillteam"><i class="fas fa-discord"></i> Discord Server</a></li>
+            </ul>
         </nav>
+    </aside>
 
-        <!-- Hero -->
-        <div class="hero fade-up delay-1">
-            <div class="hero-content">
-                <div class="hero-badge"><i class="fab fa-telegram"></i> @MrSikty</div>
-                <h1><span class="highlight">MrSiktyyy</span><br />Основная информация</h1>
-                <p>
-                    Иван Акбашев — стример, разработчик, геймер.
-                    Здесь ты найдёшь все мои соцсети, последние новости и информацию о проектах.
+    <!-- Основная область -->
+    <main class="main">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">Главная <span>PHX</span></div>
+            <div class="user-area">
+                <i class="fas fa-bell" title="Уведомления"></i>
+                <i class="fas fa-user-circle" title="Профиль" style="font-size:1.8rem;"></i>
+            </div>
+        </header>
+
+        <!-- Герой -->
+        <div class="hero fade-up">
+            <div class="hero-info">
+                <h1>Привет, я <span>MrSiktyyy</span></h1>
+                <div class="subtitle">Основатель PHX · Стример · Разработчик</div>
+                <p class="bio">
+                    Меня зовут Иван Акбашев. Я создал этот сайт и команду Phoenix.
+                    Здесь ты найдёшь всё о нашей деятельности, новости и состав.
+                    Присоединяйся к нам в соцсетях!
                 </p>
-                <div class="hero-buttons">
-                    <a href="https://www.instagram.com/mrsiktyyy/" class="btn" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="https://www.twitch.tv/mrs1kty" class="btn btn-primary" target="_blank"><i class="fab fa-twitch"></i> Twitch</a>
-                    <a href="https://www.youtube.com/@MrS1kyyy" class="btn" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                <div class="social-links">
+                    <a href="https://t.me/MrSikty" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="https://www.instagram.com/mrsiktyyy/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://www.twitch.tv/mrs1kty" target="_blank"><i class="fab fa-twitch"></i> Twitch</a>
+                    <a href="https://www.youtube.com/@MrS1kyyy" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="https://steamcommunity.com/id/mrsikty/" target="_blank"><i class="fab fa-steam"></i> Steam</a>
                 </div>
             </div>
-            <div class="hero-stats fade-up delay-2">
+            <div class="hero-stats">
                 <div class="stat-item">
-                    <div class="stat-number"><i class="fas fa-fire fa-icon"></i> СВЕЖИЕ</div>
-                    <div class="stat-label">новости</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" style="font-size: 1.8rem;">Акбашев Иван</div>
-                    <div class="stat-label"><span id="ageValue">--</span> лет</div>
+                    <div class="stat-number"><span id="ageValue">--</span></div>
+                    <div class="stat-label">лет</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">500+</div>
                     <div class="stat-label">подписчиков</div>
                 </div>
+                <div class="stat-item">
+                    <div class="stat-number">🔥</div>
+                    <div class="stat-label">свежие новости</div>
+                </div>
             </div>
         </div>
 
-        <!-- Carousel -->
-        <div class="carousel-section fade-up delay-2">
+        <!-- Карусель аватарок -->
+        <div class="carousel-section fade-up delay-1">
             <div class="carousel-slide" id="avatarSlide">
                 <img id="avatarImg" src="ava1.jpg" alt="avatar" />
             </div>
         </div>
 
-        <!-- Social -->
-        <div class="social-section fade-up delay-3">
-            <h2>🌐 Все соцсети</h2>
-            <div class="social-grid">
-                <a href="https://t.me/MrSikty" class="social-card" target="_blank"><i class="fab fa-telegram"></i> @MrSikty</a>
-                <a href="https://www.instagram.com/mrsiktyyy/" class="social-card" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://www.twitch.tv/mrs1kty" class="social-card" target="_blank"><i class="fab fa-twitch"></i> Twitch</a>
-                <a href="https://www.youtube.com/@MrS1kyyy" class="social-card" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-                <a href="https://steamcommunity.com/id/mrsikty/" class="social-card" target="_blank"><i class="fab fa-steam"></i> Steam</a>
-                <a href="https://discord.gg/NAHBZFxQMR" class="social-card" target="_blank"><i class="fab fa-discord"></i> Discord</a>
-            </div>
-            <div class="social-extra">
-                <a href="https://t.me/unsk1llteam" class="btn" target="_blank"><i class="fab fa-telegram"></i> Клан Phoenix</a>
-            </div>
-        </div>
-
-        <!-- Footer -->
         <footer>
-            <div class="footer-top">✨ MrSiktyyy — играет во всё, с ним интересно и позитивно!</div>
-            <div class="footer-copy">© 2026 — MrSiktyyy · Все права защищены.</div>
+            <p>© 2026 — PHX · Все права защищены.</p>
         </footer>
-    </div>
+    </main>
 
     <script>
-        // ── Курсор ──
-        const glow = document.getElementById('cursorGlow');
-        let mx = 0,
-            my = 0,
-            gx = 0,
-            gy = 0;
-        document.addEventListener('mousemove', (e) => { mx = e.clientX;
-            my = e.clientY; });
-
-        function animateGlow() {
-            gx += (mx - gx) * 0.12;
-            gy += (my - gy) * 0.12;
-            glow.style.left = gx + 'px';
-            glow.style.top = gy + 'px';
-            requestAnimationFrame(animateGlow);
-        }
-        animateGlow();
+        // ── Гамбургер ──
+        const hamburger = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                if (!sidebar.contains(e.target) && e.target !== hamburger && !hamburger.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
 
         // ── Возраст ──
         function calculateAge(birthDate) {
@@ -680,23 +508,23 @@
         setInterval(changeAvatar, 5000);
         imgElement.style.opacity = '1';
 
-        // ── Генерация частиц ──
-        (function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 40; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                const size = 2 + Math.random() * 4;
-                p.style.width = size + 'px';
-                p.style.height = size + 'px';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.top = Math.random() * 100 + '%';
-                p.style.animationDelay = Math.random() * 15 + 's';
-                p.style.animationDuration = 12 + Math.random() * 18 + 's';
-                p.style.opacity = 0.2 + Math.random() * 0.4;
-                container.appendChild(p);
-            }
-        })();
+        // ── Курсор ──
+        const glow = document.getElementById('cursorGlow');
+        let mx = 0,
+            my = 0,
+            gx = 0,
+            gy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX;
+            my = e.clientY; });
+
+        function animateGlow() {
+            gx += (mx - gx) * 0.12;
+            gy += (my - gy) * 0.12;
+            glow.style.left = gx + 'px';
+            glow.style.top = gy + 'px';
+            requestAnimationFrame(animateGlow);
+        }
+        animateGlow();
     </script>
 </body>
 </html>
