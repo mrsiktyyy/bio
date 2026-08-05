@@ -3,7 +3,7 @@
     { "source": "/", "destination": "/index.html" },
     { "source": "/news", "destination": "/news.html" },
     { "source": "/news/:page", "destination": "/news.html" },
-    { "source": "/server", "destination": "/server.html" },
+    { "source": "/phoenix", "destination": "/phoenix.html" },
     { "source": "/unskillteam", "destination": "/unskillteam.html" }
   ]
 }

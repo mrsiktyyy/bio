@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Phoenix Team | CS2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="icon" type="image/png" href="/favicon2.png" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0b0e1a;
+            font-family: 'Inter', sans-serif;
+            color: #eaeef7;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        body::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        body {
+            scrollbar-width: none;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(105, 112, 255, 0.15);
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('11.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+            transform: scaleY(-1);
+        }
+        .light-source-1,
+        .light-source-2 {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.2;
+            filter: blur(80px);
+            animation: floatLight 22s infinite alternate ease-in-out;
+        }
+        .light-source-1 {
+            background: radial-gradient(circle, rgba(255, 70, 70, 0.3), rgba(255, 150, 50, 0));
+            top: -10%;
+            left: -10%;
+        }
+        .light-source-2 {
+            background: radial-gradient(circle, rgba(255, 100, 100, 0.25), rgba(255, 180, 80, 0));
+            bottom: -5%;
+            right: -15%;
+            animation-duration: 26s;
+            animation-delay: -4s;
+        }
+        @keyframes floatLight {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.15;
+            }
+            100% {
+                transform: translate(10%, 15%) scale(1.3);
+                opacity: 0.3;
+            }
+        }
+        .cursor-glow {
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(255, 100, 100, 0.2) 0%, rgba(255, 150, 50, 0.05) 50%, transparent 75%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            filter: blur(35px);
+            z-index: 1000;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 10;
+        }
+        .navbar {
+            padding: 25px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid rgba(255, 100, 100, 0.15);
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #ffa94d);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            animation: logoGlow 3s infinite alternate;
+        }
+        @keyframes logoGlow {
+            0% {
+                text-shadow: 0 0 5px rgba(255, 100, 100, 0.2);
+            }
+            100% {
+                text-shadow: 0 0 25px rgba(255, 100, 100, 0.5);
+            }
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.2rem;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #c0b0d0;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            font-size: 0.95rem;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #ffa94d);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: #ffd0a0;
+        }
+        .nav-links a.active {
+            color: #ffa94d;
+            text-shadow: 0 0 15px rgba(255, 150, 50, 0.4);
+        }
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #ffa94d);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+        }
+        .page-header p {
+            color: #b0a0c0;
+            font-size: 1.1rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .member-card {
+            background: rgba(16, 12, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 100, 100, 0.2);
+            padding: 24px 18px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 100, 100, 0.05), transparent 70%);
+            transition: all 0.5s;
+            pointer-events: none;
+        }
+        .member-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #ffa94d;
+            box-shadow: 0 20px 40px rgba(255, 100, 100, 0.25);
+        }
+        .member-card:hover::before {
+            transform: scale(1.2);
+            opacity: 0.5;
+        }
+        .member-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #ffa94d);
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            box-shadow: 0 0 30px rgba(255, 100, 100, 0.3);
+            transition: transform 0.3s;
+        }
+        .member-card:hover .member-avatar {
+            transform: scale(1.08) rotate(2deg);
+        }
+        .member-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .member-role {
+            display: inline-block;
+            background: rgba(255, 100, 100, 0.15);
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #ffa94d;
+            border: 1px solid rgba(255, 100, 100, 0.15);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .member-stats {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: #b0a0c0;
+            margin: 12px 0 16px;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .member-stats span {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .member-stats .highlight {
+            color: #ffa94d;
+            font-weight: 700;
+        }
+        .member-bio {
+            font-size: 0.9rem;
+            color: #c0b0d0;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+        }
+        .member-social a {
+            color: #a090b0;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.05);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .member-social a:hover {
+            color: #ffa94d;
+            transform: translateY(-3px) scale(1.1);
+            background: rgba(255, 100, 100, 0.15);
+            border-color: #ffa94d;
+            box-shadow: 0 0 15px rgba(255, 100, 100, 0.3);
+        }
+        .vacancy {
+            border-style: dashed;
+            border-color: rgba(255, 200, 100, 0.4);
+            background: rgba(16, 12, 30, 0.4);
+        }
+        .vacancy .member-avatar {
+            background: rgba(255, 200, 100, 0.2);
+            color: #ffa94d;
+            box-shadow: none;
+            border: 2px dashed #ffa94d;
+        }
+        .vacancy .member-name {
+            color: #ffa94d;
+        }
+        .vacancy .member-role {
+            background: rgba(255, 200, 100, 0.1);
+            color: #ffcc80;
+        }
+        .vacancy .member-bio {
+            color: #a090b0;
+        }
+
+        .quote-block {
+            background: rgba(16, 12, 30, 0.5);
+            border-radius: 28px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            border-left: 4px solid #ffa94d;
+            font-style: italic;
+            color: #c0b0d0;
+            transition: all 0.3s;
+        }
+        .quote-block:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        footer {
+            text-align: center;
+            padding: 30px 0 40px;
+            border-top: 1px solid rgba(255, 100, 100, 0.1);
+            margin-top: 40px;
+            color: #7a6a8a;
+        }
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+            .team-grid {
+                gap: 20px;
+            }
+            .member-card {
+                padding: 18px;
+            }
+            .member-avatar {
+                width: 90px;
+                height: 90px;
+                font-size: 2.2rem;
+            }
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+        .delay-5 {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="light-source-1"></div>
+    <div class="light-source-2"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="container">
+        <nav class="navbar fade-up">
+            <div class="logo">✦ Phoenix</div>
+            <div class="nav-links">
+                <a href="/">Главная</a>
+                <a href="/news">Новости</a>
+                <a href="/phoenix" class="active">Phoenix</a>
+                <a href="/unskillteam">Команда</a>
+            </div>
+        </nav>
+
+        <div class="page-header fade-up">
+            <h1>🔥 Phoenix Team</h1>
+            <p>Состав команды по CS2 в стиле Faceit</p>
+        </div>
+
+        <div class="team-grid">
+            <!-- MrSiktyyy -->
+            <div class="member-card fade-up delay-1">
+                <div class="member-avatar">MS</div>
+                <div class="member-name">MrSiktyyy</div>
+                <div class="member-role">Опен фрагер · Снайпер</div>
+                <div class="member-stats">
+                    <span>💀 1.45 K/D</span>
+                    <span>⭐ 2200 ELO</span>
+                </div>
+                <div class="member-bio">Агрессивный стиль, отличный аим, может закрыть любую позицию.</div>
+                <div class="member-social">
+                    <a href="https://steamcommunity.com/id/mrsikty/" target="_blank"><i class="fab fa-steam"></i></a>
+                    <a href="https://www.twitch.tv/mrs1kty" target="_blank"><i class="fab fa-twitch"></i></a>
+                    <a href="https://t.me/MrSikty" target="_blank"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+
+            <!-- Novich0k42 -->
+            <div class="member-card fade-up delay-2">
+                <div class="member-avatar">N0</div>
+                <div class="member-name">Novich0k42</div>
+                <div class="member-role">Командир · Рифлер</div>
+                <div class="member-stats">
+                    <span>💀 1.60 K/D</span>
+                    <span>⭐ 2400 ELO</span>
+                </div>
+                <div class="member-bio">Лидер, тактик, лучший стрелок команды. Ведёт за собой.</div>
+                <div class="member-social">
+                    <a href="#" target="_blank"><i class="fab fa-steam"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitch"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+
+            <!-- Zenlo. -->
+            <div class="member-card fade-up delay-3">
+                <div class="member-avatar">Z</div>
+                <div class="member-name">Zenlo.</div>
+                <div class="member-role">Снайпер</div>
+                <div class="member-stats">
+                    <span>💀 1.30 K/D</span>
+                    <span>⭐ 1950 ELO</span>
+                </div>
+                <div class="member-bio">Хороший AWP, но уступает MrSiktyyy по стабильности.</div>
+                <div class="member-social">
+                    <a href="#" target="_blank"><i class="fab fa-steam"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitch"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+
+            <!-- Fogy -->
+            <div class="member-card fade-up delay-4">
+                <div class="member-avatar">F</div>
+                <div class="member-name">Fogy</div>
+                <div class="member-role">Люркер</div>
+                <div class="member-stats">
+                    <span>💀 1.25 K/D</span>
+                    <span>⭐ 1800 ELO</span>
+                </div>
+                <div class="member-bio">Любит нестандартные раскидки и фланги, умеет дать информацию.</div>
+                <div class="member-social">
+                    <a href="#" target="_blank"><i class="fab fa-steam"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitch"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+
+            <!-- Вакансия -->
+            <div class="member-card vacancy fade-up delay-5">
+                <div class="member-avatar">+</div>
+                <div class="member-name">Ищем игрока</div>
+                <div class="member-role">Пятый · Любая роль</div>
+                <div class="member-stats">
+                    <span>💀 ?</span>
+                    <span>⭐ ?</span>
+                </div>
+                <div class="member-bio">Хочешь стать частью Phoenix? Пиши @MrSikty с пометкой "В Phoenix".</div>
+                <div class="member-social">
+                    <a href="https://t.me/MrSikty" target="_blank"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-block fade-up">
+            <i class="fas fa-quote-left" style="margin-right: 10px; color:#ffa94d;"></i>
+            Phoenix — это не просто команда, это братство. Мы играем ради победы и кайфа.
+        </div>
+
+        <footer>
+            <p><i class="fab fa-telegram"></i> © 2026 — Phoenix Team · Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script>
+        const glow = document.getElementById('cursorGlow');
+        let mx = 0,
+            my = 0,
+            gx = 0,
+            gy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX;
+            my = e.clientY; });
+
+        function animateGlow() {
+            gx += (mx - gx) * 0.12;
+            gy += (my - gy) * 0.12;
+            glow.style.left = gx + 'px';
+            glow.style.top = gy + 'px';
+            requestAnimationFrame(animateGlow);
+        }
+        animateGlow();
+    </script>
+</body>
+</html>
