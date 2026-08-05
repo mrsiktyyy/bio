@@ -57,21 +57,15 @@
             animation-delay: -4s;
         }
         @keyframes floatLight {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.05;
-            }
-            100% {
-                transform: translate(10%, 15%) scale(1.3);
-                opacity: 0.12;
-            }
+            0% { transform: translate(0,0) scale(1); opacity: 0.05; }
+            100% { transform: translate(10%,15%) scale(1.3); opacity: 0.12; }
         }
 
         .cursor-glow {
             position: fixed;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(255, 85, 0, 0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(255,85,0,0.15), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
@@ -95,18 +89,16 @@
             border-right: 1px solid #2a2a2d;
             transition: transform 0.3s ease;
         }
-        .sidebar .logo {
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #FF5500, #ff8833);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            padding: 8px 0 12px;
-            border-bottom: 1px solid #2a2a2d;
+        .sidebar .logo-link {
+            display: block;
             margin-bottom: 8px;
-            text-decoration: none;
+            border-bottom: 1px solid #2a2a2d;
+            padding-bottom: 12px;
+        }
+        .sidebar .logo-link img {
+            max-width: 160px;
+            height: auto;
+            display: block;
         }
         .sidebar nav ul {
             list-style: none;
@@ -132,13 +124,13 @@
             font-size: 1.2rem;
         }
         .sidebar nav ul li a:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             color: #ffffff;
         }
         .sidebar nav ul li a.active {
             background: #FF5500;
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(255,85,0,0.3);
         }
 
         .main-wrapper {
@@ -239,7 +231,7 @@
             border-radius: 12px;
             padding: 24px 18px;
             border: 1px solid #2a2a2d;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
             cursor: pointer;
             position: relative;
@@ -250,7 +242,7 @@
         }
         .member-card:hover {
             border-color: #FF5500;
-            box-shadow: 0 8px 24px rgba(255, 85, 0, 0.15);
+            box-shadow: 0 8px 24px rgba(255,85,0,0.15);
             opacity: 0;
             transform: scale(0.92) translateY(20px);
         }
@@ -296,7 +288,7 @@
             margin-bottom: 18px;
         }
         .stat-tile {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             border-radius: 8px;
             padding: 8px 4px;
             text-align: center;
@@ -304,7 +296,7 @@
             transition: 0.2s;
         }
         .stat-tile:hover {
-            background: rgba(255, 85, 0, 0.08);
+            background: rgba(255,85,0,0.08);
             border-color: #FF5500;
         }
         .stat-tile .label {
@@ -329,24 +321,26 @@
         .stat-tile .value.low-kd {
             color: #f44336;
         }
-        .stat-tile .value.elo {
-            font-size: 1.1rem;
+        .stat-tile .value.elo-white {
+            color: #ffffff;
             font-weight: 700;
-            color: #FF5500;
+        }
+        .stat-tile .value.italic-num {
+            font-style: italic;
         }
         .progress-wrap {
             width: 100%;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            height: 4px;
+            background: #333333;
+            border-radius: 2px;
             margin-top: 4px;
             overflow: hidden;
         }
-        .progress-bar {
+        .progress-fill {
             height: 100%;
-            border-radius: 4px;
-            background: linear-gradient(90deg, #FF5500, #ff8833);
-            transition: width 0.6s ease;
+            border-radius: 2px;
+            background: #FF5500;
+            transition: width 0.3s ease;
         }
 
         .btn-steam {
@@ -382,11 +376,11 @@
         }
         .vacancy:hover {
             border-color: #FF5500;
-            box-shadow: 0 8px 24px rgba(255, 85, 0, 0.08);
+            box-shadow: 0 8px 24px rgba(255,85,0,0.08);
         }
         .vacancy .member-avatar {
             border-color: #2a2a2d;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -406,12 +400,12 @@
             display: none;
         }
         .vacancy .btn-steam {
-            background: rgba(255, 85, 0, 0.1);
+            background: rgba(255,85,0,0.1);
             color: #FF5500;
-            border: 1px solid rgba(255, 85, 0, 0.2);
+            border: 1px solid rgba(255,85,0,0.2);
         }
         .vacancy .btn-steam:hover {
-            background: rgba(255, 85, 0, 0.2);
+            background: rgba(255,85,0,0.2);
             color: #ff8833;
         }
 
@@ -422,7 +416,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0,0,0,0.7);
             backdrop-filter: blur(8px);
             z-index: 2000;
             justify-content: center;
@@ -443,17 +437,11 @@
             animation: modalFade 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
         @keyframes modalFade {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .modal-close {
             position: absolute;
@@ -462,12 +450,11 @@
             font-size: 28px;
             color: #aaaaaa;
             cursor: pointer;
-            transition: 0.2s;
+            transition: opacity 0.2s ease;
             line-height: 1;
         }
         .modal-close:hover {
-            color: #ffffff;
-            transform: rotate(90deg);
+            opacity: 0.7;
         }
         .modal-avatar {
             width: 100px;
@@ -476,7 +463,7 @@
             overflow: hidden;
             margin: 0 auto 16px;
             border: 2px solid #FF5500;
-            box-shadow: 0 0 30px rgba(255, 85, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255,85,0,0.2);
         }
         .modal-avatar img {
             width: 100%;
@@ -515,6 +502,13 @@
         }
         .modal-stats .value.accent {
             color: #FF5500;
+        }
+        .modal-stats .value.italic-num {
+            font-style: italic;
+        }
+        .modal-stats .value.elo-white {
+            color: #ffffff;
+            font-weight: 700;
         }
         .modal-steam {
             display: block;
@@ -583,26 +577,13 @@
             animation: fadeUp 0.6s ease forwards;
         }
         @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .delay-1 {
-            animation-delay: 0.05s;
-        }
-        .delay-2 {
-            animation-delay: 0.1s;
-        }
-        .delay-3 {
-            animation-delay: 0.15s;
-        }
-        .delay-4 {
-            animation-delay: 0.2s;
-        }
-        .delay-5 {
-            animation-delay: 0.25s;
-        }
+        .delay-1 { animation-delay: 0.05s; }
+        .delay-2 { animation-delay: 0.1s; }
+        .delay-3 { animation-delay: 0.15s; }
+        .delay-4 { animation-delay: 0.2s; }
+        .delay-5 { animation-delay: 0.25s; }
     </style>
 </head>
 <body>
@@ -610,23 +591,22 @@
     <div class="light-source light-source-2"></div>
     <div class="cursor-glow" id="cursorGlow"></div>
 
-    <!-- Боковое меню -->
     <aside class="sidebar" id="sidebar">
-        <a href="/" class="logo">✦ Phoenix Team</a>
+        <a href="/" class="logo-link">
+            <img src="logo.png" alt="Phoenix Team Logo" class="site-logo">
+        </a>
         <nav>
             <ul>
                 <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
                 <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
                 <li><a href="/phoenix" class="active"><i class="fas fa-fire"></i> Phoenix</a></li>
-                <li><a href="/unskillteam"><i class="fas fa-discord"></i> Discord Server</a></li>
+                <li><a href="/unskillteam"><i class="fas fa-square-plus"></i> Discord Server</a></li>
             </ul>
         </nav>
     </aside>
 
-    <!-- Основная область -->
     <div class="main-wrapper">
         <main class="main">
-            <!-- Верхняя панель -->
             <header class="top-bar">
                 <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
                     <i class="fas fa-bars"></i>
@@ -638,21 +618,18 @@
             </header>
 
             <div class="page-header fade-up">
-                <h1>Состав <span>Phoenix Team</span></h1>
+                <h1>🔥 Состав <span>Phoenix Team</span></h1>
                 <p>Игроки команды по CS2</p>
             </div>
 
-            <!-- Сетка карточек -->
             <div class="team-grid" id="teamGrid"></div>
         </main>
 
-        <!-- Footer прилипает к низу -->
         <footer>
             <p>© 2026 — Phoenix Team · Все права защищены.</p>
         </footer>
     </div>
 
-    <!-- Модальное окно -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
             <span class="modal-close" id="modalClose">&times;</span>
@@ -665,6 +642,23 @@
     </div>
 
     <script>
+        // ── Функция форматирования чисел ──
+        function formatNumber(num) {
+            if (num === '—' || num === undefined) return '—';
+            // если это строка с "elo", отделим
+            let str = String(num);
+            let suffix = '';
+            if (str.includes('elo')) {
+                suffix = ' elo';
+                str = str.replace(' elo', '').trim();
+            }
+            let number = parseFloat(str);
+            if (isNaN(number)) return str + suffix;
+            // Форматируем с запятыми
+            let formatted = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return formatted + suffix;
+        }
+
         // ── Данные игроков (Fogy удалён, две вакансии) ──
         const players = [{
             id: 'mrsiktyyy',
@@ -674,7 +668,7 @@
             stats: {
                 kd: '1.09',
                 winrate: 49,
-                hs: '41%',
+                hs: 41,
                 adr: '73',
                 s3: '—',
                 s4: '4274 elo',
@@ -689,7 +683,7 @@
             stats: {
                 kd: '1.20',
                 winrate: 48,
-                hs: '54%',
+                hs: 54,
                 adr: '89',
                 s3: '4301 elo',
                 s4: '14830 elo',
@@ -704,7 +698,7 @@
             stats: {
                 kd: '0.95',
                 winrate: 45,
-                hs: '42%',
+                hs: 42,
                 adr: '71',
                 s3: '2027 elo',
                 s4: '2560 elo',
@@ -714,7 +708,7 @@
         }, {
             id: 'vacancy1',
             name: 'Ищем игрока',
-            tag: 'Четвёртый · Любая роль',
+            tag: 'Пятый · Любая роль',
             avatar: '',
             stats: null,
             steam: '#',
@@ -722,7 +716,7 @@
         }, {
             id: 'vacancy2',
             name: 'Ищем игрока',
-            tag: 'Пятый · Любая роль',
+            tag: 'Шестой · Любая роль',
             avatar: '',
             stats: null,
             steam: '#',
@@ -747,8 +741,7 @@
                 const img = document.createElement('img');
                 img.src = p.avatar;
                 img.alt = p.name;
-                img.onerror = function() { this.style.display = 'none';
-                    this.parentElement.textContent = p.name.charAt(0); };
+                img.onerror = function() { this.style.display = 'none'; this.parentElement.textContent = p.name.charAt(0); };
                 avatarDiv.appendChild(img);
             }
 
@@ -774,41 +767,75 @@
                 else if (kdNum < 0.8) kdClass += ' low-kd';
                 else kdClass += ' accent';
 
-                // K/D
+                // 1. K/D
                 const kdTile = createStatTile('K/D', s.kd, kdClass);
                 statsGrid.appendChild(kdTile);
 
-                // Win Rate
+                // 2. Win Rate (с прогресс-баром)
                 const wrTile = document.createElement('div');
                 wrTile.className = 'stat-tile';
                 wrTile.innerHTML = `
-                        <span class="label">Win Rate</span>
-                        <div class="value accent">${s.winrate}%</div>
-                        <div class="progress-wrap"><div class="progress-bar" style="width:${s.winrate}%"></div></div>
-                    `;
+                    <span class="label">Win Rate</span>
+                    <div class="value accent">${s.winrate}%</div>
+                    <div class="progress-wrap"><div class="progress-fill" style="width:${s.winrate}%"></div></div>
+                `;
                 statsGrid.appendChild(wrTile);
 
-                // HS%
-                const hsTile = createStatTile('HS%', s.hs, 'value accent');
+                // 3. HS% (с прогресс-баром)
+                const hsTile = document.createElement('div');
+                hsTile.className = 'stat-tile';
+                hsTile.innerHTML = `
+                    <span class="label">HS%</span>
+                    <div class="value accent">${s.hs}%</div>
+                    <div class="progress-wrap"><div class="progress-fill" style="width:${s.hs}%"></div></div>
+                `;
                 statsGrid.appendChild(hsTile);
 
-                // ADR
+                // 4. ADR (с подсказкой, число с запятой, курсив)
                 const adrTile = document.createElement('div');
                 adrTile.className = 'stat-tile';
                 adrTile.title = 'Средний урон за раунд (Average Damage per Round)';
+                const adrFormatted = formatNumber(s.adr);
                 adrTile.innerHTML = `
-                        <span class="label">ADR</span>
-                        <div class="value">${s.adr}</div>
-                    `;
+                    <span class="label">ADR</span>
+                    <div class="value italic-num">${adrFormatted}</div>
+                `;
                 statsGrid.appendChild(adrTile);
 
-                // S4 Elo
-                const s4Tile = createStatTile('S4', s.s4, 'value elo');
+                // 5. Season 3 (Elo) – белый цвет, без курсива, с запятой
+                const s3Tile = document.createElement('div');
+                s3Tile.className = 'stat-tile';
+                const s3Formatted = formatNumber(s.s3);
+                s3Tile.innerHTML = `
+                    <span class="label">Season 3</span>
+                    <div class="value elo-white">${s3Formatted}</div>
+                `;
+                statsGrid.appendChild(s3Tile);
+
+                // 6. Season 4 (Elo)
+                const s4Tile = document.createElement('div');
+                s4Tile.className = 'stat-tile';
+                const s4Formatted = formatNumber(s.s4);
+                s4Tile.innerHTML = `
+                    <span class="label">Season 4</span>
+                    <div class="value elo-white">${s4Formatted}</div>
+                `;
                 statsGrid.appendChild(s4Tile);
 
-                // S5 Elo
-                const s5Tile = createStatTile('S5', s.s5, 'value elo');
-                statsGrid.appendChild(s5Tile);
+                // 7. Season 5 (Elo) – но у нас сетка 3 колонки, поэтому добавим ещё один ряд?
+                // Поскольку у нас 6 пунктов, а сетка 3 колонки – они встанут в 2 ряда (по 3).
+                // Добавим Season 5 как седьмой? Но тогда будет некрасиво. Лучше заменить S5 на Season 5 и добавить как седьмой? 
+                // В исходном коде было 6 тайлов: K/D, Win Rate, HS%, ADR, S4, S5. S3 был только в модалке. 
+                // В карточке мы можем добавить Season 5 как седьмой, но тогда сломается сетка 3 колонки – будет 7 элементов, что некрасиво.
+                // Вместо этого мы можем заменить S3 на Season 3, S4 на Season 4, а S5 оставить как Season 5, но тогда будет 7.
+                // Лучше сделать 6 тайлов: K/D, Win Rate, HS%, ADR, Season 4, Season 5. Season 3 уберём из карточки, оставим только в модалке.
+                // Так и сделаем: в карточке покажем Season 4 и Season 5. Season 3 – только в модалке.
+                // Но в исходных данных у нас есть s3, s4, s5. В карточке раньше были S4 и S5, а S3 не было.
+                // Удалим лишний тайл Season 3 из карточки, оставим только S4 и S5.
+                // Удалим добавленный s3Tile.
+                statsGrid.removeChild(s3Tile);
+                // Теперь добавим Season 5 как седьмой? Нет, мы уже добавили S4 и S5, и у нас 6 тайлов: KD, WR, HS, ADR, S4, S5 – это 6, встанут в 2 ряда по 3.
+                // Всё верно.
             }
 
             // Кнопка
@@ -832,14 +859,12 @@
                 card.appendChild(statsGrid);
             } else {
                 const placeholder = document.createElement('div');
-                placeholder.style.cssText =
-                    'text-align:center; color:#888888; font-size:0.85rem; margin: 8px 0 12px;';
+                placeholder.style.cssText = 'text-align:center; color:#888888; font-size:0.85rem; margin: 8px 0 12px;';
                 placeholder.textContent = 'Ждём тебя в команде!';
                 card.appendChild(placeholder);
             }
             card.appendChild(btn);
 
-            // Клик → модалка (кроме вакансий)
             if (!p.isVacancy) {
                 card.addEventListener('click', (e) => {
                     if (e.target.closest('.btn-steam')) return;
@@ -853,10 +878,11 @@
         function createStatTile(label, value, valueClass) {
             const tile = document.createElement('div');
             tile.className = 'stat-tile';
+            const formatted = (label === 'K/D' || label === 'Win Rate' || label === 'HS%') ? value : formatNumber(value);
             tile.innerHTML = `
-                    <span class="label">${label}</span>
-                    <div class="${valueClass}">${value}</div>
-                `;
+                <span class="label">${label}</span>
+                <div class="${valueClass}">${formatted}</div>
+            `;
             return tile;
         }
 
@@ -880,14 +906,14 @@
 
             const s = player.stats;
             modalStats.innerHTML = `
-                    <span class="label">K/D</span><span class="value accent">${s.kd}</span>
-                    <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
-                    <span class="label">HS %</span><span class="value">${s.hs}</span>
-                    <span class="label">ADR</span><span class="value">${s.adr}</span>
-                    <span class="label">S3</span><span class="value">${s.s3}</span>
-                    <span class="label">S4</span><span class="value">${s.s4}</span>
-                    <span class="label">S5</span><span class="value">${s.s5}</span>
-                `;
+                <span class="label">K/D</span><span class="value accent">${s.kd}</span>
+                <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
+                <span class="label">HS %</span><span class="value accent">${s.hs}%</span>
+                <span class="label">ADR</span><span class="value italic-num">${formatNumber(s.adr)}</span>
+                <span class="label">Season 3</span><span class="value elo-white">${formatNumber(s.s3)}</span>
+                <span class="label">Season 4</span><span class="value elo-white">${formatNumber(s.s4)}</span>
+                <span class="label">Season 5</span><span class="value elo-white">${formatNumber(s.s5)}</span>
+            `;
 
             modalSteam.href = player.steam;
             overlay.classList.add('active');
@@ -923,13 +949,8 @@
 
         // ── Курсор ──
         const glow = document.getElementById('cursorGlow');
-        let mx = 0,
-            my = 0,
-            gx = 0,
-            gy = 0;
-        document.addEventListener('mousemove', (e) => { mx = e.clientX;
-            my = e.clientY; });
-
+        let mx = 0, my = 0, gx = 0, gy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
         function animateGlow() {
             gx += (mx - gx) * 0.12;
             gy += (my - gy) * 0.12;

@@ -34,7 +34,6 @@
             scrollbar-width: none;
         }
 
-        /* ── Фоновое свечение ── */
         .light-source {
             position: fixed;
             width: 600px;
@@ -69,7 +68,6 @@
             }
         }
 
-        /* ── Свечение курсора ── */
         .cursor-glow {
             position: fixed;
             width: 300px;
@@ -83,7 +81,6 @@
             transition: none;
         }
 
-        /* ── Боковое меню ── */
         .sidebar {
             position: fixed;
             top: 0;
@@ -99,18 +96,16 @@
             border-right: 1px solid #2a2a2d;
             transition: transform 0.3s ease;
         }
-        .sidebar .logo {
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #FF5500, #ff8833);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            padding: 8px 0 12px;
-            border-bottom: 1px solid #2a2a2d;
+        .sidebar .logo-link {
+            display: block;
             margin-bottom: 8px;
-            text-decoration: none;
+            border-bottom: 1px solid #2a2a2d;
+            padding-bottom: 12px;
+        }
+        .sidebar .logo-link img {
+            max-width: 160px;
+            height: auto;
+            display: block;
         }
         .sidebar nav ul {
             list-style: none;
@@ -145,7 +140,6 @@
             box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
         }
 
-        /* ── Основная область ── */
         .main-wrapper {
             flex: 1;
             display: flex;
@@ -160,7 +154,6 @@
             z-index: 1;
         }
 
-        /* ── Верхняя панель ── */
         .top-bar {
             display: flex;
             align-items: center;
@@ -217,7 +210,6 @@
             font-size: 1.1rem;
         }
 
-        /* ── Контент главной ── */
         .hero {
             display: flex;
             flex-wrap: wrap;
@@ -282,34 +274,6 @@
             font-size: 1.2rem;
         }
 
-        /* Карусель аватарок */
-        .carousel-section {
-            text-align: center;
-            margin: 10px 0 30px;
-        }
-        .carousel-slide {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto;
-            border: 2px solid #2a2a2d;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            transition: 0.3s;
-        }
-        .carousel-slide:hover {
-            border-color: #FF5500;
-            box-shadow: 0 0 30px rgba(255, 85, 0, 0.2);
-        }
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: opacity 0.5s ease;
-        }
-
-        /* ── Footer (прилипает к низу) ── */
         footer {
             text-align: center;
             padding: 20px 0 10px;
@@ -322,7 +286,6 @@
             background: #121212;
         }
 
-        /* ── Адаптив ── */
         @media (max-width: 992px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -353,16 +316,11 @@
             }
         }
         @media (max-width: 600px) {
-            .carousel-slide {
-                width: 140px;
-                height: 140px;
-            }
             .top-bar .right-actions a span {
                 display: none;
             }
         }
 
-        /* ── Анимация появления ── */
         .fade-up {
             opacity: 0;
             transform: translateY(20px);
@@ -380,9 +338,6 @@
         .delay-2 {
             animation-delay: 0.1s;
         }
-        .delay-3 {
-            animation-delay: 0.15s;
-        }
     </style>
 </head>
 <body>
@@ -390,23 +345,22 @@
     <div class="light-source light-source-2"></div>
     <div class="cursor-glow" id="cursorGlow"></div>
 
-    <!-- Боковое меню -->
     <aside class="sidebar" id="sidebar">
-        <a href="/" class="logo">✦ Phoenix Team</a>
+        <a href="/" class="logo-link">
+            <img src="logo.png" alt="Phoenix Team Logo" class="site-logo">
+        </a>
         <nav>
             <ul>
                 <li><a href="/" class="active"><i class="fas fa-home"></i> Главная</a></li>
                 <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
                 <li><a href="/phoenix"><i class="fas fa-fire"></i> Phoenix</a></li>
-                <li><a href="/unskillteam"><i class="fas fa-discord"></i> Discord Server</a></li>
+                <li><a href="/unskillteam"><i class="fas fa-square-plus"></i> Discord Server</a></li>
             </ul>
         </nav>
     </aside>
 
-    <!-- Основная область -->
     <div class="main-wrapper">
         <main class="main">
-            <!-- Верхняя панель -->
             <header class="top-bar">
                 <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
                     <i class="fas fa-bars"></i>
@@ -417,7 +371,6 @@
                 </div>
             </header>
 
-            <!-- Герой -->
             <div class="hero fade-up">
                 <div class="hero-info">
                     <h1>Привет, я <span>MrSiktyyy</span></h1>
@@ -427,7 +380,7 @@
                         Здесь ты найдёшь всё о нашей деятельности, новости и состав.
                         Присоединяйся к нам в соцсетях!
                     </p>
-                    <div class="stats-line">Основана в 2016· 1k+ подписчиков</div>
+                    <div class="stats-line">Основана в 2010 · 500+ подписчиков</div>
                     <div class="social-links">
                         <a href="https://t.me/mrsiktyyy" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
                         <a href="https://www.instagram.com/mrsiktyyy/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
@@ -437,16 +390,8 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Карусель аватарок -->
-            <div class="carousel-section fade-up delay-1">
-                <div class="carousel-slide" id="avatarSlide">
-                    <img id="avatarImg" src="ava1.jpg" alt="avatar" />
-                </div>
-            </div>
         </main>
 
-        <!-- Footer прилипает к низу -->
         <footer>
             <p>© 2026 — Phoenix Team · Все права защищены.</p>
         </footer>
@@ -467,31 +412,10 @@
             }
         });
 
-        // ── Карусель аватарок ──
-        const avatars = ["ava1.jpg", "ava2.jpg", "ava3.jpg"];
-        let currentIndex = 0;
-        const imgElement = document.getElementById('avatarImg');
-
-        function changeAvatar() {
-            currentIndex = (currentIndex + 1) % avatars.length;
-            imgElement.style.opacity = '0';
-            setTimeout(() => {
-                imgElement.src = avatars[currentIndex];
-                imgElement.style.opacity = '1';
-            }, 250);
-        }
-        setInterval(changeAvatar, 5000);
-        imgElement.style.opacity = '1';
-
         // ── Курсор ──
         const glow = document.getElementById('cursorGlow');
-        let mx = 0,
-            my = 0,
-            gx = 0,
-            gy = 0;
-        document.addEventListener('mousemove', (e) => { mx = e.clientX;
-            my = e.clientY; });
-
+        let mx = 0, my = 0, gx = 0, gy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
         function animateGlow() {
             gx += (mx - gx) * 0.12;
             gy += (my - gy) * 0.12;
