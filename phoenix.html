@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>Phoenix Team | CS2</title>
+    <title>Состав | Phoenix Team</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="icon" type="image/png" href="/favicon2.png" />
     <style>
-        /* ── Reset & base ── */
         * {
             margin: 0;
             padding: 0;
@@ -18,11 +17,12 @@
         }
         body {
             font-family: 'Roboto', sans-serif;
-            background: #1e1e1e;
+            background: #121212;
             color: #ffffff;
             line-height: 1.5;
             overflow-x: hidden;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
         body::-webkit-scrollbar {
@@ -33,7 +33,6 @@
             scrollbar-width: none;
         }
 
-        /* ── Фоновое свечение (лёгкое) ── */
         .light-source {
             position: fixed;
             width: 600px;
@@ -46,12 +45,12 @@
             animation: floatLight 22s infinite alternate ease-in-out;
         }
         .light-source-1 {
-            background: radial-gradient(circle, #0088ff, transparent);
+            background: radial-gradient(circle, #FF5500, transparent);
             top: -10%;
             left: -10%;
         }
         .light-source-2 {
-            background: radial-gradient(circle, #0088ff, transparent);
+            background: radial-gradient(circle, #FF5500, transparent);
             bottom: -10%;
             right: -10%;
             animation-duration: 26s;
@@ -68,12 +67,11 @@
             }
         }
 
-        /* ── Свечение курсора ── */
         .cursor-glow {
             position: fixed;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(0, 136, 255, 0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(255, 85, 0, 0.15), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
@@ -82,33 +80,33 @@
             transition: none;
         }
 
-        /* ── Боковое меню ── */
         .sidebar {
             position: fixed;
             top: 0;
             left: 0;
             width: 280px;
             height: 100vh;
-            background: #222222;
+            background: #1a1a1d;
             padding: 24px 16px;
             display: flex;
             flex-direction: column;
             gap: 20px;
             z-index: 100;
-            border-right: 1px solid #333333;
+            border-right: 1px solid #2a2a2d;
             transition: transform 0.3s ease;
         }
         .sidebar .logo {
             font-size: 1.6rem;
             font-weight: 900;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #0088ff, #00ccff);
+            background: linear-gradient(135deg, #FF5500, #ff8833);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             padding: 8px 0 12px;
-            border-bottom: 1px solid #333333;
+            border-bottom: 1px solid #2a2a2d;
             margin-bottom: 8px;
+            text-decoration: none;
         }
         .sidebar nav ul {
             list-style: none;
@@ -138,29 +136,31 @@
             color: #ffffff;
         }
         .sidebar nav ul li a.active {
-            background: #0077ff;
+            background: #FF5500;
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
         }
 
-        /* ── Основная область ── */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
         .main {
             margin-left: 280px;
             flex: 1;
-            padding: 0 30px 40px;
-            background: #1e1e1e;
-            min-height: 100vh;
+            padding: 0 30px 20px;
+            background: #121212;
             position: relative;
             z-index: 1;
         }
 
-        /* ── Верхняя панель ── */
         .top-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 20px 0;
-            border-bottom: 1px solid #333333;
+            border-bottom: 1px solid #2a2a2d;
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 16px;
@@ -183,39 +183,65 @@
             color: #ffffff;
         }
         .top-bar .page-title span {
-            color: #0088ff;
+            color: #FF5500;
         }
-        .top-bar .user-area {
+        .top-bar .right-actions {
             display: flex;
             align-items: center;
             gap: 16px;
-            color: #aaaaaa;
         }
-        .top-bar .user-area i {
-            font-size: 1.4rem;
-            cursor: pointer;
+        .top-bar .right-actions a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 40px;
+            background: #2a2a2d;
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
             transition: 0.2s;
         }
-        .top-bar .user-area i:hover {
+        .top-bar .right-actions a:hover {
+            background: #FF5500;
             color: #ffffff;
         }
+        .top-bar .right-actions a i {
+            font-size: 1.1rem;
+        }
 
-        /* ── Карточки игроков ── */
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        .page-header h1 span {
+            color: #FF5500;
+        }
+        .page-header p {
+            color: #aaaaaa;
+            margin-top: 4px;
+        }
+
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
             gap: 24px;
-            margin-top: 10px;
+            margin-bottom: 30px;
         }
 
         .member-card {
-            background: #282828;
+            background: #1e1e1e;
             border-radius: 12px;
             padding: 24px 18px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            border: 1px solid #2a2a2d;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
             cursor: pointer;
-            border: 1px solid #333333;
             position: relative;
             overflow: hidden;
             will-change: transform, opacity;
@@ -223,8 +249,8 @@
             transform: translateY(0) scale(1);
         }
         .member-card:hover {
-            border-color: #0088ff;
-            box-shadow: 0 8px 24px rgba(0, 136, 255, 0.2);
+            border-color: #FF5500;
+            box-shadow: 0 8px 24px rgba(255, 85, 0, 0.15);
             opacity: 0;
             transform: scale(0.92) translateY(20px);
         }
@@ -235,11 +261,11 @@
             border-radius: 50%;
             margin: 0 auto 14px;
             overflow: hidden;
-            border: 2px solid #444444;
+            border: 2px solid #2a2a2d;
             transition: border-color 0.3s;
         }
         .member-card:hover .member-avatar {
-            border-color: #0088ff;
+            border-color: #FF5500;
         }
         .member-avatar img {
             width: 100%;
@@ -263,7 +289,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* Статистика в карточке */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -275,12 +300,12 @@
             border-radius: 8px;
             padding: 8px 4px;
             text-align: center;
-            border: 1px solid #333333;
+            border: 1px solid #2a2a2d;
             transition: 0.2s;
         }
         .stat-tile:hover {
-            background: rgba(0, 136, 255, 0.08);
-            border-color: #0088ff;
+            background: rgba(255, 85, 0, 0.08);
+            border-color: #FF5500;
         }
         .stat-tile .label {
             font-size: 0.6rem;
@@ -296,7 +321,7 @@
             color: #ffffff;
         }
         .stat-tile .value.accent {
-            color: #0088ff;
+            color: #FF5500;
         }
         .stat-tile .value.high-kd {
             color: #4caf50;
@@ -307,7 +332,7 @@
         .stat-tile .value.elo {
             font-size: 1.1rem;
             font-weight: 700;
-            color: #0088ff;
+            color: #FF5500;
         }
         .progress-wrap {
             width: 100%;
@@ -320,7 +345,7 @@
         .progress-bar {
             height: 100%;
             border-radius: 4px;
-            background: linear-gradient(90deg, #0088ff, #00ccff);
+            background: linear-gradient(90deg, #FF5500, #ff8833);
             transition: width 0.6s ease;
         }
 
@@ -335,33 +360,32 @@
             font-weight: 600;
             font-size: 0.85rem;
             text-decoration: none;
-            background: #333333;
+            background: #2a2a2d;
             color: #aaaaaa;
             border: none;
             transition: all 0.3s;
             cursor: pointer;
         }
         .btn-steam:hover {
-            background: #444444;
+            background: #3a3a3d;
             color: #ffffff;
         }
         .btn-steam i {
             font-size: 1.1rem;
         }
 
-        /* ── Карточка-вакансия ── */
         .vacancy {
             border-style: dashed;
-            border-color: #444444;
-            background: #222222;
+            border-color: #2a2a2d;
+            background: #1a1a1d;
             cursor: default;
         }
         .vacancy:hover {
-            border-color: #0088ff;
-            box-shadow: 0 8px 24px rgba(0, 136, 255, 0.1);
+            border-color: #FF5500;
+            box-shadow: 0 8px 24px rgba(255, 85, 0, 0.08);
         }
         .vacancy .member-avatar {
-            border-color: #444444;
+            border-color: #2a2a2d;
             background: rgba(255, 255, 255, 0.03);
             display: flex;
             align-items: center;
@@ -373,7 +397,7 @@
             display: none;
         }
         .vacancy .member-name {
-            color: #0088ff;
+            color: #FF5500;
         }
         .vacancy .member-tag {
             color: #888888;
@@ -382,16 +406,15 @@
             display: none;
         }
         .vacancy .btn-steam {
-            background: rgba(0, 136, 255, 0.1);
-            color: #0088ff;
-            border: 1px solid rgba(0, 136, 255, 0.2);
+            background: rgba(255, 85, 0, 0.1);
+            color: #FF5500;
+            border: 1px solid rgba(255, 85, 0, 0.2);
         }
         .vacancy .btn-steam:hover {
-            background: rgba(0, 136, 255, 0.2);
-            color: #00ccff;
+            background: rgba(255, 85, 0, 0.2);
+            color: #ff8833;
         }
 
-        /* ── Модальное окно ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -410,9 +433,9 @@
             display: flex;
         }
         .modal-box {
-            background: #282828;
+            background: #1e1e1e;
             border-radius: 16px;
-            border: 1px solid #333333;
+            border: 1px solid #2a2a2d;
             max-width: 520px;
             width: 100%;
             padding: 32px 28px;
@@ -452,8 +475,8 @@
             border-radius: 50%;
             overflow: hidden;
             margin: 0 auto 16px;
-            border: 2px solid #0088ff;
-            box-shadow: 0 0 30px rgba(0, 136, 255, 0.2);
+            border: 2px solid #FF5500;
+            box-shadow: 0 0 30px rgba(255, 85, 0, 0.2);
         }
         .modal-avatar img {
             width: 100%;
@@ -469,7 +492,7 @@
         }
         .modal-role {
             text-align: center;
-            color: #0088ff;
+            color: #FF5500;
             font-size: 0.9rem;
             margin-bottom: 20px;
         }
@@ -491,13 +514,13 @@
             font-weight: 500;
         }
         .modal-stats .value.accent {
-            color: #0088ff;
+            color: #FF5500;
         }
         .modal-steam {
             display: block;
             text-align: center;
             padding: 10px 20px;
-            background: #333333;
+            background: #2a2a2d;
             border-radius: 40px;
             color: #aaaaaa;
             text-decoration: none;
@@ -505,21 +528,22 @@
             font-weight: 500;
         }
         .modal-steam:hover {
-            background: #444444;
+            background: #3a3a3d;
             color: #ffffff;
         }
 
-        /* ── Footer ── */
         footer {
             text-align: center;
-            padding: 30px 0 10px;
-            border-top: 1px solid #333333;
-            margin-top: 40px;
+            padding: 20px 0 10px;
+            border-top: 1px solid #2a2a2d;
+            margin-top: 20px;
             color: #666666;
             font-size: 0.8rem;
+            width: 100%;
+            margin-left: 280px;
+            background: #121212;
         }
 
-        /* ── Адаптив ── */
         @media (max-width: 992px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -529,7 +553,10 @@
             }
             .main {
                 margin-left: 0;
-                padding: 0 20px 30px;
+                padding: 0 20px 20px;
+            }
+            footer {
+                margin-left: 0;
             }
             .top-bar .hamburger {
                 display: block;
@@ -545,9 +572,11 @@
             .modal-box {
                 padding: 20px;
             }
+            .top-bar .right-actions a span {
+                display: none;
+            }
         }
 
-        /* ── Анимация появления ── */
         .fade-up {
             opacity: 0;
             transform: translateY(20px);
@@ -577,48 +606,51 @@
     </style>
 </head>
 <body>
-
-    <!-- Источники света -->
     <div class="light-source light-source-1"></div>
     <div class="light-source light-source-2"></div>
-
-    <!-- Свечение курсора -->
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <!-- Боковое меню -->
     <aside class="sidebar" id="sidebar">
-        <div class="logo">✦ Phoenix</div>
+        <a href="/" class="logo">✦ Phoenix Team</a>
         <nav>
             <ul>
                 <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
                 <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
                 <li><a href="/phoenix" class="active"><i class="fas fa-fire"></i> Phoenix</a></li>
-                <li><a href="/unskillteam"><i class="fas fa-users"></i> Команда</a></li>
+                <li><a href="/unskillteam"><i class="fas fa-discord"></i> Discord Server</a></li>
             </ul>
         </nav>
     </aside>
 
     <!-- Основная область -->
-    <main class="main">
-        <!-- Верхняя панель -->
-        <header class="top-bar">
-            <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="page-title">Phoenix <span>Team</span></div>
-            <div class="user-area">
-                <i class="fas fa-bell" title="Уведомления"></i>
-                <i class="fas fa-user-circle" title="Профиль" style="font-size:1.8rem;"></i>
+    <div class="main-wrapper">
+        <main class="main">
+            <!-- Верхняя панель -->
+            <header class="top-bar">
+                <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="page-title">Состав <span>Phoenix Team</span></div>
+                <div class="right-actions">
+                    <a href="/news"><i class="fas fa-newspaper"></i> <span>Новости</span></a>
+                </div>
+            </header>
+
+            <div class="page-header fade-up">
+                <h1>🔥 Состав <span>Phoenix Team</span></h1>
+                <p>Игроки команды по CS2</p>
             </div>
-        </header>
 
-        <!-- Сетка карточек -->
-        <div class="team-grid" id="teamGrid"></div>
+            <!-- Сетка карточек -->
+            <div class="team-grid" id="teamGrid"></div>
+        </main>
 
+        <!-- Footer прилипает к низу -->
         <footer>
             <p>© 2026 — Phoenix Team · Все права защищены.</p>
         </footer>
-    </main>
+    </div>
 
     <!-- Модальное окно -->
     <div class="modal-overlay" id="modalOverlay">
@@ -783,7 +815,7 @@
             const btn = document.createElement('a');
             btn.className = 'btn-steam';
             if (p.isVacancy) {
-                btn.href = 'https://t.me/MrSikty';
+                btn.href = 'https://t.me/mrsiktyyy';
                 btn.target = '_blank';
                 btn.innerHTML = '<i class="fab fa-telegram"></i> Написать';
             } else {
@@ -881,7 +913,6 @@
         hamburger.addEventListener('click', () => {
             sidebar.classList.toggle('open');
         });
-        // Закрываем меню при клике вне его на мобильных
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 992) {
                 if (!sidebar.contains(e.target) && e.target !== hamburger && !hamburger.contains(e.target)) {

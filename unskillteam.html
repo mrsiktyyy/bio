@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>Discord Server | PHX</title>
+    <title>Discord Server | Phoenix Team</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
@@ -17,11 +17,12 @@
         }
         body {
             font-family: 'Roboto', sans-serif;
-            background: #1e1e1e;
+            background: #121212;
             color: #ffffff;
             line-height: 1.5;
             overflow-x: hidden;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
         body::-webkit-scrollbar {
@@ -44,12 +45,12 @@
             animation: floatLight 22s infinite alternate ease-in-out;
         }
         .light-source-1 {
-            background: radial-gradient(circle, #0088ff, transparent);
+            background: radial-gradient(circle, #FF5500, transparent);
             top: -10%;
             left: -10%;
         }
         .light-source-2 {
-            background: radial-gradient(circle, #0088ff, transparent);
+            background: radial-gradient(circle, #FF5500, transparent);
             bottom: -10%;
             right: -10%;
             animation-duration: 26s;
@@ -70,7 +71,7 @@
             position: fixed;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(0, 136, 255, 0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(255, 85, 0, 0.15), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
@@ -85,26 +86,27 @@
             left: 0;
             width: 280px;
             height: 100vh;
-            background: #222222;
+            background: #1a1a1d;
             padding: 24px 16px;
             display: flex;
             flex-direction: column;
             gap: 20px;
             z-index: 100;
-            border-right: 1px solid #333333;
+            border-right: 1px solid #2a2a2d;
             transition: transform 0.3s ease;
         }
         .sidebar .logo {
             font-size: 1.6rem;
             font-weight: 900;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #0088ff, #00ccff);
+            background: linear-gradient(135deg, #FF5500, #ff8833);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             padding: 8px 0 12px;
-            border-bottom: 1px solid #333333;
+            border-bottom: 1px solid #2a2a2d;
             margin-bottom: 8px;
+            text-decoration: none;
         }
         .sidebar nav ul {
             list-style: none;
@@ -134,17 +136,21 @@
             color: #ffffff;
         }
         .sidebar nav ul li a.active {
-            background: #0077ff;
+            background: #FF5500;
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
         }
 
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
         .main {
             margin-left: 280px;
             flex: 1;
-            padding: 0 30px 40px;
-            background: #1e1e1e;
-            min-height: 100vh;
+            padding: 0 30px 20px;
+            background: #121212;
             position: relative;
             z-index: 1;
             display: flex;
@@ -158,7 +164,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 20px 0;
-            border-bottom: 1px solid #333333;
+            border-bottom: 1px solid #2a2a2d;
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 16px;
@@ -182,31 +188,42 @@
             color: #ffffff;
         }
         .top-bar .page-title span {
-            color: #0088ff;
+            color: #FF5500;
         }
-        .top-bar .user-area {
+        .top-bar .right-actions {
             display: flex;
             align-items: center;
             gap: 16px;
-            color: #aaaaaa;
         }
-        .top-bar .user-area i {
-            font-size: 1.4rem;
-            cursor: pointer;
+        .top-bar .right-actions a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 40px;
+            background: #2a2a2d;
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
             transition: 0.2s;
         }
-        .top-bar .user-area i:hover {
+        .top-bar .right-actions a:hover {
+            background: #FF5500;
             color: #ffffff;
+        }
+        .top-bar .right-actions a i {
+            font-size: 1.1rem;
         }
 
         .discord-card {
-            background: #282828;
+            background: #1e1e1e;
             border-radius: 16px;
             padding: 40px 32px;
             max-width: 500px;
             width: 100%;
             text-align: center;
-            border: 1px solid #333333;
+            border: 1px solid #2a2a2d;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
         }
         .discord-card .icon {
@@ -249,12 +266,14 @@
 
         footer {
             text-align: center;
-            padding: 30px 0 10px;
-            border-top: 1px solid #333333;
-            margin-top: 40px;
+            padding: 20px 0 10px;
+            border-top: 1px solid #2a2a2d;
+            margin-top: 20px;
             color: #666666;
             font-size: 0.8rem;
             width: 100%;
+            margin-left: 280px;
+            background: #121212;
         }
 
         @media (max-width: 992px) {
@@ -266,7 +285,10 @@
             }
             .main {
                 margin-left: 0;
-                padding: 0 20px 30px;
+                padding: 0 20px 20px;
+            }
+            footer {
+                margin-left: 0;
             }
             .top-bar .hamburger {
                 display: block;
@@ -282,6 +304,9 @@
             .discord-card .invite-btn {
                 padding: 12px 24px;
                 font-size: 1rem;
+            }
+            .top-bar .right-actions a span {
+                display: none;
             }
         }
 
@@ -307,7 +332,7 @@
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <aside class="sidebar" id="sidebar">
-        <div class="logo">✦ PHX</div>
+        <a href="/" class="logo">✦ Phoenix Team</a>
         <nav>
             <ul>
                 <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
@@ -318,31 +343,32 @@
         </nav>
     </aside>
 
-    <main class="main">
-        <header class="top-bar">
-            <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="page-title">Discord <span>Server</span></div>
-            <div class="user-area">
-                <i class="fas fa-bell" title="Уведомления"></i>
-                <i class="fas fa-user-circle" title="Профиль" style="font-size:1.8rem;"></i>
-            </div>
-        </header>
+    <div class="main-wrapper">
+        <main class="main">
+            <header class="top-bar">
+                <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="page-title">Discord <span>Server</span></div>
+                <div class="right-actions">
+                    <a href="/news"><i class="fas fa-newspaper"></i> <span>Новости</span></a>
+                </div>
+            </header>
 
-        <div class="discord-card fade-up">
-            <div class="icon"><i class="fab fa-discord"></i></div>
-            <h2>Присоединяйся к нам!</h2>
-            <p>Общайся с командой, следи за новостями и участвуй в жизни PHX.</p>
-            <a href="https://discord.com/invite/kvd35a3Std" class="invite-btn" target="_blank">
-                <i class="fab fa-discord"></i> Присоединиться
-            </a>
-        </div>
+            <div class="discord-card fade-up">
+                <div class="icon"><i class="fab fa-discord"></i></div>
+                <h2>Присоединяйся к нам!</h2>
+                <p>Общайся с командой, следи за новостями и участвуй в жизни Phoenix Team.</p>
+                <a href="https://discord.com/invite/kvd35a3Std" class="invite-btn" target="_blank">
+                    <i class="fab fa-discord"></i> Присоединиться
+                </a>
+            </div>
+        </main>
 
         <footer>
-            <p>© 2026 — PHX · Все права защищены.</p>
+            <p>© 2026 — Phoenix Team · Все права защищены.</p>
         </footer>
-    </main>
+    </div>
 
     <script>
         // ── Гамбургер ──

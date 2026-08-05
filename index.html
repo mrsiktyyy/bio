@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>Главная | PHX</title>
+    <title>Главная | Phoenix Team</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
@@ -18,11 +18,12 @@
         }
         body {
             font-family: 'Roboto', sans-serif;
-            background: #1e1e1e;
+            background: #121212;
             color: #ffffff;
             line-height: 1.5;
             overflow-x: hidden;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
         body::-webkit-scrollbar {
@@ -46,12 +47,12 @@
             animation: floatLight 22s infinite alternate ease-in-out;
         }
         .light-source-1 {
-            background: radial-gradient(circle, #0088ff, transparent);
+            background: radial-gradient(circle, #FF5500, transparent);
             top: -10%;
             left: -10%;
         }
         .light-source-2 {
-            background: radial-gradient(circle, #0088ff, transparent);
+            background: radial-gradient(circle, #FF5500, transparent);
             bottom: -10%;
             right: -10%;
             animation-duration: 26s;
@@ -73,7 +74,7 @@
             position: fixed;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(0, 136, 255, 0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(255, 85, 0, 0.15), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
@@ -89,26 +90,27 @@
             left: 0;
             width: 280px;
             height: 100vh;
-            background: #222222;
+            background: #1a1a1d;
             padding: 24px 16px;
             display: flex;
             flex-direction: column;
             gap: 20px;
             z-index: 100;
-            border-right: 1px solid #333333;
+            border-right: 1px solid #2a2a2d;
             transition: transform 0.3s ease;
         }
         .sidebar .logo {
             font-size: 1.6rem;
             font-weight: 900;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #0088ff, #00ccff);
+            background: linear-gradient(135deg, #FF5500, #ff8833);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             padding: 8px 0 12px;
-            border-bottom: 1px solid #333333;
+            border-bottom: 1px solid #2a2a2d;
             margin-bottom: 8px;
+            text-decoration: none;
         }
         .sidebar nav ul {
             list-style: none;
@@ -138,18 +140,22 @@
             color: #ffffff;
         }
         .sidebar nav ul li a.active {
-            background: #0077ff;
+            background: #FF5500;
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
         }
 
         /* ── Основная область ── */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
         .main {
             margin-left: 280px;
             flex: 1;
-            padding: 0 30px 40px;
-            background: #1e1e1e;
-            min-height: 100vh;
+            padding: 0 30px 20px;
+            background: #121212;
             position: relative;
             z-index: 1;
         }
@@ -160,7 +166,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 20px 0;
-            border-bottom: 1px solid #333333;
+            border-bottom: 1px solid #2a2a2d;
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 16px;
@@ -183,21 +189,32 @@
             color: #ffffff;
         }
         .top-bar .page-title span {
-            color: #0088ff;
+            color: #FF5500;
         }
-        .top-bar .user-area {
+        .top-bar .right-actions {
             display: flex;
             align-items: center;
             gap: 16px;
-            color: #aaaaaa;
         }
-        .top-bar .user-area i {
-            font-size: 1.4rem;
-            cursor: pointer;
+        .top-bar .right-actions a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 40px;
+            background: #2a2a2d;
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
             transition: 0.2s;
         }
-        .top-bar .user-area i:hover {
+        .top-bar .right-actions a:hover {
+            background: #FF5500;
             color: #ffffff;
+        }
+        .top-bar .right-actions a i {
+            font-size: 1.1rem;
         }
 
         /* ── Контент главной ── */
@@ -205,8 +222,8 @@
             display: flex;
             flex-wrap: wrap;
             gap: 40px;
-            align-items: center;
-            margin-bottom: 40px;
+            align-items: flex-start;
+            margin-bottom: 30px;
         }
         .hero-info {
             flex: 1;
@@ -218,7 +235,7 @@
             margin-bottom: 8px;
         }
         .hero-info h1 span {
-            background: linear-gradient(135deg, #0088ff, #00ccff);
+            background: linear-gradient(135deg, #FF5500, #ff8833);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -231,8 +248,13 @@
         .hero-info .bio {
             color: #cccccc;
             max-width: 500px;
-            margin-bottom: 24px;
+            margin-bottom: 8px;
             line-height: 1.6;
+        }
+        .hero-info .stats-line {
+            color: #888888;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
         }
         .hero-info .social-links {
             display: flex;
@@ -244,7 +266,7 @@
             align-items: center;
             gap: 8px;
             padding: 8px 18px;
-            background: #333333;
+            background: #2a2a2d;
             border-radius: 40px;
             color: #aaaaaa;
             text-decoration: none;
@@ -253,44 +275,17 @@
             transition: 0.2s;
         }
         .hero-info .social-links a:hover {
-            background: #444444;
+            background: #FF5500;
             color: #ffffff;
         }
         .hero-info .social-links a i {
             font-size: 1.2rem;
         }
 
-        .hero-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            flex: 0 0 auto;
-        }
-        .stat-item {
-            background: #282828;
-            padding: 16px 24px;
-            border-radius: 12px;
-            text-align: center;
-            min-width: 120px;
-            border: 1px solid #333333;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        .stat-item .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0088ff;
-        }
-        .stat-item .stat-label {
-            font-size: 0.8rem;
-            color: #aaaaaa;
-            margin-top: 4px;
-        }
-
         /* Карусель аватарок */
         .carousel-section {
             text-align: center;
-            margin: 20px 0 40px;
+            margin: 10px 0 30px;
         }
         .carousel-slide {
             width: 180px;
@@ -298,13 +293,13 @@
             border-radius: 50%;
             overflow: hidden;
             margin: 0 auto;
-            border: 2px solid #444444;
+            border: 2px solid #2a2a2d;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             transition: 0.3s;
         }
         .carousel-slide:hover {
-            border-color: #0088ff;
-            box-shadow: 0 0 30px rgba(0, 136, 255, 0.2);
+            border-color: #FF5500;
+            box-shadow: 0 0 30px rgba(255, 85, 0, 0.2);
         }
         .carousel-slide img {
             width: 100%;
@@ -314,14 +309,17 @@
             transition: opacity 0.5s ease;
         }
 
-        /* ── Footer ── */
+        /* ── Footer (прилипает к низу) ── */
         footer {
             text-align: center;
-            padding: 30px 0 10px;
-            border-top: 1px solid #333333;
-            margin-top: 40px;
+            padding: 20px 0 10px;
+            border-top: 1px solid #2a2a2d;
+            margin-top: 20px;
             color: #666666;
             font-size: 0.8rem;
+            width: 100%;
+            margin-left: 280px;
+            background: #121212;
         }
 
         /* ── Адаптив ── */
@@ -334,7 +332,10 @@
             }
             .main {
                 margin-left: 0;
-                padding: 0 20px 30px;
+                padding: 0 20px 20px;
+            }
+            footer {
+                margin-left: 0;
             }
             .top-bar .hamburger {
                 display: block;
@@ -352,17 +353,12 @@
             }
         }
         @media (max-width: 600px) {
-            .hero-stats {
-                flex-direction: column;
-                align-items: center;
-            }
-            .stat-item {
-                width: 100%;
-                max-width: 200px;
-            }
             .carousel-slide {
                 width: 140px;
                 height: 140px;
+            }
+            .top-bar .right-actions a span {
+                display: none;
             }
         }
 
@@ -396,7 +392,7 @@
 
     <!-- Боковое меню -->
     <aside class="sidebar" id="sidebar">
-        <div class="logo">✦ PHX</div>
+        <a href="/" class="logo">✦ Phoenix Team</a>
         <nav>
             <ul>
                 <li><a href="/" class="active"><i class="fas fa-home"></i> Главная</a></li>
@@ -408,63 +404,53 @@
     </aside>
 
     <!-- Основная область -->
-    <main class="main">
-        <header class="top-bar">
-            <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="page-title">Главная <span>PHX</span></div>
-            <div class="user-area">
-                <i class="fas fa-bell" title="Уведомления"></i>
-                <i class="fas fa-user-circle" title="Профиль" style="font-size:1.8rem;"></i>
-            </div>
-        </header>
+    <div class="main-wrapper">
+        <main class="main">
+            <!-- Верхняя панель -->
+            <header class="top-bar">
+                <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="page-title">Главная <span>Phoenix Team</span></div>
+                <div class="right-actions">
+                    <a href="/news"><i class="fas fa-bullhorn"></i> <span>Новости</span></a>
+                </div>
+            </header>
 
-        <!-- Герой -->
-        <div class="hero fade-up">
-            <div class="hero-info">
-                <h1>Привет, я <span>MrSiktyyy</span></h1>
-                <div class="subtitle">Основатель PHX · Стример · Разработчик</div>
-                <p class="bio">
-                    Меня зовут Иван Акбашев. Я создал этот сайт и команду Phoenix.
-                    Здесь ты найдёшь всё о нашей деятельности, новости и состав.
-                    Присоединяйся к нам в соцсетях!
-                </p>
-                <div class="social-links">
-                    <a href="https://t.me/MrSikty" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
-                    <a href="https://www.instagram.com/mrsiktyyy/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="https://www.twitch.tv/mrs1kty" target="_blank"><i class="fab fa-twitch"></i> Twitch</a>
-                    <a href="https://www.youtube.com/@MrS1kyyy" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-                    <a href="https://steamcommunity.com/id/mrsikty/" target="_blank"><i class="fab fa-steam"></i> Steam</a>
+            <!-- Герой -->
+            <div class="hero fade-up">
+                <div class="hero-info">
+                    <h1>Привет, я <span>MrSiktyyy</span></h1>
+                    <div class="subtitle">Основатель Phoenix Team · Стример · Разработчик</div>
+                    <p class="bio">
+                        Меня зовут Иван Акбашев. Я создал этот сайт и команду Phoenix.
+                        Здесь ты найдёшь всё о нашей деятельности, новости и состав.
+                        Присоединяйся к нам в соцсетях!
+                    </p>
+                    <div class="stats-line">Основана в 2010 · 500+ подписчиков</div>
+                    <div class="social-links">
+                        <a href="https://t.me/mrsiktyyy" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                        <a href="https://www.instagram.com/mrsiktyyy/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://twitch.tv/mrsiktyyy" target="_blank"><i class="fab fa-twitch"></i> Twitch</a>
+                        <a href="https://www.youtube.com/@MrS1kyyy" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                        <a href="https://steamcommunity.com/id/mrsikty/" target="_blank"><i class="fab fa-steam"></i> Steam</a>
+                    </div>
                 </div>
             </div>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-number"><span id="ageValue">--</span></div>
-                    <div class="stat-label">лет</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">подписчиков</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">🔥</div>
-                    <div class="stat-label">свежие новости</div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Карусель аватарок -->
-        <div class="carousel-section fade-up delay-1">
-            <div class="carousel-slide" id="avatarSlide">
-                <img id="avatarImg" src="ava1.jpg" alt="avatar" />
+            <!-- Карусель аватарок -->
+            <div class="carousel-section fade-up delay-1">
+                <div class="carousel-slide" id="avatarSlide">
+                    <img id="avatarImg" src="ava1.jpg" alt="avatar" />
+                </div>
             </div>
-        </div>
+        </main>
 
+        <!-- Footer прилипает к низу -->
         <footer>
-            <p>© 2026 — PHX · Все права защищены.</p>
+            <p>© 2026 — Phoenix Team · Все права защищены.</p>
         </footer>
-    </main>
+    </div>
 
     <script>
         // ── Гамбургер ──
@@ -480,17 +466,6 @@
                 }
             }
         });
-
-        // ── Возраст ──
-        function calculateAge(birthDate) {
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
-            return age;
-        }
-        const birth = new Date(2011, 7, 7);
-        document.getElementById('ageValue').innerText = calculateAge(birth);
 
         // ── Карусель аватарок ──
         const avatars = ["ava1.jpg", "ava2.jpg", "ava3.jpg"];
