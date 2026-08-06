@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно (баннер сверху, стекло снизу) ── */
+        /* ── Модальное окно (по референсу) ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -462,8 +462,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -473,45 +473,153 @@
             display: flex;
         }
 
-        .modal-box {
+        .modal-content {
             max-width: 460px;
             width: 100%;
             background: transparent;
             border-radius: 20px;
             overflow: hidden;
+            position: relative;
             animation: modalFade 0.3s ease;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
-        /* Баннер сверху (чёткий) */
-        .modal-top {
+        /* Размытый фон (мыльный) */
+        .modal-background {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 130px;
+            height: 100%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            filter: blur(20px) brightness(0.5);
+            transform: scale(1.1);
+            z-index: 0;
         }
-        .modal-avatar {
+
+        /* Контент поверх фона */
+        .modal-foreground {
+            position: relative;
+            z-index: 1;
+            background: rgba(20, 20, 30, 0.3);
+            backdrop-filter: blur(0px); /* прозрачный, чтобы фон был виден */
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        /* Баннер четкий (яркий) */
+        .profile-banner-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 2px solid rgba(255, 85, 0, 0.3);
+        }
+
+        /* Аватар и имя */
+        .profile-header {
+            position: relative;
+            margin-top: -50px;
+            padding: 0 20px 12px;
+            text-align: center;
+        }
+
+        .profile-avatar {
             width: 100px;
             height: 100px;
             border-radius: 50%;
             overflow: hidden;
             border: 3px solid #FF5500;
             box-shadow: 0 0 30px rgba(255, 85, 0, 0.4);
+            margin: 0 auto 10px;
             background: #1a1a1d;
         }
-        .modal-avatar img {
+        .profile-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        /* Крестик поверх баннера */
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+        .profile-tag {
+            font-size: 1rem;
+            color: #FF5500;
+            margin-bottom: 16px;
+        }
+
+        /* Статистика */
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 24px;
+            padding: 0 24px 20px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            color: #cccccc;
+            text-align: left;
+        }
+        .profile-stats .label {
+            color: #999999;
+        }
+        .profile-stats .value {
+            text-align: right;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .profile-stats .value.accent {
+            color: #FF5500;
+        }
+        .profile-stats .value.italic-num {
+            font-style: italic;
+        }
+        .profile-stats .value .elo-orange {
+            color: #FF5500;
+        }
+        .profile-stats .value.elo-white {
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .profile-stats .value .faceit-icon {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            vertical-align: middle;
+        }
+        .profile-stats .value .faceit-icon img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Кнопка Steam */
+        .profile-steam-btn {
+            display: block;
+            margin: 0 24px 24px;
+            padding: 12px 20px;
+            background: rgba(42, 42, 45, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            color: #aaaaaa;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        .profile-steam-btn:hover {
+            background: rgba(60, 60, 65, 0.9);
+            color: #ffffff;
+        }
+
         .modal-close {
             position: absolute;
             top: 14px;
@@ -525,91 +633,6 @@
         }
         .modal-close:hover {
             opacity: 0.7;
-        }
-
-        /* Стеклянная карточка снизу */
-        .modal-body {
-            background: rgba(20, 20, 30, 0.7);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            padding: 20px 24px 28px;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .modal-name {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 2px;
-        }
-        .modal-role {
-            font-size: 1rem;
-            color: #FF5500;
-            margin-bottom: 18px;
-        }
-
-        .modal-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px 24px;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1rem;
-            color: #cccccc;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .modal-stats .label {
-            color: #999999;
-            font-size: 0.9rem;
-        }
-        .modal-stats .value {
-            text-align: right;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 1.05rem;
-        }
-        .modal-stats .value.accent {
-            color: #FF5500;
-        }
-        .modal-stats .value.italic-num {
-            font-style: italic;
-        }
-        .modal-stats .value .elo-orange {
-            color: #FF5500;
-        }
-        .modal-stats .value.elo-white {
-            color: #ffffff;
-            font-weight: 700;
-        }
-        .modal-stats .value .faceit-icon {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            vertical-align: middle;
-        }
-        .modal-stats .value .faceit-icon img {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .modal-steam {
-            display: block;
-            text-align: center;
-            padding: 12px 20px;
-            background: rgba(42, 42, 45, 0.8);
-            border-radius: 40px;
-            color: #aaaaaa;
-            text-decoration: none;
-            transition: 0.3s;
-            font-weight: 500;
-            font-size: 0.95rem;
-            backdrop-filter: blur(4px);
-        }
-        .modal-steam:hover {
-            background: rgba(60, 60, 65, 0.9);
-            color: #ffffff;
         }
 
         @keyframes modalFade {
@@ -660,29 +683,39 @@
             .team-grid {
                 grid-template-columns: 1fr;
             }
-            .modal-box {
+            .modal-content {
                 max-width: 100%;
             }
-            .modal-stats {
+            .profile-stats {
                 grid-template-columns: 1fr;
                 gap: 8px 0;
+                padding: 0 16px 16px;
             }
-            .modal-stats .value {
+            .profile-stats .value {
                 text-align: left;
             }
             .top-bar .right-actions a span {
                 display: none;
             }
-            .card-top, .modal-top {
+            .card-top {
                 height: 100px;
             }
             .member-avatar {
                 width: 70px;
                 height: 70px;
             }
-            .modal-avatar {
+            .profile-avatar {
                 width: 80px;
                 height: 80px;
+            }
+            .profile-banner-img {
+                height: 110px;
+            }
+            .profile-name {
+                font-size: 1.6rem;
+            }
+            .profile-header {
+                margin-top: -40px;
             }
         }
 
@@ -758,19 +791,29 @@
         </footer>
     </div>
 
+    <!-- Модальное окно (по референсу) -->
     <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
-            <div class="modal-top" id="modalTop">
-                <div class="modal-avatar" id="modalAvatar">
-                    <img src="" alt="avatar" />
-                </div>
+        <div class="modal-content">
+            <!-- Размытый фон -->
+            <div class="modal-background" id="modalBackground"></div>
+            <!-- Контент -->
+            <div class="modal-foreground">
+                <!-- Четкий баннер -->
+                <img class="profile-banner-img" id="profileBannerImg" src="" alt="banner" />
+                <!-- Крестик -->
                 <span class="modal-close" id="modalClose">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="modal-name" id="modalName"></div>
-                <div class="modal-role" id="modalRole"></div>
-                <div class="modal-stats" id="modalStats"></div>
-                <a href="#" class="modal-steam" id="modalSteam" target="_blank"><i class="fab fa-steam"></i> Профиль Steam</a>
+                <!-- Аватар и имя -->
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">
+                        <img src="" alt="avatar" />
+                    </div>
+                    <div class="profile-name" id="profileName"></div>
+                    <div class="profile-tag" id="profileTag"></div>
+                </div>
+                <!-- Статистика -->
+                <div class="profile-stats" id="profileStats"></div>
+                <!-- Кнопка Steam -->
+                <a href="#" class="profile-steam-btn" id="profileSteam" target="_blank"><i class="fab fa-steam"></i> Профиль Steam</a>
             </div>
         </div>
     </div>
@@ -1039,37 +1082,40 @@
         // ── Модальное окно ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
-        const modalTop = document.getElementById('modalTop');
-        const modalAvatar = document.getElementById('modalAvatar').querySelector('img');
-        const modalName = document.getElementById('modalName');
-        const modalRole = document.getElementById('modalRole');
-        const modalStats = document.getElementById('modalStats');
-        const modalSteam = document.getElementById('modalSteam');
+        const modalBackground = document.getElementById('modalBackground');
+        const profileBannerImg = document.getElementById('profileBannerImg');
+        const profileAvatar = document.getElementById('profileAvatar').querySelector('img');
+        const profileName = document.getElementById('profileName');
+        const profileTag = document.getElementById('profileTag');
+        const profileStats = document.getElementById('profileStats');
+        const profileSteam = document.getElementById('profileSteam');
 
         function openModal(id) {
             const player = players.find(p => p.id === id);
             if (!player || player.isVacancy) return;
 
-            // Баннер в верхней части (чёткий)
-            if (player.banner) {
-                modalTop.style.backgroundImage = `url('${player.banner}')`;
-                modalTop.style.backgroundSize = 'cover';
-                modalTop.style.backgroundPosition = 'center';
-                modalTop.style.backgroundRepeat = 'no-repeat';
-            } else {
-                modalTop.style.background = '#2a2a2d';
-            }
+            const bannerUrl = player.banner;
 
-            modalAvatar.src = player.avatar;
-            modalAvatar.alt = player.name;
-            modalName.textContent = player.name;
-            modalRole.textContent = player.tag;
+            // Размытый фон (мыльный)
+            modalBackground.style.backgroundImage = `url('${bannerUrl}')`;
 
+            // Четкий баннер
+            profileBannerImg.src = bannerUrl;
+
+            // Аватар
+            profileAvatar.src = player.avatar;
+            profileAvatar.alt = player.name;
+
+            // Имя и тег
+            profileName.textContent = player.name;
+            profileTag.textContent = player.tag;
+
+            // Статистика
             const s = player.stats;
             const lvl = s.faceit_lvl || 0;
             const iconPath = `/phx/faceit${lvl}.svg`;
 
-            modalStats.innerHTML = `
+            profileStats.innerHTML = `
                 <span class="label">K/D</span><span class="value accent">${s.kd}</span>
                 <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
                 <span class="label">HS %</span><span class="value accent">${s.hs}%</span>
@@ -1086,7 +1132,9 @@
                 </span>
             `;
 
-            modalSteam.href = player.steam;
+            // Кнопка Steam
+            profileSteam.href = player.steam;
+
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
