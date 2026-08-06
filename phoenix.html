@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* Modal */
+        /* ── Модальное окно (новое) ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -472,41 +472,41 @@
         .modal-overlay.active {
             display: flex;
         }
+
         .modal-box {
-            background: #1e1e1e;
-            border-radius: 16px;
-            border: 1px solid #2a2a2d;
-            max-width: 520px;
+            max-width: 460px;
             width: 100%;
-            padding: 0 0 28px 0;
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             position: relative;
+            overflow: hidden;
             animation: modalFade 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-        @keyframes modalFade {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
 
-        .modal-top {
+        /* Баннер с размытием */
+        .modal-banner-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 130px;
+            height: 140px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            border-radius: 16px 16px 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            filter: blur(18px) brightness(0.7);
+            transform: scale(1.1);
+            z-index: 0;
+        }
+
+        .modal-content {
             position: relative;
+            z-index: 1;
+            padding: 20px 24px 28px;
+            text-align: center;
         }
 
         .modal-avatar {
@@ -516,6 +516,7 @@
             overflow: hidden;
             border: 3px solid #FF5500;
             box-shadow: 0 0 30px rgba(255, 85, 0, 0.4);
+            margin: 10px auto 12px;
             background: #1a1a1d;
         }
         .modal-avatar img {
@@ -527,52 +528,51 @@
 
         .modal-close {
             position: absolute;
-            top: 16px;
-            right: 22px;
+            top: 14px;
+            right: 20px;
             font-size: 28px;
-            color: #aaaaaa;
+            color: #cccccc;
             cursor: pointer;
             transition: opacity 0.2s ease;
-            line-height: 1;
             z-index: 10;
+            line-height: 1;
         }
         .modal-close:hover {
             opacity: 0.7;
         }
 
-        .modal-body {
-            padding: 20px 28px 0;
-            text-align: center;
-        }
-
         .modal-name {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         .modal-role {
+            font-size: 1rem;
             color: #FF5500;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
+
+        /* Увеличенный шрифт для статистики */
         .modal-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px 20px;
+            gap: 14px 24px;
             font-family: 'Roboto Mono', monospace;
-            font-size: 0.9rem;
-            color: #aaaaaa;
+            font-size: 1rem;
+            color: #cccccc;
             margin-bottom: 20px;
             text-align: left;
         }
         .modal-stats .label {
-            color: #888888;
+            color: #999999;
+            font-size: 0.9rem;
         }
         .modal-stats .value {
             text-align: right;
             color: #ffffff;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.05rem;
         }
         .modal-stats .value.accent {
             color: #FF5500;
@@ -593,25 +593,38 @@
             height: 24px;
             vertical-align: middle;
         }
-        .modal-stats .value .faceit-icon svg {
+        .modal-stats .value .faceit-icon img {
             width: 100%;
             height: 100%;
             display: block;
         }
+
         .modal-steam {
             display: block;
             text-align: center;
-            padding: 10px 20px;
+            padding: 12px 20px;
             background: #2a2a2d;
             border-radius: 40px;
             color: #aaaaaa;
             text-decoration: none;
             transition: 0.3s;
             font-weight: 500;
+            font-size: 0.95rem;
         }
         .modal-steam:hover {
             background: #3a3a3d;
             color: #ffffff;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         footer {
@@ -652,20 +665,31 @@
                 grid-template-columns: 1fr;
             }
             .modal-box {
-                padding: 0 0 20px 0;
+                max-width: 100%;
             }
-            .modal-body {
-                padding: 16px 20px 0;
+            .modal-stats {
+                grid-template-columns: 1fr;
+                gap: 8px 0;
+            }
+            .modal-stats .value {
+                text-align: left;
             }
             .top-bar .right-actions a span {
                 display: none;
             }
-            .card-top, .modal-top {
+            .card-top {
                 height: 100px;
             }
-            .member-avatar, .modal-avatar {
+            .member-avatar {
                 width: 70px;
                 height: 70px;
+            }
+            .modal-banner-blur {
+                height: 110px;
+            }
+            .modal-avatar {
+                width: 80px;
+                height: 80px;
             }
         }
 
@@ -741,15 +765,15 @@
         </footer>
     </div>
 
+    <!-- Модальное окно (переработанное) -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
+            <div class="modal-banner-blur" id="modalBannerBlur"></div>
             <span class="modal-close" id="modalClose">&times;</span>
-            <div class="modal-top" id="modalTop">
+            <div class="modal-content">
                 <div class="modal-avatar" id="modalAvatar">
                     <img src="" alt="avatar" />
                 </div>
-            </div>
-            <div class="modal-body">
                 <div class="modal-name" id="modalName"></div>
                 <div class="modal-role" id="modalRole"></div>
                 <div class="modal-stats" id="modalStats"></div>
@@ -777,7 +801,7 @@
             return formatted;
         }
 
-        // ── Данные игроков ──
+        // ── Данные игроков (с season1, season2, season3, season4) ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
@@ -789,8 +813,11 @@
                 winrate: 49,
                 hs: 41,
                 adr: '73',
-                s5: '4363 elo',
-                faceit_lvl: 4
+                season1: '—',       // s3
+                season2: '4274 elo', // s4
+                season3: '4363 elo', // s5 (используем как season3, но в карточке покажем season4)
+                season4: '—',        // последний (пока нет данных)
+                faceit_lvl: 8
             },
             steam: 'https://steamcommunity.com/id/mrsiktyyy/'
         }, {
@@ -804,8 +831,11 @@
                 winrate: 48,
                 hs: 54,
                 adr: '89',
-                s5: '16992 elo',
-                faceit_lvl: 4
+                season1: '4301 elo',
+                season2: '14830 elo',
+                season3: '16992 elo',
+                season4: '—',
+                faceit_lvl: 9
             },
             steam: 'https://steamcommunity.com/profiles/76561199182259553'
         }, {
@@ -819,8 +849,11 @@
                 winrate: 45,
                 hs: 42,
                 adr: '71',
-                s5: '3373 elo',
-                faceit_lvl: 4
+                season1: '2027 elo',
+                season2: '2560 elo',
+                season3: '3373 elo',
+                season4: '—',
+                faceit_lvl: 5
             },
             steam: 'https://steamcommunity.com/id/zenlo-official'
         }, {
@@ -852,7 +885,7 @@
             card.className = `member-card fade-up delay-${(index % 5) + 1}`;
             if (p.isVacancy) card.classList.add('vacancy');
 
-            // ── Баннер ──
+            // Баннер
             const cardTop = document.createElement('div');
             cardTop.className = 'card-top';
             if (p.banner) {
@@ -878,7 +911,7 @@
             }
             cardTop.appendChild(avatarDiv);
 
-            // ── Тело ──
+            // Тело
             const cardBody = document.createElement('div');
             cardBody.className = 'card-body';
 
@@ -936,17 +969,17 @@
                 `;
                 statsGrid.appendChild(adrTile);
 
-                // 5. Season 5
-                const s5Tile = document.createElement('div');
-                s5Tile.className = 'stat-tile';
-                const s5Formatted = formatNumberWithElo(s.s5);
-                s5Tile.innerHTML = `
-                    <span class="label">Season 5</span>
-                    <div class="value elo-white">${s5Formatted}</div>
+                // 5. Season 4 (последний)
+                const s4Tile = document.createElement('div');
+                s4Tile.className = 'stat-tile';
+                const s4Formatted = formatNumberWithElo(s.season4 || '—');
+                s4Tile.innerHTML = `
+                    <span class="label">Season 4</span>
+                    <div class="value elo-white">${s4Formatted}</div>
                 `;
-                statsGrid.appendChild(s5Tile);
+                statsGrid.appendChild(s4Tile);
 
-                // 6. LVL FACEIT (SVG)
+                // 6. LVL FACEIT
                 const faceitTile = document.createElement('div');
                 faceitTile.className = 'stat-tile';
                 const lvl = s.faceit_lvl || 0;
@@ -1010,10 +1043,10 @@
             return tile;
         }
 
-        // ── Модалка ──
+        // ── Модальное окно ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
-        const modalTop = document.getElementById('modalTop');
+        const modalBannerBlur = document.getElementById('modalBannerBlur');
         const modalAvatar = document.getElementById('modalAvatar').querySelector('img');
         const modalName = document.getElementById('modalName');
         const modalRole = document.getElementById('modalRole');
@@ -1024,13 +1057,14 @@
             const player = players.find(p => p.id === id);
             if (!player || player.isVacancy) return;
 
+            // Баннер с размытием
             if (player.banner) {
-                modalTop.style.backgroundImage = `url('${player.banner}')`;
-                modalTop.style.backgroundSize = 'cover';
-                modalTop.style.backgroundPosition = 'center';
-                modalTop.style.backgroundRepeat = 'no-repeat';
+                modalBannerBlur.style.backgroundImage = `url('${player.banner}')`;
+                modalBannerBlur.style.backgroundSize = 'cover';
+                modalBannerBlur.style.backgroundPosition = 'center';
+                modalBannerBlur.style.backgroundRepeat = 'no-repeat';
             } else {
-                modalTop.style.background = '#2a2a2d';
+                modalBannerBlur.style.background = '#2a2a2d';
             }
 
             modalAvatar.src = player.avatar;
@@ -1041,12 +1075,15 @@
             const s = player.stats;
             const lvl = s.faceit_lvl || 0;
             const iconPath = `/phx/faceit${lvl}.svg`;
+
+            // Показываем только Season 1 и Season 2
             modalStats.innerHTML = `
                 <span class="label">K/D</span><span class="value accent">${s.kd}</span>
                 <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
                 <span class="label">HS %</span><span class="value accent">${s.hs}%</span>
                 <span class="label">ADR</span><span class="value italic-num">${formatNumberWithElo(s.adr)}</span>
-                <span class="label">Season 5</span><span class="value elo-white">${formatNumberWithElo(s.s5)}</span>
+                <span class="label">Season 1</span><span class="value elo-white">${formatNumberWithElo(s.season1)}</span>
+                <span class="label">Season 2</span><span class="value elo-white">${formatNumberWithElo(s.season2)}</span>
                 <span class="label">LVL FACEIT</span>
                 <span class="value">
                     <span class="faceit-icon">
