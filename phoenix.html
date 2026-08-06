@@ -356,11 +356,11 @@
         }
         .stat-tile .value .faceit-icon {
             display: inline-block;
-            width: 24px;
-            height: 24px;
+            width: 36px;
+            height: 36px;
             vertical-align: middle;
         }
-        .stat-tile .value .faceit-icon svg {
+        .stat-tile .value .faceit-icon img {
             width: 100%;
             height: 100%;
             display: block;
@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно (новое) ── */
+        /* ── Модальное окно ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -476,37 +476,40 @@
         .modal-box {
             max-width: 460px;
             width: 100%;
-            background: rgba(20, 20, 30, 0.6);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             position: relative;
             overflow: hidden;
             animation: modalFade 0.3s ease;
+            background: transparent;
         }
 
-        /* Баннер с размытием */
+        /* Баннер на всю модалку с размытием */
         .modal-banner-blur {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 140px;
+            height: 100%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: blur(18px) brightness(0.7);
+            filter: blur(20px) brightness(0.6);
             transform: scale(1.1);
             z-index: 0;
         }
 
-        .modal-content {
+        /* Стеклянный слой поверх баннера */
+        .modal-glass {
             position: relative;
             z-index: 1;
-            padding: 20px 24px 28px;
+            background: rgba(20, 20, 30, 0.45);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            padding: 24px 24px 28px;
             text-align: center;
+            border-radius: 20px;
         }
 
         .modal-avatar {
@@ -553,7 +556,6 @@
             margin-bottom: 18px;
         }
 
-        /* Увеличенный шрифт для статистики */
         .modal-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -589,8 +591,8 @@
         }
         .modal-stats .value .faceit-icon {
             display: inline-block;
-            width: 24px;
-            height: 24px;
+            width: 36px;
+            height: 36px;
             vertical-align: middle;
         }
         .modal-stats .value .faceit-icon img {
@@ -603,16 +605,17 @@
             display: block;
             text-align: center;
             padding: 12px 20px;
-            background: #2a2a2d;
+            background: rgba(42, 42, 45, 0.8);
             border-radius: 40px;
             color: #aaaaaa;
             text-decoration: none;
             transition: 0.3s;
             font-weight: 500;
             font-size: 0.95rem;
+            backdrop-filter: blur(4px);
         }
         .modal-steam:hover {
-            background: #3a3a3d;
+            background: rgba(60, 60, 65, 0.9);
             color: #ffffff;
         }
 
@@ -683,9 +686,6 @@
             .member-avatar {
                 width: 70px;
                 height: 70px;
-            }
-            .modal-banner-blur {
-                height: 110px;
             }
             .modal-avatar {
                 width: 80px;
@@ -765,12 +765,11 @@
         </footer>
     </div>
 
-    <!-- Модальное окно (переработанное) -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
             <div class="modal-banner-blur" id="modalBannerBlur"></div>
             <span class="modal-close" id="modalClose">&times;</span>
-            <div class="modal-content">
+            <div class="modal-glass">
                 <div class="modal-avatar" id="modalAvatar">
                     <img src="" alt="avatar" />
                 </div>
@@ -801,7 +800,7 @@
             return formatted;
         }
 
-        // ── Данные игроков (с season1, season2, season3, season4) ──
+        // ── Данные игроков (все LVL = 4, сезоны 1-3 = "Нет рейтинга", сезон 4 = реальный рейтинг) ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
@@ -813,11 +812,11 @@
                 winrate: 49,
                 hs: 41,
                 adr: '73',
-                season1: '—',       // s3
-                season2: '4274 elo', // s4
-                season3: '4363 elo', // s5 (используем как season3, но в карточке покажем season4)
-                season4: '—',        // последний (пока нет данных)
-                faceit_lvl: 8
+                season1: 'Нет рейтинга',
+                season2: 'Нет рейтинга',
+                season3: 'Нет рейтинга',
+                season4: '4274 elo',
+                faceit_lvl: 4
             },
             steam: 'https://steamcommunity.com/id/mrsiktyyy/'
         }, {
@@ -831,11 +830,11 @@
                 winrate: 48,
                 hs: 54,
                 adr: '89',
-                season1: '4301 elo',
-                season2: '14830 elo',
-                season3: '16992 elo',
-                season4: '—',
-                faceit_lvl: 9
+                season1: 'Нет рейтинга',
+                season2: 'Нет рейтинга',
+                season3: 'Нет рейтинга',
+                season4: '14830 elo',
+                faceit_lvl: 4
             },
             steam: 'https://steamcommunity.com/profiles/76561199182259553'
         }, {
@@ -849,11 +848,11 @@
                 winrate: 45,
                 hs: 42,
                 adr: '71',
-                season1: '2027 elo',
-                season2: '2560 elo',
-                season3: '3373 elo',
-                season4: '—',
-                faceit_lvl: 5
+                season1: 'Нет рейтинга',
+                season2: 'Нет рейтинга',
+                season3: 'Нет рейтинга',
+                season4: '2560 elo',
+                faceit_lvl: 4
             },
             steam: 'https://steamcommunity.com/id/zenlo-official'
         }, {
@@ -972,14 +971,14 @@
                 // 5. Season 4 (последний)
                 const s4Tile = document.createElement('div');
                 s4Tile.className = 'stat-tile';
-                const s4Formatted = formatNumberWithElo(s.season4 || '—');
+                const s4Formatted = formatNumberWithElo(s.season4);
                 s4Tile.innerHTML = `
                     <span class="label">Season 4</span>
                     <div class="value elo-white">${s4Formatted}</div>
                 `;
                 statsGrid.appendChild(s4Tile);
 
-                // 6. LVL FACEIT
+                // 6. LVL FACEIT (увеличен до 36px)
                 const faceitTile = document.createElement('div');
                 faceitTile.className = 'stat-tile';
                 const lvl = s.faceit_lvl || 0;
@@ -988,7 +987,7 @@
                     <span class="label">LVL FACEIT</span>
                     <div class="value">
                         <span class="faceit-icon">
-                            <img src="${iconPath}" alt="LVL ${lvl}" style="width:24px;height:24px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
+                            <img src="${iconPath}" alt="LVL ${lvl}" style="width:36px;height:36px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
                         </span>
                     </div>
                 `;
@@ -1057,7 +1056,7 @@
             const player = players.find(p => p.id === id);
             if (!player || player.isVacancy) return;
 
-            // Баннер с размытием
+            // Баннер с размытием на всю модалку
             if (player.banner) {
                 modalBannerBlur.style.backgroundImage = `url('${player.banner}')`;
                 modalBannerBlur.style.backgroundSize = 'cover';
@@ -1076,18 +1075,20 @@
             const lvl = s.faceit_lvl || 0;
             const iconPath = `/phx/faceit${lvl}.svg`;
 
-            // Показываем только Season 1 и Season 2
+            // В модалке показываем все 4 сезона: 1-3 = "Нет рейтинга", 4 = реальный
             modalStats.innerHTML = `
                 <span class="label">K/D</span><span class="value accent">${s.kd}</span>
                 <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
                 <span class="label">HS %</span><span class="value accent">${s.hs}%</span>
                 <span class="label">ADR</span><span class="value italic-num">${formatNumberWithElo(s.adr)}</span>
-                <span class="label">Season 1</span><span class="value elo-white">${formatNumberWithElo(s.season1)}</span>
-                <span class="label">Season 2</span><span class="value elo-white">${formatNumberWithElo(s.season2)}</span>
+                <span class="label">Season 1</span><span class="value elo-white">${s.season1}</span>
+                <span class="label">Season 2</span><span class="value elo-white">${s.season2}</span>
+                <span class="label">Season 3</span><span class="value elo-white">${s.season3}</span>
+                <span class="label">Season 4</span><span class="value elo-white">${formatNumberWithElo(s.season4)}</span>
                 <span class="label">LVL FACEIT</span>
                 <span class="value">
                     <span class="faceit-icon">
-                        <img src="${iconPath}" alt="LVL ${lvl}" style="width:24px;height:24px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
+                        <img src="${iconPath}" alt="LVL ${lvl}" style="width:36px;height:36px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
                     </span>
                 </span>
             `;
