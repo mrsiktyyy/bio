@@ -406,54 +406,6 @@
             font-size: 1.1rem;
         }
 
-        .vacancy {
-            border-style: dashed;
-            border-color: #2a2a2d;
-            background: #1a1a1d;
-            cursor: default;
-        }
-        .vacancy:hover {
-            border-color: #FF5500;
-            box-shadow: 0 8px 24px rgba(255, 85, 0, 0.08);
-        }
-        .vacancy .card-top {
-            background: #2a2a2d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .vacancy .member-avatar {
-            border-color: #666666;
-            background: rgba(255, 255, 255, 0.03);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
-            color: #666666;
-            border: 3px dashed #666666;
-        }
-        .vacancy .member-avatar img {
-            display: none;
-        }
-        .vacancy .member-name {
-            color: #FF5500;
-        }
-        .vacancy .member-tag {
-            color: #888888;
-        }
-        .vacancy .stats-grid {
-            display: none;
-        }
-        .vacancy .btn-steam {
-            background: rgba(255, 85, 0, 0.1);
-            color: #FF5500;
-            border: 1px solid rgba(255, 85, 0, 0.2);
-        }
-        .vacancy .btn-steam:hover {
-            background: rgba(255, 85, 0, 0.2);
-            color: #ff8833;
-        }
-
         /* ── Модальное окно ── */
         .modal-overlay {
             display: none;
@@ -845,11 +797,11 @@
             return formatted;
         }
 
-        // ── Данные игроков (4 игрока + 1 вакансия) ──
+        // ── Данные игроков (5 игроков, без вакансий) ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
-            tag: 'OpenFrager',
+            tag: 'OpenFrager + Sniper',
             avatar: '/phx/Avatar1.png',
             banner: '/phx/Banner1.png',
             stats: {
@@ -861,13 +813,13 @@
                 season2: 'Нет рейтинга',
                 season3: 'Нет рейтинга',
                 season4: '4274 elo',
-                faceit_lvl: 6
+                faceit_lvl: 4
             },
             steam: 'https://steamcommunity.com/id/mrsiktyyy/'
         }, {
             id: 'novich0k42',
             name: 'Novich0k42',
-            tag: 'Leader',
+            tag: 'Leader + Rifler',
             avatar: '/phx/Avatar2.png',
             banner: '/phx/Banner2.png',
             stats: {
@@ -879,13 +831,13 @@
                 season2: 'Нет рейтинга',
                 season3: 'Нет рейтинга',
                 season4: '14830 elo',
-                faceit_lvl: 9
+                faceit_lvl: 4
             },
             steam: 'https://steamcommunity.com/profiles/76561199182259553'
         }, {
             id: 'egorvdadika',
             name: 'EgorVdadika',
-            tag: 'Sniper',
+            tag: 'Rifler',
             avatar: '/phx/Avatar3.png',
             banner: '/phx/Banner3.png',
             stats: {
@@ -903,7 +855,7 @@
         }, {
             id: 'mrerror404',
             name: 'MrError404',
-            tag: 'Support',
+            tag: 'Rifler',
             avatar: '/phx/Avatar4.png',
             banner: '/phx/Banner4.png',
             stats: {
@@ -915,18 +867,27 @@
                 season2: 'Нет рейтинга',
                 season3: 'Нет рейтинга',
                 season4: 'Нет рейтинга',
-                faceit_lvl: 5
+                faceit_lvl: 4
             },
             steam: 'https://steamcommunity.com/profiles/76561199742805365/'
         }, {
-            id: 'vacancy1',
-            name: 'Ищем игрока',
-            tag: 'Пятый · Любая роль',
-            avatar: '',
-            banner: null,
-            stats: null,
-            steam: '#',
-            isVacancy: true
+            id: 'dreamzyy',
+            name: 'Dreamzyy',
+            tag: 'Rifler',
+            avatar: '/phx/Avatar5.png',
+            banner: '/phx/Banner5.png',
+            stats: {
+                kd: '0.94',
+                winrate: 49,
+                hs: 54,
+                adr: '77',
+                season1: '1899 elo',
+                season2: '4384 elo',
+                season3: '6046 elo',
+                season4: '16599 elo',
+                faceit_lvl: 7
+            },
+            steam: 'https://steamcommunity.com/id/dreamzywow/'
         }];
 
         // ── Рендер карточек ──
@@ -936,7 +897,7 @@
         players.forEach((p, index) => {
             const card = document.createElement('div');
             card.className = `member-card fade-up delay-${(index % 5) + 1}`;
-            if (p.isVacancy) card.classList.add('vacancy');
+            // больше нет вакансий, так что не добавляем класс vacancy
 
             // Баннер
             const cardTop = document.createElement('div');
@@ -952,16 +913,12 @@
 
             const avatarDiv = document.createElement('div');
             avatarDiv.className = 'member-avatar';
-            if (p.isVacancy) {
-                avatarDiv.textContent = '+';
-            } else {
-                const img = document.createElement('img');
-                img.src = p.avatar;
-                img.alt = p.name;
-                img.onerror = function() { this.style.display = 'none';
-                    this.parentElement.textContent = p.name.charAt(0); };
-                avatarDiv.appendChild(img);
-            }
+            const img = document.createElement('img');
+            img.src = p.avatar;
+            img.alt = p.name;
+            img.onerror = function() { this.style.display = 'none';
+                this.parentElement.textContent = p.name.charAt(0); };
+            avatarDiv.appendChild(img);
             cardTop.appendChild(avatarDiv);
 
             // Тело
@@ -979,108 +936,91 @@
             const statsGrid = document.createElement('div');
             statsGrid.className = 'stats-grid';
 
-            if (!p.isVacancy && p.stats) {
-                const s = p.stats;
-                const kdNum = parseFloat(s.kd);
-                let kdClass = 'value';
-                if (kdNum > 1.5) kdClass += ' high-kd';
-                else if (kdNum < 0.8) kdClass += ' low-kd';
-                else kdClass += ' accent';
+            const s = p.stats;
+            const kdNum = parseFloat(s.kd);
+            let kdClass = 'value';
+            if (kdNum > 1.5) kdClass += ' high-kd';
+            else if (kdNum < 0.8) kdClass += ' low-kd';
+            else kdClass += ' accent';
 
-                // 1. K/D
-                const kdTile = createStatTile('K/D', s.kd, kdClass);
-                statsGrid.appendChild(kdTile);
+            // 1. K/D
+            const kdTile = createStatTile('K/D', s.kd, kdClass);
+            statsGrid.appendChild(kdTile);
 
-                // 2. Win Rate
-                const wrTile = document.createElement('div');
-                wrTile.className = 'stat-tile';
-                wrTile.innerHTML = `
-                    <span class="label">Win Rate</span>
-                    <div class="value accent">${s.winrate}%</div>
-                    <div class="progress-wrap"><div class="progress-fill" style="width:${s.winrate}%"></div></div>
-                `;
-                statsGrid.appendChild(wrTile);
+            // 2. Win Rate
+            const wrTile = document.createElement('div');
+            wrTile.className = 'stat-tile';
+            wrTile.innerHTML = `
+                <span class="label">Win Rate</span>
+                <div class="value accent">${s.winrate}%</div>
+                <div class="progress-wrap"><div class="progress-fill" style="width:${s.winrate}%"></div></div>
+            `;
+            statsGrid.appendChild(wrTile);
 
-                // 3. HS%
-                const hsTile = document.createElement('div');
-                hsTile.className = 'stat-tile';
-                hsTile.innerHTML = `
-                    <span class="label">HS%</span>
-                    <div class="value accent">${s.hs}%</div>
-                    <div class="progress-wrap"><div class="progress-fill" style="width:${s.hs}%"></div></div>
-                `;
-                statsGrid.appendChild(hsTile);
+            // 3. HS%
+            const hsTile = document.createElement('div');
+            hsTile.className = 'stat-tile';
+            hsTile.innerHTML = `
+                <span class="label">HS%</span>
+                <div class="value accent">${s.hs}%</div>
+                <div class="progress-wrap"><div class="progress-fill" style="width:${s.hs}%"></div></div>
+            `;
+            statsGrid.appendChild(hsTile);
 
-                // 4. ADR
-                const adrTile = document.createElement('div');
-                adrTile.className = 'stat-tile';
-                adrTile.title = 'Средний урон за раунд (Average Damage per Round)';
-                const adrFormatted = formatNumberWithElo(s.adr);
-                adrTile.innerHTML = `
-                    <span class="label">ADR</span>
-                    <div class="value italic-num">${adrFormatted}</div>
-                `;
-                statsGrid.appendChild(adrTile);
+            // 4. ADR
+            const adrTile = document.createElement('div');
+            adrTile.className = 'stat-tile';
+            adrTile.title = 'Средний урон за раунд (Average Damage per Round)';
+            const adrFormatted = formatNumberWithElo(s.adr);
+            adrTile.innerHTML = `
+                <span class="label">ADR</span>
+                <div class="value italic-num">${adrFormatted}</div>
+            `;
+            statsGrid.appendChild(adrTile);
 
-                // 5. Season 4
-                const s4Tile = document.createElement('div');
-                s4Tile.className = 'stat-tile';
-                const s4Formatted = formatNumberWithElo(s.season4);
-                s4Tile.innerHTML = `
-                    <span class="label">Season 4</span>
-                    <div class="value elo-white">${s4Formatted}</div>
-                `;
-                statsGrid.appendChild(s4Tile);
+            // 5. Season 4
+            const s4Tile = document.createElement('div');
+            s4Tile.className = 'stat-tile';
+            const s4Formatted = formatNumberWithElo(s.season4);
+            s4Tile.innerHTML = `
+                <span class="label">Season 4</span>
+                <div class="value elo-white">${s4Formatted}</div>
+            `;
+            statsGrid.appendChild(s4Tile);
 
-                // 6. LVL FACEIT
-                const faceitTile = document.createElement('div');
-                faceitTile.className = 'stat-tile';
-                const lvl = s.faceit_lvl || 0;
-                const iconPath = `/phx/faceit${lvl}.svg`;
-                faceitTile.innerHTML = `
-                    <span class="label">LVL FACEIT</span>
-                    <div class="value">
-                        <span class="faceit-icon">
-                            <img src="${iconPath}" alt="LVL ${lvl}" style="width:36px;height:36px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
-                        </span>
-                    </div>
-                `;
-                statsGrid.appendChild(faceitTile);
-            }
+            // 6. LVL FACEIT
+            const faceitTile = document.createElement('div');
+            faceitTile.className = 'stat-tile';
+            const lvl = s.faceit_lvl || 0;
+            const iconPath = `/phx/faceit${lvl}.svg`;
+            faceitTile.innerHTML = `
+                <span class="label">LVL FACEIT</span>
+                <div class="value">
+                    <span class="faceit-icon">
+                        <img src="${iconPath}" alt="LVL ${lvl}" style="width:36px;height:36px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
+                    </span>
+                </div>
+            `;
+            statsGrid.appendChild(faceitTile);
 
             const btn = document.createElement('a');
             btn.className = 'btn-steam';
-            if (p.isVacancy) {
-                btn.href = 'https://t.me/mrsiktyyy';
-                btn.target = '_blank';
-                btn.innerHTML = '<i class="fab fa-telegram"></i> Написать';
-            } else {
-                btn.href = p.steam;
-                btn.target = '_blank';
-                btn.innerHTML = '<i class="fab fa-steam"></i> Профиль Steam';
-            }
+            btn.href = p.steam;
+            btn.target = '_blank';
+            btn.innerHTML = '<i class="fab fa-steam"></i> Профиль Steam';
 
             cardBody.appendChild(nameDiv);
             cardBody.appendChild(tagDiv);
-            if (!p.isVacancy) {
-                cardBody.appendChild(statsGrid);
-            } else {
-                const placeholder = document.createElement('div');
-                placeholder.style.cssText = 'text-align:center; color:#888888; font-size:0.85rem; margin: 8px 0 12px;';
-                placeholder.textContent = 'Ждём тебя в команде!';
-                cardBody.appendChild(placeholder);
-            }
+            cardBody.appendChild(statsGrid);
             cardBody.appendChild(btn);
 
             card.appendChild(cardTop);
             card.appendChild(cardBody);
 
-            if (!p.isVacancy) {
-                card.addEventListener('click', (e) => {
-                    if (e.target.closest('.btn-steam')) return;
-                    openModal(p.id);
-                });
-            }
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.btn-steam')) return;
+                openModal(p.id);
+            });
 
             grid.appendChild(card);
         });
@@ -1109,7 +1049,7 @@
 
         function openModal(id) {
             const player = players.find(p => p.id === id);
-            if (!player || player.isVacancy) return;
+            if (!player) return;
 
             const bannerUrl = player.banner;
 
@@ -1137,9 +1077,9 @@
                 <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
                 <span class="label">HS %</span><span class="value accent">${s.hs}%</span>
                 <span class="label">ADR</span><span class="value italic-num">${formatNumberWithElo(s.adr)}</span>
-                <span class="label">Season 1</span><span class="value elo-white">${s.season1}</span>
-                <span class="label">Season 2</span><span class="value elo-white">${s.season2}</span>
-                <span class="label">Season 3</span><span class="value elo-white">${s.season3}</span>
+                <span class="label">Season 1</span><span class="value elo-white">${formatNumberWithElo(s.season1)}</span>
+                <span class="label">Season 2</span><span class="value elo-white">${formatNumberWithElo(s.season2)}</span>
+                <span class="label">Season 3</span><span class="value elo-white">${formatNumberWithElo(s.season3)}</span>
                 <span class="label">Season 4</span><span class="value elo-white">${formatNumberWithElo(s.season4)}</span>
                 <span class="label">LVL FACEIT</span>
                 <span class="value">
