@@ -212,13 +212,28 @@
             font-size: 1.1rem;
         }
 
-        /* ── Общий стиль для профилей ── */
+        /* ── Новая сетка: текст слева, баннер справа ── */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: stretch;
+            margin-bottom: 40px;
+            min-height: 400px;
+        }
+
+        /* Левая колонка – тексты */
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
         .hero {
             display: flex;
             flex-wrap: wrap;
             gap: 40px;
             align-items: flex-start;
-            margin-bottom: 40px;
         }
         .hero-info {
             flex: 1;
@@ -273,6 +288,23 @@
             font-size: 1.2rem;
         }
 
+        /* Правая колонка – рекламный баннер */
+        .hero-right {
+            display: flex;
+            align-items: stretch;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #1a1a1d;
+            min-height: 300px;
+        }
+        .hero-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 16px;
+        }
+
         /* ── Footer ── */
         footer {
             text-align: center;
@@ -303,6 +335,13 @@
             .top-bar .hamburger {
                 display: block;
             }
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .hero-right {
+                min-height: 200px;
+            }
             .hero {
                 flex-direction: column;
                 text-align: center;
@@ -319,6 +358,9 @@
         @media (max-width: 600px) {
             .top-bar .right-actions a span {
                 display: none;
+            }
+            .hero-right {
+                min-height: 150px;
             }
         }
 
@@ -338,6 +380,9 @@
         }
         .delay-2 {
             animation-delay: 0.1s;
+        }
+        .delay-3 {
+            animation-delay: 0.15s;
         }
     </style>
 </head>
@@ -372,38 +417,49 @@
                 </div>
             </header>
 
-            <!-- Блок MrSiktyyy -->
-            <div class="hero fade-up">
-                <div class="hero-info">
-                    <h1>Привет, я <span>mrsiktyyy</span> — <span>Иван Акбашев</span></h1>
-                    <div class="subtitle">Основатель Phoenix Team · Стример · Разработчик</div>
-                    <p class="bio">
-                        Меня зовут Иван Акбашев. Я создал этот сайт и команду Phoenix.
-                        Здесь ты найдёшь всё о нашей деятельности, новости и состав.
-                        Присоединяйся к нам в соцсетях!
-                    </p>
-                    <div class="social-links">
-                        <a href="https://t.me/mrsiktyyy" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
-                        <a href="https://www.instagram.com/mrsiktyyy/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                        <a href="https://twitch.tv/mrsiktyyy" target="_blank"><i class="fab fa-twitch"></i> Twitch</a>
-                        <a href="https://www.youtube.com/@MrS1kyyy" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-                        <a href="https://steamcommunity.com/id/mrsikty/" target="_blank"><i class="fab fa-steam"></i> Steam</a>
+            <!-- Сетка: текст слева, баннер справа -->
+            <div class="hero-grid fade-up">
+                <!-- Левая колонка: тексты -->
+                <div class="hero-left">
+                    <!-- Блок MrSiktyyy -->
+                    <div class="hero">
+                        <div class="hero-info">
+                            <h1>Привет, я <span>mrsiktyyy</span> — <span>Иван Акбашев</span></h1>
+                            <div class="subtitle">Основатель Phoenix Team · Стример · Разработчик</div>
+                            <p class="bio">
+                                Меня зовут Иван Акбашев. Я создал этот сайт и команду Phoenix.
+                                Здесь ты найдёшь всё о нашей деятельности, новости и состав.
+                                Присоединяйся к нам в соцсетях!
+                            </p>
+                            <div class="social-links">
+                                <a href="https://t.me/mrsiktyyy" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                                <a href="https://www.instagram.com/mrsiktyyy/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                <a href="https://twitch.tv/mrsiktyyy" target="_blank"><i class="fab fa-twitch"></i> Twitch</a>
+                                <a href="https://www.youtube.com/@MrS1kyyy" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                                <a href="https://steamcommunity.com/id/mrsikty/" target="_blank"><i class="fab fa-steam"></i> Steam</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Блок Novich0k42 -->
+                    <div class="hero fade-up delay-1">
+                        <div class="hero-info">
+                            <h1>Я <span>Novich0k42</span> и меня звать <span>Вадим</span></h1>
+                            <div class="subtitle">Игрок Phoenix Team · Рифлер · Командир</div>
+                            <p class="bio">
+                                Мне 14 лет, играю в CS2 с 2018 (1.6). Далее в 2025 году начинал играть в CS2, наиграл 800 часов и достиг почти 17,000 рейтинга в 5 сезоне Премьера.
+                            </p>
+                            <div class="social-links">
+                                <a href="https://t.me/Novichok42" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                                <a href="https://steamcommunity.com/profiles/76561199182259553" target="_blank"><i class="fab fa-steam"></i> Steam</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Блок Novich0k42 -->
-            <div class="hero fade-up delay-1">
-                <div class="hero-info">
-                    <h1>Я <span>Novich0k42</span> и меня звать <span>Вадим</span></h1>
-                    <div class="subtitle">Игрок Phoenix Team · Рифлер · Командир</div>
-                    <p class="bio">
-                        Мне 14 лет, играю в CS2 с 2018 (1.6). Далее в 2025 году начинал играть в CS2, наиграл 800 часов и достиг почти 17,000 рейтинга в 5 сезоне Премьера.
-                    </p>
-                    <div class="social-links">
-                        <a href="https://t.me/Novichok42" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
-                        <a href="https://steamcommunity.com/profiles/76561199182259553" target="_blank"><i class="fab fa-steam"></i> Steam</a>
-                    </div>
+                <!-- Правая колонка: рекламный баннер -->
+                <div class="hero-right">
+                    <img src="5447617324774005331.jpg" alt="Реклама GGDROP" />
                 </div>
             </div>
 
