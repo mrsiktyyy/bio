@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно (новое) ── */
+        /* ── Модальное окно ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -845,7 +845,7 @@
             return formatted;
         }
 
-       // ── Данные игроков ──
+        // ── Данные игроков (4 игрока + 1 вакансия) ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
@@ -901,16 +901,25 @@
             },
             steam: 'https://steamcommunity.com/id/EgorVdadika/'
         }, {
-            id: 'vacancy1',
-            name: 'Ищем игрока',
-            tag: 'Четвёртый · Любая роль',
-            avatar: '',
-            banner: null,
-            stats: null,
-            steam: '#',
-            isVacancy: true
+            id: 'mrerror404',
+            name: 'MrError404',
+            tag: 'Rifler',
+            avatar: '/phx/Avatar4.png',
+            banner: '/phx/Banner4.png',
+            stats: {
+                kd: '1.05',
+                winrate: 54,
+                hs: 37,
+                adr: '69',
+                season1: 'Нет рейтинга',
+                season2: 'Нет рейтинга',
+                season3: 'Нет рейтинга',
+                season4: 'Нет рейтинга',
+                faceit_lvl: 4
+            },
+            steam: 'https://steamcommunity.com/profiles/76561199742805365/'
         }, {
-            id: 'vacancy2',
+            id: 'vacancy1',
             name: 'Ищем игрока',
             tag: 'Пятый · Любая роль',
             avatar: '',
