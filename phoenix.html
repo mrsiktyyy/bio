@@ -259,7 +259,7 @@
         /* ── Баннер сверху ── */
         .card-top {
             width: 100%;
-            height: 110px;
+            height: 130px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -289,19 +289,18 @@
 
         /* ── Контент под баннером ── */
         .card-body {
-            padding: 16px 18px 20px;
+            padding: 20px 24px 24px;
+            text-align: center;
         }
 
         .member-name {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            text-align: center;
             color: #ffffff;
             margin-bottom: 2px;
         }
         .member-tag {
-            text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #aaaaaa;
             margin-bottom: 16px;
             letter-spacing: 0.3px;
@@ -310,13 +309,13 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 18px;
         }
         .stat-tile {
             background: rgba(255, 255, 255, 0.04);
             border-radius: 8px;
-            padding: 8px 4px;
+            padding: 10px 6px;
             text-align: center;
             border: 1px solid #2a2a2d;
             transition: 0.2s;
@@ -326,7 +325,7 @@
             border-color: #FF5500;
         }
         .stat-tile .label {
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             color: #aaaaaa;
             letter-spacing: 0.5px;
@@ -446,7 +445,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно ── */
+        /* ── Модальное окно (с баннером) ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -470,7 +469,7 @@
             border: 1px solid #2a2a2d;
             max-width: 520px;
             width: 100%;
-            padding: 32px 28px;
+            padding: 0 0 28px 0;
             position: relative;
             animation: modalFade 0.3s ease;
             max-height: 90vh;
@@ -487,6 +486,36 @@
                 transform: scale(1) translateY(0);
             }
         }
+
+        .modal-top {
+            width: 100%;
+            height: 130px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .modal-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #FF5500;
+            box-shadow: 0 0 30px rgba(255, 85, 0, 0.4);
+            background: #1a1a1d;
+        }
+        .modal-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         .modal-close {
             position: absolute;
             top: 16px;
@@ -496,33 +525,24 @@
             cursor: pointer;
             transition: opacity 0.2s ease;
             line-height: 1;
+            z-index: 10;
         }
         .modal-close:hover {
             opacity: 0.7;
         }
-        .modal-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto 16px;
-            border: 2px solid #FF5500;
-            box-shadow: 0 0 30px rgba(255, 85, 0, 0.2);
+
+        .modal-body {
+            padding: 20px 28px 0;
+            text-align: center;
         }
-        .modal-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+
         .modal-name {
             font-size: 1.8rem;
             font-weight: 700;
-            text-align: center;
             color: #ffffff;
             margin-bottom: 4px;
         }
         .modal-role {
-            text-align: center;
             color: #FF5500;
             font-size: 0.9rem;
             margin-bottom: 20px;
@@ -535,6 +555,7 @@
             font-size: 0.9rem;
             color: #aaaaaa;
             margin-bottom: 20px;
+            text-align: left;
         }
         .modal-stats .label {
             color: #888888;
@@ -611,15 +632,18 @@
                 grid-template-columns: 1fr;
             }
             .modal-box {
-                padding: 20px;
+                padding: 0 0 20px 0;
+            }
+            .modal-body {
+                padding: 16px 20px 0;
             }
             .top-bar .right-actions a span {
                 display: none;
             }
-            .card-top {
-                height: 90px;
+            .card-top, .modal-top {
+                height: 100px;
             }
-            .member-avatar {
+            .member-avatar, .modal-avatar {
                 width: 70px;
                 height: 70px;
             }
@@ -700,11 +724,17 @@
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
             <span class="modal-close" id="modalClose">&times;</span>
-            <div class="modal-avatar" id="modalAvatar"><img src="" alt="avatar" /></div>
-            <div class="modal-name" id="modalName"></div>
-            <div class="modal-role" id="modalRole"></div>
-            <div class="modal-stats" id="modalStats"></div>
-            <a href="#" class="modal-steam" id="modalSteam" target="_blank"><i class="fab fa-steam"></i> Профиль Steam</a>
+            <div class="modal-top" id="modalTop">
+                <div class="modal-avatar" id="modalAvatar">
+                    <img src="" alt="avatar" />
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-name" id="modalName"></div>
+                <div class="modal-role" id="modalRole"></div>
+                <div class="modal-stats" id="modalStats"></div>
+                <a href="#" class="modal-steam" id="modalSteam" target="_blank"><i class="fab fa-steam"></i> Профиль Steam</a>
+            </div>
         </div>
     </div>
 
@@ -811,14 +841,12 @@
             // ── Верхняя часть с баннером и аватаркой ──
             const cardTop = document.createElement('div');
             cardTop.className = 'card-top';
-            // Если есть баннер, ставим его как фон
             if (p.banner) {
                 cardTop.style.backgroundImage = `url('${p.banner}')`;
                 cardTop.style.backgroundSize = 'cover';
                 cardTop.style.backgroundPosition = 'center';
                 cardTop.style.backgroundRepeat = 'no-repeat';
             } else {
-                // Для вакансий фон тёмный
                 cardTop.style.background = '#2a2a2d';
             }
 
@@ -838,7 +866,7 @@
 
             cardTop.appendChild(avatarDiv);
 
-            // ── Тело карточки (имя, тег, статистика, кнопка) ──
+            // ── Тело карточки ──
             const cardBody = document.createElement('div');
             cardBody.className = 'card-body';
 
@@ -932,7 +960,6 @@
                 btn.innerHTML = '<i class="fab fa-steam"></i> Профиль Steam';
             }
 
-            // Сборка тела
             cardBody.appendChild(nameDiv);
             cardBody.appendChild(tagDiv);
             if (!p.isVacancy) {
@@ -945,7 +972,6 @@
             }
             cardBody.appendChild(btn);
 
-            // Сборка карточки
             card.appendChild(cardTop);
             card.appendChild(cardBody);
 
@@ -970,9 +996,10 @@
             return tile;
         }
 
-        // ── Модальное окно ──
+        // ── Модальное окно (с баннером) ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
+        const modalTop = document.getElementById('modalTop');
         const modalAvatar = document.getElementById('modalAvatar').querySelector('img');
         const modalName = document.getElementById('modalName');
         const modalRole = document.getElementById('modalRole');
@@ -982,6 +1009,16 @@
         function openModal(id) {
             const player = players.find(p => p.id === id);
             if (!player || player.isVacancy) return;
+
+            // Устанавливаем баннер
+            if (player.banner) {
+                modalTop.style.backgroundImage = `url('${player.banner}')`;
+                modalTop.style.backgroundSize = 'cover';
+                modalTop.style.backgroundPosition = 'center';
+                modalTop.style.backgroundRepeat = 'no-repeat';
+            } else {
+                modalTop.style.background = '#2a2a2d';
+            }
 
             modalAvatar.src = player.avatar;
             modalAvatar.alt = player.name;
