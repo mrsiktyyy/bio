@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно (баннер 4:3) ── */
+        /* ── Модальное окно (новое) ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -484,7 +484,6 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
-        /* Размытый фон (мыльный) */
         .modal-background {
             position: absolute;
             top: 0;
@@ -499,7 +498,6 @@
             z-index: 0;
         }
 
-        /* Контент поверх фона */
         .modal-foreground {
             position: relative;
             z-index: 1;
@@ -510,21 +508,33 @@
             padding: 0;
         }
 
-        /* Баннер четкий — теперь 4:3 */
+        .banner-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+        }
+
         .profile-banner-img {
             width: 100%;
-            aspect-ratio: 16 / 9;          /* было 4 / 3 */
+            height: 100%;
             object-fit: cover;
             display: block;
             border-bottom: 2px solid rgba(255, 85, 0, 0.3);
         }
 
-        /* Аватар и имя */
-        .profile-header {
-            position: relative;
-            margin-top: -50px;
-            padding: 0 20px 12px;
-            text-align: center;
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 5%;
+            pointer-events: none;
         }
 
         .profile-avatar {
@@ -534,8 +544,9 @@
             overflow: hidden;
             border: 3px solid #FF5500;
             box-shadow: 0 0 30px rgba(255, 85, 0, 0.4);
-            margin: 0 auto 10px;
             background: #1a1a1d;
+            margin-bottom: 10px;
+            pointer-events: auto;
         }
         .profile-avatar img {
             width: 100%;
@@ -544,24 +555,46 @@
             display: block;
         }
 
+        .profile-name-tag {
+            text-align: center;
+            pointer-events: auto;
+        }
+
         .profile-name {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 800;
             color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
             margin-bottom: 2px;
         }
         .profile-tag {
             font-size: 1rem;
+            font-weight: 700;
             color: #FF5500;
-            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
         }
 
-        /* Статистика */
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            font-size: 28px;
+            color: #cccccc;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            z-index: 20;
+            line-height: 1;
+            pointer-events: auto;
+        }
+        .modal-close:hover {
+            opacity: 0.7;
+        }
+
         .profile-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 14px 24px;
-            padding: 0 24px 20px;
+            padding: 20px 24px 16px;
             font-family: 'Roboto Mono', monospace;
             font-size: 0.95rem;
             color: #cccccc;
@@ -600,7 +633,6 @@
             display: block;
         }
 
-        /* Кнопка Steam */
         .profile-steam-btn {
             display: block;
             margin: 0 24px 24px;
@@ -618,21 +650,6 @@
         .profile-steam-btn:hover {
             background: rgba(60, 60, 65, 0.9);
             color: #ffffff;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 14px;
-            right: 20px;
-            font-size: 28px;
-            color: #cccccc;
-            cursor: pointer;
-            transition: opacity 0.2s ease;
-            z-index: 10;
-            line-height: 1;
-        }
-        .modal-close:hover {
-            opacity: 0.7;
         }
 
         @keyframes modalFade {
@@ -689,7 +706,7 @@
             .profile-stats {
                 grid-template-columns: 1fr;
                 gap: 8px 0;
-                padding: 0 16px 16px;
+                padding: 16px;
             }
             .profile-stats .value {
                 text-align: left;
@@ -710,9 +727,6 @@
             }
             .profile-name {
                 font-size: 1.6rem;
-            }
-            .profile-header {
-                margin-top: -40px;
             }
         }
 
@@ -793,15 +807,19 @@
         <div class="modal-content">
             <div class="modal-background" id="modalBackground"></div>
             <div class="modal-foreground">
-                <img class="profile-banner-img" id="profileBannerImg" src="" alt="banner" />
-                <span class="modal-close" id="modalClose">&times;</span>
-                <div class="profile-header">
-                    <div class="profile-avatar" id="profileAvatar">
-                        <img src="" alt="avatar" />
+                <div class="banner-wrapper">
+                    <img class="profile-banner-img" id="profileBannerImg" src="" alt="banner" />
+                    <div class="banner-overlay">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <img src="" alt="avatar" />
+                        </div>
+                        <div class="profile-name-tag">
+                            <div class="profile-name" id="profileName"></div>
+                            <div class="profile-tag" id="profileTag"></div>
+                        </div>
                     </div>
-                    <div class="profile-name" id="profileName"></div>
-                    <div class="profile-tag" id="profileTag"></div>
                 </div>
+                <span class="modal-close" id="modalClose">&times;</span>
                 <div class="profile-stats" id="profileStats"></div>
                 <a href="#" class="profile-steam-btn" id="profileSteam" target="_blank"><i class="fab fa-steam"></i> Профиль Steam</a>
             </div>
