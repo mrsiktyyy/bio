@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно ── */
+        /* ── Модальное окно с баннером ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -800,7 +800,7 @@
             return formatted;
         }
 
-        // ── Данные игроков (все LVL = 4, сезоны 1-3 = "Нет рейтинга", сезон 4 = реальный рейтинг) ──
+        // ── Данные игроков ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
@@ -968,7 +968,7 @@
                 `;
                 statsGrid.appendChild(adrTile);
 
-                // 5. Season 4 (последний)
+                // 5. Season 4
                 const s4Tile = document.createElement('div');
                 s4Tile.className = 'stat-tile';
                 const s4Formatted = formatNumberWithElo(s.season4);
@@ -978,7 +978,7 @@
                 `;
                 statsGrid.appendChild(s4Tile);
 
-                // 6. LVL FACEIT (увеличен до 36px)
+                // 6. LVL FACEIT
                 const faceitTile = document.createElement('div');
                 faceitTile.className = 'stat-tile';
                 const lvl = s.faceit_lvl || 0;
@@ -1056,7 +1056,7 @@
             const player = players.find(p => p.id === id);
             if (!player || player.isVacancy) return;
 
-            // Баннер с размытием на всю модалку
+            // Устанавливаем баннер в размытый фон
             if (player.banner) {
                 modalBannerBlur.style.backgroundImage = `url('${player.banner}')`;
                 modalBannerBlur.style.backgroundSize = 'cover';
@@ -1075,7 +1075,6 @@
             const lvl = s.faceit_lvl || 0;
             const iconPath = `/phx/faceit${lvl}.svg`;
 
-            // В модалке показываем все 4 сезона: 1-3 = "Нет рейтинга", 4 = реальный
             modalStats.innerHTML = `
                 <span class="label">K/D</span><span class="value accent">${s.kd}</span>
                 <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
