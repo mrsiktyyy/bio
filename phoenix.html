@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно (баннер как в карточке) ── */
+        /* ── Модальное окно (баннер + стекло) ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -476,25 +476,40 @@
         .modal-box {
             max-width: 460px;
             width: 100%;
-            background: #1e1e1e;
-            border-radius: 16px;
-            border: 1px solid #2a2a2d;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            position: relative;
             overflow: hidden;
             animation: modalFade 0.3s ease;
+            background: transparent;
         }
 
-        /* Баннер в модалке (как в карточке) */
-        .modal-top {
+        /* Баннер на всю модалку с размытием */
+        .modal-banner-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 130px;
+            height: 100%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            filter: blur(20px) brightness(0.6);
+            transform: scale(1.1);
+            z-index: 0;
+        }
+
+        /* Стеклянный слой поверх баннера */
+        .modal-glass {
             position: relative;
+            z-index: 1;
+            background: rgba(20, 20, 30, 0.45);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            padding: 24px 24px 28px;
+            text-align: center;
+            border-radius: 20px;
         }
 
         .modal-avatar {
@@ -504,6 +519,7 @@
             overflow: hidden;
             border: 3px solid #FF5500;
             box-shadow: 0 0 30px rgba(255, 85, 0, 0.4);
+            margin: 10px auto 12px;
             background: #1a1a1d;
         }
         .modal-avatar img {
@@ -526,11 +542,6 @@
         }
         .modal-close:hover {
             opacity: 0.7;
-        }
-
-        .modal-body {
-            padding: 20px 24px 28px;
-            text-align: center;
         }
 
         .modal-name {
@@ -594,16 +605,17 @@
             display: block;
             text-align: center;
             padding: 12px 20px;
-            background: #2a2a2d;
+            background: rgba(42, 42, 45, 0.8);
             border-radius: 40px;
             color: #aaaaaa;
             text-decoration: none;
             transition: 0.3s;
             font-weight: 500;
             font-size: 0.95rem;
+            backdrop-filter: blur(4px);
         }
         .modal-steam:hover {
-            background: #3a3a3d;
+            background: rgba(60, 60, 65, 0.9);
             color: #ffffff;
         }
 
@@ -668,7 +680,7 @@
             .top-bar .right-actions a span {
                 display: none;
             }
-            .card-top, .modal-top {
+            .card-top {
                 height: 100px;
             }
             .member-avatar {
@@ -753,16 +765,14 @@
         </footer>
     </div>
 
-    <!-- Модальное окно (новое) -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
-            <div class="modal-top" id="modalTop">
+            <div class="modal-banner-blur" id="modalBannerBlur"></div>
+            <span class="modal-close" id="modalClose">&times;</span>
+            <div class="modal-glass">
                 <div class="modal-avatar" id="modalAvatar">
                     <img src="" alt="avatar" />
                 </div>
-                <span class="modal-close" id="modalClose">&times;</span>
-            </div>
-            <div class="modal-body">
                 <div class="modal-name" id="modalName"></div>
                 <div class="modal-role" id="modalRole"></div>
                 <div class="modal-stats" id="modalStats"></div>
@@ -1035,7 +1045,7 @@
         // ── Модальное окно ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
-        const modalTop = document.getElementById('modalTop');
+        const modalBannerBlur = document.getElementById('modalBannerBlur');
         const modalAvatar = document.getElementById('modalAvatar').querySelector('img');
         const modalName = document.getElementById('modalName');
         const modalRole = document.getElementById('modalRole');
@@ -1046,14 +1056,14 @@
             const player = players.find(p => p.id === id);
             if (!player || player.isVacancy) return;
 
-            // Баннер в модалке (как в карточке)
+            // Баннер размытый на всю модалку
             if (player.banner) {
-                modalTop.style.backgroundImage = `url('${player.banner}')`;
-                modalTop.style.backgroundSize = 'cover';
-                modalTop.style.backgroundPosition = 'center';
-                modalTop.style.backgroundRepeat = 'no-repeat';
+                modalBannerBlur.style.backgroundImage = `url('${player.banner}')`;
+                modalBannerBlur.style.backgroundSize = 'cover';
+                modalBannerBlur.style.backgroundPosition = 'center';
+                modalBannerBlur.style.backgroundRepeat = 'no-repeat';
             } else {
-                modalTop.style.background = '#2a2a2d';
+                modalBannerBlur.style.background = '#2a2a2d';
             }
 
             modalAvatar.src = player.avatar;
