@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно (баннер + стекло) ── */
+        /* ── Модальное окно (баннер сверху, стекло снизу) ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -476,42 +476,25 @@
         .modal-box {
             max-width: 460px;
             width: 100%;
+            background: transparent;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-            position: relative;
             overflow: hidden;
             animation: modalFade 0.3s ease;
-            background: transparent;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
-        /* Баннер на всю модалку с размытием */
-        .modal-banner-blur {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Баннер сверху (чёткий) */
+        .modal-top {
             width: 100%;
-            height: 100%;
+            height: 130px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: blur(20px) brightness(0.6);
-            transform: scale(1.1);
-            z-index: 0;
-        }
-
-        /* Стеклянный слой поверх баннера */
-        .modal-glass {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
-            z-index: 1;
-            background: rgba(20, 20, 30, 0.45);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            padding: 24px 24px 28px;
-            text-align: center;
-            border-radius: 20px;
         }
-
         .modal-avatar {
             width: 100px;
             height: 100px;
@@ -519,7 +502,6 @@
             overflow: hidden;
             border: 3px solid #FF5500;
             box-shadow: 0 0 30px rgba(255, 85, 0, 0.4);
-            margin: 10px auto 12px;
             background: #1a1a1d;
         }
         .modal-avatar img {
@@ -529,6 +511,7 @@
             display: block;
         }
 
+        /* Крестик поверх баннера */
         .modal-close {
             position: absolute;
             top: 14px;
@@ -542,6 +525,16 @@
         }
         .modal-close:hover {
             opacity: 0.7;
+        }
+
+        /* Стеклянная карточка снизу */
+        .modal-body {
+            background: rgba(20, 20, 30, 0.7);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            padding: 20px 24px 28px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .modal-name {
@@ -680,7 +673,7 @@
             .top-bar .right-actions a span {
                 display: none;
             }
-            .card-top {
+            .card-top, .modal-top {
                 height: 100px;
             }
             .member-avatar {
@@ -767,12 +760,13 @@
 
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
-            <div class="modal-banner-blur" id="modalBannerBlur"></div>
-            <span class="modal-close" id="modalClose">&times;</span>
-            <div class="modal-glass">
+            <div class="modal-top" id="modalTop">
                 <div class="modal-avatar" id="modalAvatar">
                     <img src="" alt="avatar" />
                 </div>
+                <span class="modal-close" id="modalClose">&times;</span>
+            </div>
+            <div class="modal-body">
                 <div class="modal-name" id="modalName"></div>
                 <div class="modal-role" id="modalRole"></div>
                 <div class="modal-stats" id="modalStats"></div>
@@ -1045,7 +1039,7 @@
         // ── Модальное окно ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
-        const modalBannerBlur = document.getElementById('modalBannerBlur');
+        const modalTop = document.getElementById('modalTop');
         const modalAvatar = document.getElementById('modalAvatar').querySelector('img');
         const modalName = document.getElementById('modalName');
         const modalRole = document.getElementById('modalRole');
@@ -1056,14 +1050,14 @@
             const player = players.find(p => p.id === id);
             if (!player || player.isVacancy) return;
 
-            // Баннер размытый на всю модалку
+            // Баннер в верхней части (чёткий)
             if (player.banner) {
-                modalBannerBlur.style.backgroundImage = `url('${player.banner}')`;
-                modalBannerBlur.style.backgroundSize = 'cover';
-                modalBannerBlur.style.backgroundPosition = 'center';
-                modalBannerBlur.style.backgroundRepeat = 'no-repeat';
+                modalTop.style.backgroundImage = `url('${player.banner}')`;
+                modalTop.style.backgroundSize = 'cover';
+                modalTop.style.backgroundPosition = 'center';
+                modalTop.style.backgroundRepeat = 'no-repeat';
             } else {
-                modalBannerBlur.style.background = '#2a2a2d';
+                modalTop.style.background = '#2a2a2d';
             }
 
             modalAvatar.src = player.avatar;
