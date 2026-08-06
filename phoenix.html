@@ -238,7 +238,6 @@
         .member-card {
             background: #1e1e1e;
             border-radius: 12px;
-            padding: 24px 18px;
             border: 1px solid #2a2a2d;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
@@ -248,6 +247,7 @@
             will-change: transform, opacity;
             opacity: 1;
             transform: translateY(0) scale(1);
+            padding: 0;
         }
         .member-card:hover {
             border-color: #FF5500;
@@ -256,23 +256,40 @@
             transform: scale(0.92) translateY(20px);
         }
 
+        /* ── Баннер сверху ── */
+        .card-top {
+            width: 100%;
+            height: 110px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
         .member-avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            margin: 0 auto 14px;
             overflow: hidden;
-            border: 2px solid #2a2a2d;
-            transition: border-color 0.3s;
-        }
-        .member-card:hover .member-avatar {
-            border-color: #FF5500;
+            border: 3px solid #FF5500;
+            box-shadow: 0 0 20px rgba(255, 85, 0, 0.4);
+            background: #1a1a1d;
+            flex-shrink: 0;
         }
         .member-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        /* ── Контент под баннером ── */
+        .card-body {
+            padding: 16px 18px 20px;
         }
 
         .member-name {
@@ -380,6 +397,7 @@
             font-size: 1.1rem;
         }
 
+        /* ── Вакансия ── */
         .vacancy {
             border-style: dashed;
             border-color: #2a2a2d;
@@ -390,14 +408,21 @@
             border-color: #FF5500;
             box-shadow: 0 8px 24px rgba(255, 85, 0, 0.08);
         }
+        .vacancy .card-top {
+            background: #2a2a2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .vacancy .member-avatar {
-            border-color: #2a2a2d;
+            border-color: #666666;
             background: rgba(255, 255, 255, 0.03);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.8rem;
             color: #666666;
+            border: 3px dashed #666666;
         }
         .vacancy .member-avatar img {
             display: none;
@@ -421,6 +446,7 @@
             color: #ff8833;
         }
 
+        /* ── Модальное окно ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -590,6 +616,13 @@
             .top-bar .right-actions a span {
                 display: none;
             }
+            .card-top {
+                height: 90px;
+            }
+            .member-avatar {
+                width: 70px;
+                height: 70px;
+            }
         }
 
         .fade-up {
@@ -694,12 +727,13 @@
             return formatted;
         }
 
-        // ── Данные игроков (две вакансии с исправленной нумерацией) ──
+        // ── Данные игроков с индивидуальными баннерами ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
             tag: 'OpenFrager + Sniper',
             avatar: '/phx/Avatar_mrsiktyyyy.png',
+            banner: '/phx/Banner1.png',
             stats: {
                 kd: '1.09',
                 winrate: 49,
@@ -708,7 +742,7 @@
                 s3: '—',
                 s4: '4274 elo',
                 s5: '4363 elo',
-                s6: '—' // Season 6
+                s6: '—'
             },
             steam: 'https://steamcommunity.com/id/mrsiktyyy/'
         }, {
@@ -716,6 +750,7 @@
             name: 'Novich0k42',
             tag: 'Leader + Rifler',
             avatar: '/phx/Avatar_Novich0k42.png',
+            banner: '/phx/Banner2.png',
             stats: {
                 kd: '1.20',
                 winrate: 48,
@@ -732,6 +767,7 @@
             name: 'Zenlo.',
             tag: 'Sniper',
             avatar: '/phx/Avatar_Zenlo.png',
+            banner: '/phx/Banner3.png',
             stats: {
                 kd: '0.95',
                 winrate: 45,
@@ -748,6 +784,7 @@
             name: 'Ищем игрока',
             tag: 'Четвёртый · Любая роль',
             avatar: '',
+            banner: null,
             stats: null,
             steam: '#',
             isVacancy: true
@@ -756,6 +793,7 @@
             name: 'Ищем игрока',
             tag: 'Пятый · Любая роль',
             avatar: '',
+            banner: null,
             stats: null,
             steam: '#',
             isVacancy: true
@@ -770,9 +808,23 @@
             card.className = `member-card fade-up delay-${(index % 5) + 1}`;
             if (p.isVacancy) card.classList.add('vacancy');
 
-            // Аватар
+            // ── Верхняя часть с баннером и аватаркой ──
+            const cardTop = document.createElement('div');
+            cardTop.className = 'card-top';
+            // Если есть баннер, ставим его как фон
+            if (p.banner) {
+                cardTop.style.backgroundImage = `url('${p.banner}')`;
+                cardTop.style.backgroundSize = 'cover';
+                cardTop.style.backgroundPosition = 'center';
+                cardTop.style.backgroundRepeat = 'no-repeat';
+            } else {
+                // Для вакансий фон тёмный
+                cardTop.style.background = '#2a2a2d';
+            }
+
             const avatarDiv = document.createElement('div');
             avatarDiv.className = 'member-avatar';
+
             if (p.isVacancy) {
                 avatarDiv.textContent = '+';
             } else {
@@ -784,17 +836,20 @@
                 avatarDiv.appendChild(img);
             }
 
-            // Имя
+            cardTop.appendChild(avatarDiv);
+
+            // ── Тело карточки (имя, тег, статистика, кнопка) ──
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
             const nameDiv = document.createElement('div');
             nameDiv.className = 'member-name';
             nameDiv.textContent = p.name;
 
-            // Тег
             const tagDiv = document.createElement('div');
             tagDiv.className = 'member-tag';
             tagDiv.textContent = p.tag;
 
-            // Статистика
             const statsGrid = document.createElement('div');
             statsGrid.className = 'stats-grid';
 
@@ -806,11 +861,9 @@
                 else if (kdNum < 0.8) kdClass += ' low-kd';
                 else kdClass += ' accent';
 
-                // 1. K/D
                 const kdTile = createStatTile('K/D', s.kd, kdClass);
                 statsGrid.appendChild(kdTile);
 
-                // 2. Win Rate
                 const wrTile = document.createElement('div');
                 wrTile.className = 'stat-tile';
                 wrTile.innerHTML = `
@@ -820,7 +873,6 @@
                 `;
                 statsGrid.appendChild(wrTile);
 
-                // 3. HS%
                 const hsTile = document.createElement('div');
                 hsTile.className = 'stat-tile';
                 hsTile.innerHTML = `
@@ -830,7 +882,6 @@
                 `;
                 statsGrid.appendChild(hsTile);
 
-                // 4. ADR
                 const adrTile = document.createElement('div');
                 adrTile.className = 'stat-tile';
                 adrTile.title = 'Средний урон за раунд (Average Damage per Round)';
@@ -841,7 +892,6 @@
                 `;
                 statsGrid.appendChild(adrTile);
 
-                // 5. Season 4
                 const s4Tile = document.createElement('div');
                 s4Tile.className = 'stat-tile';
                 const s4Formatted = formatNumberWithElo(s.s4);
@@ -851,7 +901,6 @@
                 `;
                 statsGrid.appendChild(s4Tile);
 
-                // 6. Season 5
                 const s5Tile = document.createElement('div');
                 s5Tile.className = 'stat-tile';
                 const s5Formatted = formatNumberWithElo(s.s5);
@@ -861,7 +910,6 @@
                 `;
                 statsGrid.appendChild(s5Tile);
 
-                // 7. Season 6 (добавляем седьмой тайл)
                 const s6Tile = document.createElement('div');
                 s6Tile.className = 'stat-tile';
                 const s6Formatted = formatNumberWithElo(s.s6);
@@ -872,7 +920,6 @@
                 statsGrid.appendChild(s6Tile);
             }
 
-            // Кнопка
             const btn = document.createElement('a');
             btn.className = 'btn-steam';
             if (p.isVacancy) {
@@ -885,19 +932,22 @@
                 btn.innerHTML = '<i class="fab fa-steam"></i> Профиль Steam';
             }
 
-            // Сборка
-            card.appendChild(avatarDiv);
-            card.appendChild(nameDiv);
-            card.appendChild(tagDiv);
+            // Сборка тела
+            cardBody.appendChild(nameDiv);
+            cardBody.appendChild(tagDiv);
             if (!p.isVacancy) {
-                card.appendChild(statsGrid);
+                cardBody.appendChild(statsGrid);
             } else {
                 const placeholder = document.createElement('div');
                 placeholder.style.cssText = 'text-align:center; color:#888888; font-size:0.85rem; margin: 8px 0 12px;';
                 placeholder.textContent = 'Ждём тебя в команде!';
-                card.appendChild(placeholder);
+                cardBody.appendChild(placeholder);
             }
-            card.appendChild(btn);
+            cardBody.appendChild(btn);
+
+            // Сборка карточки
+            card.appendChild(cardTop);
+            card.appendChild(cardBody);
 
             if (!p.isVacancy) {
                 card.addEventListener('click', (e) => {
@@ -912,8 +962,7 @@
         function createStatTile(label, value, valueClass) {
             const tile = document.createElement('div');
             tile.className = 'stat-tile';
-            const formatted = (label === 'K/D' || label === 'Win Rate' || label === 'HS%') ? value : formatNumberWithElo(
-            value);
+            const formatted = (label === 'K/D' || label === 'Win Rate' || label === 'HS%') ? value : formatNumberWithElo(value);
             tile.innerHTML = `
                 <span class="label">${label}</span>
                 <div class="${valueClass}">${formatted}</div>
@@ -921,7 +970,7 @@
             return tile;
         }
 
-        // ── Модальное окно (тоже с форматированием) ──
+        // ── Модальное окно ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
         const modalAvatar = document.getElementById('modalAvatar').querySelector('img');
