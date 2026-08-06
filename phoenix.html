@@ -256,7 +256,6 @@
             transform: scale(0.92) translateY(20px);
         }
 
-        /* ── Баннер сверху ── */
         .card-top {
             width: 100%;
             height: 130px;
@@ -287,7 +286,6 @@
             display: block;
         }
 
-        /* ── Контент под баннером ── */
         .card-body {
             padding: 20px 24px 24px;
             text-align: center;
@@ -356,6 +354,18 @@
         .stat-tile .value .elo-orange {
             color: #FF5500;
         }
+        .stat-tile .value .faceit-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+        .stat-tile .value .faceit-icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
         .progress-wrap {
             width: 100%;
             height: 4px;
@@ -396,7 +406,6 @@
             font-size: 1.1rem;
         }
 
-        /* ── Вакансия ── */
         .vacancy {
             border-style: dashed;
             border-color: #2a2a2d;
@@ -445,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно (с баннером) ── */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -577,6 +586,17 @@
         .modal-stats .value.elo-white {
             color: #ffffff;
             font-weight: 700;
+        }
+        .modal-stats .value .faceit-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+        .modal-stats .value .faceit-icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
         .modal-steam {
             display: block;
@@ -739,7 +759,7 @@
     </div>
 
     <script>
-        // ── Функция форматирования чисел и выделения "elo" оранжевым ──
+        // ── Форматирование чисел ──
         function formatNumberWithElo(num) {
             if (num === '—' || num === undefined) return '—';
             let str = String(num);
@@ -757,7 +777,7 @@
             return formatted;
         }
 
-        // ── Данные игроков с индивидуальными баннерами ──
+        // ── Данные игроков ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
@@ -769,10 +789,8 @@
                 winrate: 49,
                 hs: 41,
                 adr: '73',
-                s3: '—',
-                s4: '4274 elo',
                 s5: '4363 elo',
-                s6: '—'
+                faceit_lvl: 8
             },
             steam: 'https://steamcommunity.com/id/mrsiktyyy/'
         }, {
@@ -786,10 +804,8 @@
                 winrate: 48,
                 hs: 54,
                 adr: '89',
-                s3: '4301 elo',
-                s4: '14830 elo',
                 s5: '16992 elo',
-                s6: '—'
+                faceit_lvl: 9
             },
             steam: 'https://steamcommunity.com/profiles/76561199182259553'
         }, {
@@ -803,10 +819,8 @@
                 winrate: 45,
                 hs: 42,
                 adr: '71',
-                s3: '2027 elo',
-                s4: '2560 elo',
                 s5: '3373 elo',
-                s6: '—'
+                faceit_lvl: 5
             },
             steam: 'https://steamcommunity.com/id/zenlo-official'
         }, {
@@ -838,7 +852,7 @@
             card.className = `member-card fade-up delay-${(index % 5) + 1}`;
             if (p.isVacancy) card.classList.add('vacancy');
 
-            // ── Верхняя часть с баннером и аватаркой ──
+            // ── Баннер ──
             const cardTop = document.createElement('div');
             cardTop.className = 'card-top';
             if (p.banner) {
@@ -852,7 +866,6 @@
 
             const avatarDiv = document.createElement('div');
             avatarDiv.className = 'member-avatar';
-
             if (p.isVacancy) {
                 avatarDiv.textContent = '+';
             } else {
@@ -863,10 +876,9 @@
                     this.parentElement.textContent = p.name.charAt(0); };
                 avatarDiv.appendChild(img);
             }
-
             cardTop.appendChild(avatarDiv);
 
-            // ── Тело карточки ──
+            // ── Тело ──
             const cardBody = document.createElement('div');
             cardBody.className = 'card-body';
 
@@ -889,9 +901,11 @@
                 else if (kdNum < 0.8) kdClass += ' low-kd';
                 else kdClass += ' accent';
 
+                // 1. K/D
                 const kdTile = createStatTile('K/D', s.kd, kdClass);
                 statsGrid.appendChild(kdTile);
 
+                // 2. Win Rate
                 const wrTile = document.createElement('div');
                 wrTile.className = 'stat-tile';
                 wrTile.innerHTML = `
@@ -901,6 +915,7 @@
                 `;
                 statsGrid.appendChild(wrTile);
 
+                // 3. HS%
                 const hsTile = document.createElement('div');
                 hsTile.className = 'stat-tile';
                 hsTile.innerHTML = `
@@ -910,6 +925,7 @@
                 `;
                 statsGrid.appendChild(hsTile);
 
+                // 4. ADR
                 const adrTile = document.createElement('div');
                 adrTile.className = 'stat-tile';
                 adrTile.title = 'Средний урон за раунд (Average Damage per Round)';
@@ -920,15 +936,7 @@
                 `;
                 statsGrid.appendChild(adrTile);
 
-                const s4Tile = document.createElement('div');
-                s4Tile.className = 'stat-tile';
-                const s4Formatted = formatNumberWithElo(s.s4);
-                s4Tile.innerHTML = `
-                    <span class="label">Season 4</span>
-                    <div class="value elo-white">${s4Formatted}</div>
-                `;
-                statsGrid.appendChild(s4Tile);
-
+                // 5. Season 5
                 const s5Tile = document.createElement('div');
                 s5Tile.className = 'stat-tile';
                 const s5Formatted = formatNumberWithElo(s.s5);
@@ -938,14 +946,20 @@
                 `;
                 statsGrid.appendChild(s5Tile);
 
-                const s6Tile = document.createElement('div');
-                s6Tile.className = 'stat-tile';
-                const s6Formatted = formatNumberWithElo(s.s6);
-                s6Tile.innerHTML = `
-                    <span class="label">Season 6</span>
-                    <div class="value elo-white">${s6Formatted}</div>
+                // 6. LVL FACEIT (SVG)
+                const faceitTile = document.createElement('div');
+                faceitTile.className = 'stat-tile';
+                const lvl = s.faceit_lvl || 0;
+                const iconPath = `/phx/faceit${lvl}.svg`;
+                faceitTile.innerHTML = `
+                    <span class="label">LVL FACEIT</span>
+                    <div class="value">
+                        <span class="faceit-icon">
+                            <img src="${iconPath}" alt="LVL ${lvl}" style="width:24px;height:24px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
+                        </span>
+                    </div>
                 `;
-                statsGrid.appendChild(s6Tile);
+                statsGrid.appendChild(faceitTile);
             }
 
             const btn = document.createElement('a');
@@ -996,7 +1010,7 @@
             return tile;
         }
 
-        // ── Модальное окно (с баннером) ──
+        // ── Модалка ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
         const modalTop = document.getElementById('modalTop');
@@ -1010,7 +1024,6 @@
             const player = players.find(p => p.id === id);
             if (!player || player.isVacancy) return;
 
-            // Устанавливаем баннер
             if (player.banner) {
                 modalTop.style.backgroundImage = `url('${player.banner}')`;
                 modalTop.style.backgroundSize = 'cover';
@@ -1026,15 +1039,20 @@
             modalRole.textContent = player.tag;
 
             const s = player.stats;
+            const lvl = s.faceit_lvl || 0;
+            const iconPath = `/phx/faceit${lvl}.svg`;
             modalStats.innerHTML = `
                 <span class="label">K/D</span><span class="value accent">${s.kd}</span>
                 <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
                 <span class="label">HS %</span><span class="value accent">${s.hs}%</span>
                 <span class="label">ADR</span><span class="value italic-num">${formatNumberWithElo(s.adr)}</span>
-                <span class="label">Season 3</span><span class="value elo-white">${formatNumberWithElo(s.s3)}</span>
-                <span class="label">Season 4</span><span class="value elo-white">${formatNumberWithElo(s.s4)}</span>
                 <span class="label">Season 5</span><span class="value elo-white">${formatNumberWithElo(s.s5)}</span>
-                <span class="label">Season 6</span><span class="value elo-white">${formatNumberWithElo(s.s6)}</span>
+                <span class="label">LVL FACEIT</span>
+                <span class="value">
+                    <span class="faceit-icon">
+                        <img src="${iconPath}" alt="LVL ${lvl}" style="width:24px;height:24px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
+                    </span>
+                </span>
             `;
 
             modalSteam.href = player.steam;
