@@ -454,7 +454,7 @@
             color: #ff8833;
         }
 
-        /* ── Модальное окно (по референсу) ── */
+        /* ── Модальное окно (баннер 4:3) ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -504,16 +504,16 @@
             position: relative;
             z-index: 1;
             background: rgba(20, 20, 30, 0.3);
-            backdrop-filter: blur(0px); /* прозрачный, чтобы фон был виден */
+            backdrop-filter: blur(0px);
             display: flex;
             flex-direction: column;
             padding: 0;
         }
 
-        /* Баннер четкий (яркий) */
+        /* Баннер четкий — теперь 4:3 */
         .profile-banner-img {
             width: 100%;
-            height: 140px;
+            aspect-ratio: 4 / 3;
             object-fit: cover;
             display: block;
             border-bottom: 2px solid rgba(255, 85, 0, 0.3);
@@ -708,9 +708,6 @@
                 width: 80px;
                 height: 80px;
             }
-            .profile-banner-img {
-                height: 110px;
-            }
             .profile-name {
                 font-size: 1.6rem;
             }
@@ -791,18 +788,13 @@
         </footer>
     </div>
 
-    <!-- Модальное окно (по референсу) -->
+    <!-- Модальное окно -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
-            <!-- Размытый фон -->
             <div class="modal-background" id="modalBackground"></div>
-            <!-- Контент -->
             <div class="modal-foreground">
-                <!-- Четкий баннер -->
                 <img class="profile-banner-img" id="profileBannerImg" src="" alt="banner" />
-                <!-- Крестик -->
                 <span class="modal-close" id="modalClose">&times;</span>
-                <!-- Аватар и имя -->
                 <div class="profile-header">
                     <div class="profile-avatar" id="profileAvatar">
                         <img src="" alt="avatar" />
@@ -810,9 +802,7 @@
                     <div class="profile-name" id="profileName"></div>
                     <div class="profile-tag" id="profileTag"></div>
                 </div>
-                <!-- Статистика -->
                 <div class="profile-stats" id="profileStats"></div>
-                <!-- Кнопка Steam -->
                 <a href="#" class="profile-steam-btn" id="profileSteam" target="_blank"><i class="fab fa-steam"></i> Профиль Steam</a>
             </div>
         </div>
@@ -1096,7 +1086,7 @@
 
             const bannerUrl = player.banner;
 
-            // Размытый фон (мыльный)
+            // Размытый фон
             modalBackground.style.backgroundImage = `url('${bannerUrl}')`;
 
             // Четкий баннер
