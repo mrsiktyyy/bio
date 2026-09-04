@@ -4,6 +4,7 @@
     { "source": "/news", "destination": "/news.html" },
     { "source": "/news/:page", "destination": "/news.html" },
     { "source": "/phoenix", "destination": "/phoenix.html" },
+    { "source": "/phxzapas", "destination": "/phxzapas.html" },
     { "source": "/unskillteam", "destination": "/unskillteam.html" }
   ]
 }
