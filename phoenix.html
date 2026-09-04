@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="icon" type="image/png" href="/favicon2.png" />
     <style>
+        /* ===== стили полностью идентичны предыдущей версии ===== */
         * {
             margin: 0;
             padding: 0;
@@ -724,8 +725,7 @@
                 <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
                 <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
                 <li><a href="/phoenix" class="active"><i class="fas fa-fire"></i> Phoenix</a></li>
-                <!-- Новая вкладка "Запас" -->
-                <li><a href="/phxzapas"><i class="fas fa-users"></i> Запасные</a></li>
+                <li><a href="/phxzapas"><i class="fas fa-users"></i> Запас</a></li>
                 <li><a href="/unskillteam"><i class="fas fa-square-plus"></i> Discord Server</a></li>
             </ul>
         </nav>
@@ -781,7 +781,7 @@
     </div>
 
     <script>
-        // ── Форматирование чисел ──
+        // ── Форматирование ──
         function formatNumberWithElo(num) {
             if (num === '—' || num === undefined) return '—';
             let str = String(num);
@@ -799,7 +799,7 @@
             return formatted;
         }
 
-        // ── Данные игроков (только 3: убраны Dreamzyy и MrError404) ──
+        // ── Данные игроков (теперь 5: 3 реальных + 2 пустых) ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
@@ -854,9 +854,47 @@
                 faceit_lvl: 4
             },
             steam: 'https://steamcommunity.com/id/EgorVdadika/'
+        }, {
+            // 4-й игрок — пустая карточка
+            id: 'player4',
+            name: 'Игрок 4',
+            tag: 'Вакансия',
+            avatar: '/phx/Avatar4.png',
+            banner: '/phx/Banner4.png',
+            stats: {
+                kd: '—',
+                winrate: 0,
+                hs: 0,
+                adr: '—',
+                season1: '—',
+                season2: '—',
+                season3: '—',
+                season4: '—',
+                faceit_lvl: 0
+            },
+            steam: '#'
+        }, {
+            // 5-й игрок — пустая карточка
+            id: 'player5',
+            name: 'Игрок 5',
+            tag: 'Вакансия',
+            avatar: '/phx/Avatar5.png',
+            banner: '/phx/Banner5.png',
+            stats: {
+                kd: '—',
+                winrate: 0,
+                hs: 0,
+                adr: '—',
+                season1: '—',
+                season2: '—',
+                season3: '—',
+                season4: '—',
+                faceit_lvl: 0
+            },
+            steam: '#'
         }];
 
-        // ── Рендер карточек ──
+        // ── Рендер ──
         const grid = document.getElementById('teamGrid');
         grid.innerHTML = '';
 
@@ -864,7 +902,6 @@
             const card = document.createElement('div');
             card.className = `member-card fade-up delay-${(index % 5) + 1}`;
 
-            // Баннер
             const cardTop = document.createElement('div');
             cardTop.className = 'card-top';
             if (p.banner) {
@@ -886,7 +923,6 @@
             avatarDiv.appendChild(img);
             cardTop.appendChild(avatarDiv);
 
-            // Тело
             const cardBody = document.createElement('div');
             cardBody.className = 'card-body';
 
@@ -904,9 +940,13 @@
             const s = p.stats;
             const kdNum = parseFloat(s.kd);
             let kdClass = 'value';
-            if (kdNum > 1.5) kdClass += ' high-kd';
-            else if (kdNum < 0.8) kdClass += ' low-kd';
-            else kdClass += ' accent';
+            if (!isNaN(kdNum)) {
+                if (kdNum > 1.5) kdClass += ' high-kd';
+                else if (kdNum < 0.8) kdClass += ' low-kd';
+                else kdClass += ' accent';
+            } else {
+                kdClass += ' accent';
+            }
 
             // 1. K/D
             const kdTile = createStatTile('K/D', s.kd, kdClass);
@@ -935,7 +975,7 @@
             // 4. ADR
             const adrTile = document.createElement('div');
             adrTile.className = 'stat-tile';
-            adrTile.title = 'Средний урон за раунд (Average Damage per Round)';
+            adrTile.title = 'Средний урон за раунд';
             const adrFormatted = formatNumberWithElo(s.adr);
             adrTile.innerHTML = `
                 <span class="label">ADR</span>
@@ -994,14 +1034,11 @@
             const tile = document.createElement('div');
             tile.className = 'stat-tile';
             const formatted = (label === 'K/D' || label === 'Win Rate' || label === 'HS%') ? value : formatNumberWithElo(value);
-            tile.innerHTML = `
-                <span class="label">${label}</span>
-                <div class="${valueClass}">${formatted}</div>
-            `;
+            tile.innerHTML = `<span class="label">${label}</span><div class="${valueClass}">${formatted}</div>`;
             return tile;
         }
 
-        // ── Модальное окно ──
+        // ── Модалка ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
         const modalBackground = document.getElementById('modalBackground');
@@ -1017,26 +1054,16 @@
             if (!player) return;
 
             const bannerUrl = player.banner;
-
-            // Размытый фон
             modalBackground.style.backgroundImage = `url('${bannerUrl}')`;
-
-            // Четкий баннер
             profileBannerImg.src = bannerUrl;
-
-            // Аватар
             profileAvatar.src = player.avatar;
             profileAvatar.alt = player.name;
-
-            // Имя и тег
             profileName.textContent = player.name;
             profileTag.textContent = player.tag;
 
-            // Статистика
             const s = player.stats;
             const lvl = s.faceit_lvl || 0;
             const iconPath = `/phx/faceit${lvl}.svg`;
-
             profileStats.innerHTML = `
                 <span class="label">K/D</span><span class="value accent">${s.kd}</span>
                 <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
@@ -1053,10 +1080,7 @@
                     </span>
                 </span>
             `;
-
-            // Кнопка Steam
             profileSteam.href = player.steam;
-
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1065,21 +1089,14 @@
             overlay.classList.remove('active');
             document.body.style.overflow = '';
         }
-
         closeBtn.addEventListener('click', closeModal);
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) closeModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
         // ── Гамбургер ──
         const hamburger = document.getElementById('hamburgerBtn');
         const sidebar = document.getElementById('sidebar');
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
+        hamburger.addEventListener('click', () => sidebar.classList.toggle('open'));
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 992) {
                 if (!sidebar.contains(e.target) && e.target !== hamburger && !hamburger.contains(e.target)) {
@@ -1090,13 +1107,8 @@
 
         // ── Курсор ──
         const glow = document.getElementById('cursorGlow');
-        let mx = 0,
-            my = 0,
-            gx = 0,
-            gy = 0;
-        document.addEventListener('mousemove', (e) => { mx = e.clientX;
-            my = e.clientY; });
-
+        let mx = 0, my = 0, gx = 0, gy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
         function animateGlow() {
             gx += (mx - gx) * 0.12;
             gy += (my - gy) * 0.12;
