@@ -724,6 +724,8 @@
                 <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
                 <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
                 <li><a href="/phoenix" class="active"><i class="fas fa-fire"></i> Phoenix</a></li>
+                <!-- Новая вкладка "Запас" -->
+                <li><a href="/phxzapas"><i class="fas fa-users"></i> Запас</a></li>
                 <li><a href="/unskillteam"><i class="fas fa-square-plus"></i> Discord Server</a></li>
             </ul>
         </nav>
@@ -797,7 +799,7 @@
             return formatted;
         }
 
-        // ── Данные игроков (5 игроков, без вакансий) ──
+        // ── Данные игроков (только 3: убраны Dreamzyy и MrError404) ──
         const players = [{
             id: 'mrsiktyyy',
             name: 'MrSiktyyy',
@@ -852,42 +854,6 @@
                 faceit_lvl: 4
             },
             steam: 'https://steamcommunity.com/id/EgorVdadika/'
-        }, {
-            id: 'mrerror404',
-            name: 'MrError404',
-            tag: 'Support',
-            avatar: '/phx/Avatar4.png',
-            banner: '/phx/Banner4.png',
-            stats: {
-                kd: '1.05',
-                winrate: 54,
-                hs: 37,
-                adr: '69',
-                season1: 'Нет рейтинга',
-                season2: 'Нет рейтинга',
-                season3: 'Нет рейтинга',
-                season4: 'Нет рейтинга',
-                faceit_lvl: 4
-            },
-            steam: 'https://steamcommunity.com/profiles/76561199742805365/'
-        }, {
-            id: 'dreamzyy',
-            name: 'Dreamzyy',
-            tag: 'Rifler',
-            avatar: '/phx/Avatar5.png',
-            banner: '/phx/Banner5.png',
-            stats: {
-                kd: '0.94',
-                winrate: 49,
-                hs: 54,
-                adr: '77',
-                season1: '1899 elo',
-                season2: '4384 elo',
-                season3: '6046 elo',
-                season4: '16599 elo',
-                faceit_lvl: 7
-            },
-            steam: 'https://steamcommunity.com/id/dreamzywow/'
         }];
 
         // ── Рендер карточек ──
@@ -897,7 +863,6 @@
         players.forEach((p, index) => {
             const card = document.createElement('div');
             card.className = `member-card fade-up delay-${(index % 5) + 1}`;
-            // больше нет вакансий, так что не добавляем класс vacancy
 
             // Баннер
             const cardTop = document.createElement('div');
