@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Запас | Phoenix Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="icon" type="image/png" href="/favicon2.png" />
+    <style>
+        /* Стили полностью идентичны основному составу */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #ffffff;
+            line-height: 1.5;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        body::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        body {
+            scrollbar-width: none;
+        }
+
+        .light-source {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.08;
+            filter: blur(80px);
+            animation: floatLight 22s infinite alternate ease-in-out;
+        }
+        .light-source-1 {
+            background: radial-gradient(circle, #FF5500, transparent);
+            top: -10%;
+            left: -10%;
+        }
+        .light-source-2 {
+            background: radial-gradient(circle, #FF5500, transparent);
+            bottom: -10%;
+            right: -10%;
+            animation-duration: 26s;
+            animation-delay: -4s;
+        }
+        @keyframes floatLight {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.05;
+            }
+            100% {
+                transform: translate(10%, 15%) scale(1.3);
+                opacity: 0.12;
+            }
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 85, 0, 0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            filter: blur(40px);
+            z-index: 1000;
+            transition: none;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: #1a1a1d;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+            border-right: 1px solid #2a2a2d;
+            transition: transform 0.3s ease;
+        }
+        .sidebar .logo-link {
+            display: block;
+            width: 100%;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #2a2a2d;
+            padding-bottom: 12px;
+        }
+        .sidebar .logo-link img {
+            width: 100%;
+            height: auto;
+            max-height: 100px;
+            object-fit: contain;
+            display: block;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sidebar nav ul li a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .sidebar nav ul li a i {
+            width: 24px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .sidebar nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+        .sidebar nav ul li a.active {
+            background: #FF5500;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
+        }
+
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 0 30px 20px;
+            background: #121212;
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid #2a2a2d;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .top-bar .hamburger {
+            display: none;
+            font-size: 1.6rem;
+            color: #aaaaaa;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .top-bar .hamburger:hover {
+            color: #ffffff;
+        }
+        .top-bar .page-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .top-bar .page-title span {
+            color: #FF5500;
+        }
+        .top-bar .right-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .top-bar .right-actions a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 40px;
+            background: #2a2a2d;
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .top-bar .right-actions a:hover {
+            background: #FF5500;
+            color: #ffffff;
+        }
+        .top-bar .right-actions a i {
+            font-size: 1.1rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        .page-header h1 span {
+            color: #FF5500;
+        }
+        .page-header p {
+            color: #aaaaaa;
+            margin-top: 4px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .member-card {
+            background: #1e1e1e;
+            border-radius: 12px;
+            border: 1px solid #2a2a2d;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            will-change: transform, opacity;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            padding: 0;
+        }
+        .member-card:hover {
+            border-color: #FF5500;
+            box-shadow: 0 8px 24px rgba(255, 85, 0, 0.15);
+            opacity: 0;
+            transform: scale(0.92) translateY(20px);
+        }
+
+        .card-top {
+            width: 100%;
+            height: 130px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #FF5500;
+            box-shadow: 0 0 20px rgba(255, 85, 0, 0.4);
+            background: #1a1a1d;
+            flex-shrink: 0;
+        }
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-body {
+            padding: 20px 24px 24px;
+            text-align: center;
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+        .member-tag {
+            font-size: 0.85rem;
+            color: #aaaaaa;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .stat-tile {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            padding: 10px 6px;
+            text-align: center;
+            border: 1px solid #2a2a2d;
+            transition: 0.2s;
+        }
+        .stat-tile:hover {
+            background: rgba(255, 85, 0, 0.08);
+            border-color: #FF5500;
+        }
+        .stat-tile .label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: #aaaaaa;
+            letter-spacing: 0.5px;
+            display: block;
+        }
+        .stat-tile .value {
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Roboto Mono', monospace;
+            color: #ffffff;
+        }
+        .stat-tile .value.accent {
+            color: #FF5500;
+        }
+        .stat-tile .value.high-kd {
+            color: #4caf50;
+        }
+        .stat-tile .value.low-kd {
+            color: #f44336;
+        }
+        .stat-tile .value.elo-white {
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .stat-tile .value.italic-num {
+            font-style: italic;
+        }
+        .stat-tile .value .elo-orange {
+            color: #FF5500;
+        }
+        .stat-tile .value .faceit-icon {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            vertical-align: middle;
+        }
+        .stat-tile .value .faceit-icon img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .progress-wrap {
+            width: 100%;
+            height: 4px;
+            background: #333333;
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: #FF5500;
+            transition: width 0.3s ease;
+        }
+
+        .btn-steam {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            background: #2a2a2d;
+            color: #aaaaaa;
+            border: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .btn-steam:hover {
+            background: #3a3a3d;
+            color: #ffffff;
+        }
+        .btn-steam i {
+            font-size: 1.1rem;
+        }
+
+        /* ── Модальное окно ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 460px;
+            width: 100%;
+            background: transparent;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            animation: modalFade 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(20px) brightness(0.5);
+            transform: scale(1.1);
+            z-index: 0;
+        }
+
+        .modal-foreground {
+            position: relative;
+            z-index: 1;
+            background: rgba(20, 20, 30, 0.3);
+            backdrop-filter: blur(0px);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .banner-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+        }
+
+        .profile-banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-bottom: 2px solid rgba(255, 85, 0, 0.3);
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 5%;
+            pointer-events: none;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #FF5500;
+            box-shadow: 0 0 30px rgba(255, 85, 0, 0.4);
+            background: #1a1a1d;
+            margin-bottom: 10px;
+            pointer-events: auto;
+        }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .profile-name-tag {
+            text-align: center;
+            pointer-events: auto;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+            margin-bottom: 2px;
+        }
+        .profile-tag {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #FF5500;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            font-size: 28px;
+            color: #cccccc;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            z-index: 20;
+            line-height: 1;
+            pointer-events: auto;
+        }
+        .modal-close:hover {
+            opacity: 0.7;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 24px;
+            padding: 20px 24px 16px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            color: #cccccc;
+            text-align: left;
+        }
+        .profile-stats .label {
+            color: #999999;
+        }
+        .profile-stats .value {
+            text-align: right;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .profile-stats .value.accent {
+            color: #FF5500;
+        }
+        .profile-stats .value.italic-num {
+            font-style: italic;
+        }
+        .profile-stats .value .elo-orange {
+            color: #FF5500;
+        }
+        .profile-stats .value.elo-white {
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .profile-stats .value .faceit-icon {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            vertical-align: middle;
+        }
+        .profile-stats .value .faceit-icon img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .profile-steam-btn {
+            display: block;
+            margin: 0 24px 24px;
+            padding: 12px 20px;
+            background: rgba(42, 42, 45, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            color: #aaaaaa;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        .profile-steam-btn:hover {
+            background: rgba(60, 60, 65, 0.9);
+            color: #ffffff;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0 10px;
+            border-top: 1px solid #2a2a2d;
+            margin-top: 20px;
+            color: #666666;
+            font-size: 0.8rem;
+            width: 100%;
+            margin-left: 280px;
+            background: #121212;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main {
+                margin-left: 0;
+                padding: 0 20px 20px;
+            }
+            footer {
+                margin-left: 0;
+            }
+            .top-bar .hamburger {
+                display: block;
+            }
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+        @media (max-width: 600px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                max-width: 100%;
+            }
+            .profile-stats {
+                grid-template-columns: 1fr;
+                gap: 8px 0;
+                padding: 16px;
+            }
+            .profile-stats .value {
+                text-align: left;
+            }
+            .top-bar .right-actions a span {
+                display: none;
+            }
+            .card-top {
+                height: 100px;
+            }
+            .member-avatar {
+                width: 70px;
+                height: 70px;
+            }
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+            }
+            .profile-name {
+                font-size: 1.6rem;
+            }
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-1 {
+            animation-delay: 0.05s;
+        }
+        .delay-2 {
+            animation-delay: 0.1s;
+        }
+        .delay-3 {
+            animation-delay: 0.15s;
+        }
+        .delay-4 {
+            animation-delay: 0.2s;
+        }
+        .delay-5 {
+            animation-delay: 0.25s;
+        }
+    </style>
+</head>
+<body>
+    <div class="light-source light-source-1"></div>
+    <div class="light-source light-source-2"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <a href="/" class="logo-link">
+            <img src="logo.png" alt="Phoenix Team Logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                <li><a href="/phoenix"><i class="fas fa-fire"></i> Phoenix</a></li>
+                <!-- Вкладка "Запас" активна на этой странице -->
+                <li><a href="/phxzapas" class="active"><i class="fas fa-users"></i> Запас</a></li>
+                <li><a href="/unskillteam"><i class="fas fa-square-plus"></i> Discord Server</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main class="main">
+            <header class="top-bar">
+                <button class="hamburger" id="hamburgerBtn" aria-label="Меню">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="page-title">Скамейка <span>запасных</span></div>
+                <div class="right-actions">
+                    <a href="/news"><i class="fas fa-newspaper"></i> <span>Новости</span></a>
+                </div>
+            </header>
+
+            <div class="page-header fade-up">
+                <h1>Скамейка <span>запасных</span></h1>
+                <p>Игроки 6–10 — всегда готовы заменить основу</p>
+            </div>
+
+            <div class="team-grid" id="teamGrid"></div>
+        </main>
+
+        <footer>
+            <p>© 2026 — Phoenix Team · Все права защищены.</p>
+        </footer>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-background" id="modalBackground"></div>
+            <div class="modal-foreground">
+                <div class="banner-wrapper">
+                    <img class="profile-banner-img" id="profileBannerImg" src="" alt="banner" />
+                    <div class="banner-overlay">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <img src="" alt="avatar" />
+                        </div>
+                        <div class="profile-name-tag">
+                            <div class="profile-name" id="profileName"></div>
+                            <div class="profile-tag" id="profileTag"></div>
+                        </div>
+                    </div>
+                </div>
+                <span class="modal-close" id="modalClose">&times;</span>
+                <div class="profile-stats" id="profileStats"></div>
+                <a href="#" class="profile-steam-btn" id="profileSteam" target="_blank"><i class="fab fa-steam"></i> Профиль Steam</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── Форматирование чисел ──
+        function formatNumberWithElo(num) {
+            if (num === '—' || num === undefined) return '—';
+            let str = String(num);
+            let suffix = '';
+            if (str.includes('elo')) {
+                suffix = ' elo';
+                str = str.replace(' elo', '').trim();
+            }
+            let number = parseFloat(str);
+            if (isNaN(number)) return str + suffix;
+            let formatted = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            if (suffix) {
+                return formatted + ' <span class="elo-orange">elo</span>';
+            }
+            return formatted;
+        }
+
+        // ── Данные запасных (5 пустых карточек) ──
+        const players = [
+            {
+                id: 'zapas6',
+                name: 'Игрок 6',
+                tag: 'Запасной',
+                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar1.png',
+                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner1.png',
+                stats: {
+                    kd: '—',
+                    winrate: 0,
+                    hs: 0,
+                    adr: '—',
+                    season1: '—',
+                    season2: '—',
+                    season3: '—',
+                    season4: '—',
+                    faceit_lvl: 0
+                },
+                steam: '#'
+            },
+            {
+                id: 'zapas7',
+                name: 'Игрок 7',
+                tag: 'Запасной',
+                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar2.png',
+                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner2.png',
+                stats: {
+                    kd: '—',
+                    winrate: 0,
+                    hs: 0,
+                    adr: '—',
+                    season1: '—',
+                    season2: '—',
+                    season3: '—',
+                    season4: '—',
+                    faceit_lvl: 0
+                },
+                steam: '#'
+            },
+            {
+                id: 'zapas8',
+                name: 'Игрок 8',
+                tag: 'Запасной',
+                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar3.png',
+                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner3.png',
+                stats: {
+                    kd: '—',
+                    winrate: 0,
+                    hs: 0,
+                    adr: '—',
+                    season1: '—',
+                    season2: '—',
+                    season3: '—',
+                    season4: '—',
+                    faceit_lvl: 0
+                },
+                steam: '#'
+            },
+            {
+                id: 'zapas9',
+                name: 'Игрок 9',
+                tag: 'Запасной',
+                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar4.png',
+                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner4.png',
+                stats: {
+                    kd: '—',
+                    winrate: 0,
+                    hs: 0,
+                    adr: '—',
+                    season1: '—',
+                    season2: '—',
+                    season3: '—',
+                    season4: '—',
+                    faceit_lvl: 0
+                },
+                steam: '#'
+            },
+            {
+                id: 'zapas10',
+                name: 'Игрок 10',
+                tag: 'Запасной',
+                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar5.png',
+                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner5.png',
+                stats: {
+                    kd: '—',
+                    winrate: 0,
+                    hs: 0,
+                    adr: '—',
+                    season1: '—',
+                    season2: '—',
+                    season3: '—',
+                    season4: '—',
+                    faceit_lvl: 0
+                },
+                steam: '#'
+            }
+        ];
+
+        // ── Рендер карточек ──
+        const grid = document.getElementById('teamGrid');
+        grid.innerHTML = '';
+
+        players.forEach((p, index) => {
+            const card = document.createElement('div');
+            card.className = `member-card fade-up delay-${(index % 5) + 1}`;
+
+            // Баннер
+            const cardTop = document.createElement('div');
+            cardTop.className = 'card-top';
+            if (p.banner) {
+                cardTop.style.backgroundImage = `url('${p.banner}')`;
+                cardTop.style.backgroundSize = 'cover';
+                cardTop.style.backgroundPosition = 'center';
+                cardTop.style.backgroundRepeat = 'no-repeat';
+            } else {
+                cardTop.style.background = '#2a2a2d';
+            }
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'member-avatar';
+            const img = document.createElement('img');
+            img.src = p.avatar;
+            img.alt = p.name;
+            img.onerror = function() { this.style.display = 'none';
+                this.parentElement.textContent = p.name.charAt(0); };
+            avatarDiv.appendChild(img);
+            cardTop.appendChild(avatarDiv);
+
+            // Тело
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'member-name';
+            nameDiv.textContent = p.name;
+
+            const tagDiv = document.createElement('div');
+            tagDiv.className = 'member-tag';
+            tagDiv.textContent = p.tag;
+
+            const statsGrid = document.createElement('div');
+            statsGrid.className = 'stats-grid';
+
+            const s = p.stats;
+            const kdNum = parseFloat(s.kd);
+            let kdClass = 'value';
+            if (!isNaN(kdNum)) {
+                if (kdNum > 1.5) kdClass += ' high-kd';
+                else if (kdNum < 0.8) kdClass += ' low-kd';
+                else kdClass += ' accent';
+            } else {
+                kdClass += ' accent';
+            }
+
+            // 1. K/D
+            const kdTile = createStatTile('K/D', s.kd, kdClass);
+            statsGrid.appendChild(kdTile);
+
+            // 2. Win Rate
+            const wrTile = document.createElement('div');
+            wrTile.className = 'stat-tile';
+            wrTile.innerHTML = `
+                <span class="label">Win Rate</span>
+                <div class="value accent">${s.winrate}%</div>
+                <div class="progress-wrap"><div class="progress-fill" style="width:${s.winrate}%"></div></div>
+            `;
+            statsGrid.appendChild(wrTile);
+
+            // 3. HS%
+            const hsTile = document.createElement('div');
+            hsTile.className = 'stat-tile';
+            hsTile.innerHTML = `
+                <span class="label">HS%</span>
+                <div class="value accent">${s.hs}%</div>
+                <div class="progress-wrap"><div class="progress-fill" style="width:${s.hs}%"></div></div>
+            `;
+            statsGrid.appendChild(hsTile);
+
+            // 4. ADR
+            const adrTile = document.createElement('div');
+            adrTile.className = 'stat-tile';
+            adrTile.title = 'Средний урон за раунд (Average Damage per Round)';
+            const adrFormatted = formatNumberWithElo(s.adr);
+            adrTile.innerHTML = `
+                <span class="label">ADR</span>
+                <div class="value italic-num">${adrFormatted}</div>
+            `;
+            statsGrid.appendChild(adrTile);
+
+            // 5. Season 4
+            const s4Tile = document.createElement('div');
+            s4Tile.className = 'stat-tile';
+            const s4Formatted = formatNumberWithElo(s.season4);
+            s4Tile.innerHTML = `
+                <span class="label">Season 4</span>
+                <div class="value elo-white">${s4Formatted}</div>
+            `;
+            statsGrid.appendChild(s4Tile);
+
+            // 6. LVL FACEIT
+            const faceitTile = document.createElement('div');
+            faceitTile.className = 'stat-tile';
+            const lvl = s.faceit_lvl || 0;
+            const iconPath = `https://github.com/mrsiktyyy/bio/raw/main/phx/faceit${lvl}.svg`;
+            faceitTile.innerHTML = `
+                <span class="label">LVL FACEIT</span>
+                <div class="value">
+                    <span class="faceit-icon">
+                        <img src="${iconPath}" alt="LVL ${lvl}" style="width:36px;height:36px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
+                    </span>
+                </div>
+            `;
+            statsGrid.appendChild(faceitTile);
+
+            const btn = document.createElement('a');
+            btn.className = 'btn-steam';
+            btn.href = p.steam;
+            btn.target = '_blank';
+            btn.innerHTML = '<i class="fab fa-steam"></i> Профиль Steam';
+
+            cardBody.appendChild(nameDiv);
+            cardBody.appendChild(tagDiv);
+            cardBody.appendChild(statsGrid);
+            cardBody.appendChild(btn);
+
+            card.appendChild(cardTop);
+            card.appendChild(cardBody);
+
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.btn-steam')) return;
+                openModal(p.id);
+            });
+
+            grid.appendChild(card);
+        });
+
+        function createStatTile(label, value, valueClass) {
+            const tile = document.createElement('div');
+            tile.className = 'stat-tile';
+            const formatted = (label === 'K/D' || label === 'Win Rate' || label === 'HS%') ? value : formatNumberWithElo(value);
+            tile.innerHTML = `
+                <span class="label">${label}</span>
+                <div class="${valueClass}">${formatted}</div>
+            `;
+            return tile;
+        }
+
+        // ── Модальное окно ──
+        const overlay = document.getElementById('modalOverlay');
+        const closeBtn = document.getElementById('modalClose');
+        const modalBackground = document.getElementById('modalBackground');
+        const profileBannerImg = document.getElementById('profileBannerImg');
+        const profileAvatar = document.getElementById('profileAvatar').querySelector('img');
+        const profileName = document.getElementById('profileName');
+        const profileTag = document.getElementById('profileTag');
+        const profileStats = document.getElementById('profileStats');
+        const profileSteam = document.getElementById('profileSteam');
+
+        function openModal(id) {
+            const player = players.find(p => p.id === id);
+            if (!player) return;
+
+            const bannerUrl = player.banner;
+
+            // Размытый фон
+            modalBackground.style.backgroundImage = `url('${bannerUrl}')`;
+
+            // Четкий баннер
+            profileBannerImg.src = bannerUrl;
+
+            // Аватар
+            profileAvatar.src = player.avatar;
+            profileAvatar.alt = player.name;
+
+            // Имя и тег
+            profileName.textContent = player.name;
+            profileTag.textContent = player.tag;
+
+            // Статистика
+            const s = player.stats;
+            const lvl = s.faceit_lvl || 0;
+            const iconPath = `https://github.com/mrsiktyyy/bio/raw/main/phx/faceit${lvl}.svg`;
+
+            profileStats.innerHTML = `
+                <span class="label">K/D</span><span class="value accent">${s.kd}</span>
+                <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
+                <span class="label">HS %</span><span class="value accent">${s.hs}%</span>
+                <span class="label">ADR</span><span class="value italic-num">${formatNumberWithElo(s.adr)}</span>
+                <span class="label">Season 1</span><span class="value elo-white">${formatNumberWithElo(s.season1)}</span>
+                <span class="label">Season 2</span><span class="value elo-white">${formatNumberWithElo(s.season2)}</span>
+                <span class="label">Season 3</span><span class="value elo-white">${formatNumberWithElo(s.season3)}</span>
+                <span class="label">Season 4</span><span class="value elo-white">${formatNumberWithElo(s.season4)}</span>
+                <span class="label">LVL FACEIT</span>
+                <span class="value">
+                    <span class="faceit-icon">
+                        <img src="${iconPath}" alt="LVL ${lvl}" style="width:36px;height:36px;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='${lvl}'">
+                    </span>
+                </span>
+            `;
+
+            // Кнопка Steam
+            profileSteam.href = player.steam;
+
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ── Гамбургер ──
+        const hamburger = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                if (!sidebar.contains(e.target) && e.target !== hamburger && !hamburger.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // ── Курсор ──
+        const glow = document.getElementById('cursorGlow');
+        let mx = 0,
+            my = 0,
+            gx = 0,
+            gy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX;
+            my = e.clientY; });
+
+        function animateGlow() {
+            gx += (mx - gx) * 0.12;
+            gy += (my - gy) * 0.12;
+            glow.style.left = gx + 'px';
+            glow.style.top = gy + 'px';
+            requestAnimationFrame(animateGlow);
+        }
+        animateGlow();
+    </script>
+</body>
+</html>
