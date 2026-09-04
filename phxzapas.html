@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="icon" type="image/png" href="/favicon2.png" />
     <style>
-        /* Стили полностью идентичны основному составу */
+        /* ===== все стили идентичны основному составу ===== */
         * {
             margin: 0;
             padding: 0;
@@ -725,7 +725,6 @@
                 <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
                 <li><a href="/news"><i class="fas fa-newspaper"></i> Новости</a></li>
                 <li><a href="/phoenix"><i class="fas fa-fire"></i> Phoenix</a></li>
-                <!-- Вкладка "Запас" активна на этой странице -->
                 <li><a href="/phxzapas" class="active"><i class="fas fa-users"></i> Запас</a></li>
                 <li><a href="/unskillteam"><i class="fas fa-square-plus"></i> Discord Server</a></li>
             </ul>
@@ -782,7 +781,7 @@
     </div>
 
     <script>
-        // ── Форматирование чисел ──
+        // ── Форматирование ──
         function formatNumberWithElo(num) {
             if (num === '—' || num === undefined) return '—';
             let str = String(num);
@@ -800,106 +799,56 @@
             return formatted;
         }
 
-        // ── Данные запасных (5 пустых карточек) ──
+        // ── Данные запасных (пустые, но с локальными путями) ──
         const players = [
             {
                 id: 'zapas6',
                 name: 'Игрок 6',
                 tag: 'Запасной',
-                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar1.png',
-                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner1.png',
-                stats: {
-                    kd: '—',
-                    winrate: 0,
-                    hs: 0,
-                    adr: '—',
-                    season1: '—',
-                    season2: '—',
-                    season3: '—',
-                    season4: '—',
-                    faceit_lvl: 0
-                },
+                avatar: '/phx/Avatar1.png',
+                banner: '/phx/Banner1.png',
+                stats: { kd: '—', winrate: 0, hs: 0, adr: '—', season1: '—', season2: '—', season3: '—', season4: '—', faceit_lvl: 0 },
                 steam: '#'
             },
             {
                 id: 'zapas7',
                 name: 'Игрок 7',
                 tag: 'Запасной',
-                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar2.png',
-                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner2.png',
-                stats: {
-                    kd: '—',
-                    winrate: 0,
-                    hs: 0,
-                    adr: '—',
-                    season1: '—',
-                    season2: '—',
-                    season3: '—',
-                    season4: '—',
-                    faceit_lvl: 0
-                },
+                avatar: '/phx/Avatar2.png',
+                banner: '/phx/Banner2.png',
+                stats: { kd: '—', winrate: 0, hs: 0, adr: '—', season1: '—', season2: '—', season3: '—', season4: '—', faceit_lvl: 0 },
                 steam: '#'
             },
             {
                 id: 'zapas8',
                 name: 'Игрок 8',
                 tag: 'Запасной',
-                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar3.png',
-                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner3.png',
-                stats: {
-                    kd: '—',
-                    winrate: 0,
-                    hs: 0,
-                    adr: '—',
-                    season1: '—',
-                    season2: '—',
-                    season3: '—',
-                    season4: '—',
-                    faceit_lvl: 0
-                },
+                avatar: '/phx/Avatar3.png',
+                banner: '/phx/Banner3.png',
+                stats: { kd: '—', winrate: 0, hs: 0, adr: '—', season1: '—', season2: '—', season3: '—', season4: '—', faceit_lvl: 0 },
                 steam: '#'
             },
             {
                 id: 'zapas9',
                 name: 'Игрок 9',
                 tag: 'Запасной',
-                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar4.png',
-                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner4.png',
-                stats: {
-                    kd: '—',
-                    winrate: 0,
-                    hs: 0,
-                    adr: '—',
-                    season1: '—',
-                    season2: '—',
-                    season3: '—',
-                    season4: '—',
-                    faceit_lvl: 0
-                },
+                avatar: '/phx/Avatar4.png',
+                banner: '/phx/Banner4.png',
+                stats: { kd: '—', winrate: 0, hs: 0, adr: '—', season1: '—', season2: '—', season3: '—', season4: '—', faceit_lvl: 0 },
                 steam: '#'
             },
             {
                 id: 'zapas10',
                 name: 'Игрок 10',
                 tag: 'Запасной',
-                avatar: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Avatar5.png',
-                banner: 'https://github.com/mrsiktyyy/bio/raw/main/phx/Banner5.png',
-                stats: {
-                    kd: '—',
-                    winrate: 0,
-                    hs: 0,
-                    adr: '—',
-                    season1: '—',
-                    season2: '—',
-                    season3: '—',
-                    season4: '—',
-                    faceit_lvl: 0
-                },
+                avatar: '/phx/Avatar5.png',
+                banner: '/phx/Banner5.png',
+                stats: { kd: '—', winrate: 0, hs: 0, adr: '—', season1: '—', season2: '—', season3: '—', season4: '—', faceit_lvl: 0 },
                 steam: '#'
             }
         ];
 
-        // ── Рендер карточек ──
+        // ── Рендер ──
         const grid = document.getElementById('teamGrid');
         grid.innerHTML = '';
 
@@ -907,17 +856,12 @@
             const card = document.createElement('div');
             card.className = `member-card fade-up delay-${(index % 5) + 1}`;
 
-            // Баннер
             const cardTop = document.createElement('div');
             cardTop.className = 'card-top';
-            if (p.banner) {
-                cardTop.style.backgroundImage = `url('${p.banner}')`;
-                cardTop.style.backgroundSize = 'cover';
-                cardTop.style.backgroundPosition = 'center';
-                cardTop.style.backgroundRepeat = 'no-repeat';
-            } else {
-                cardTop.style.background = '#2a2a2d';
-            }
+            cardTop.style.backgroundImage = `url('${p.banner}')`;
+            cardTop.style.backgroundSize = 'cover';
+            cardTop.style.backgroundPosition = 'center';
+            cardTop.style.backgroundRepeat = 'no-repeat';
 
             const avatarDiv = document.createElement('div');
             avatarDiv.className = 'member-avatar';
@@ -929,7 +873,6 @@
             avatarDiv.appendChild(img);
             cardTop.appendChild(avatarDiv);
 
-            // Тело
             const cardBody = document.createElement('div');
             cardBody.className = 'card-body';
 
@@ -945,66 +888,35 @@
             statsGrid.className = 'stats-grid';
 
             const s = p.stats;
-            const kdNum = parseFloat(s.kd);
-            let kdClass = 'value';
-            if (!isNaN(kdNum)) {
-                if (kdNum > 1.5) kdClass += ' high-kd';
-                else if (kdNum < 0.8) kdClass += ' low-kd';
-                else kdClass += ' accent';
-            } else {
-                kdClass += ' accent';
-            }
-
-            // 1. K/D
+            const kdClass = 'value accent';
             const kdTile = createStatTile('K/D', s.kd, kdClass);
             statsGrid.appendChild(kdTile);
 
-            // 2. Win Rate
             const wrTile = document.createElement('div');
             wrTile.className = 'stat-tile';
-            wrTile.innerHTML = `
-                <span class="label">Win Rate</span>
-                <div class="value accent">${s.winrate}%</div>
-                <div class="progress-wrap"><div class="progress-fill" style="width:${s.winrate}%"></div></div>
-            `;
+            wrTile.innerHTML = `<span class="label">Win Rate</span><div class="value accent">${s.winrate}%</div><div class="progress-wrap"><div class="progress-fill" style="width:${s.winrate}%"></div></div>`;
             statsGrid.appendChild(wrTile);
 
-            // 3. HS%
             const hsTile = document.createElement('div');
             hsTile.className = 'stat-tile';
-            hsTile.innerHTML = `
-                <span class="label">HS%</span>
-                <div class="value accent">${s.hs}%</div>
-                <div class="progress-wrap"><div class="progress-fill" style="width:${s.hs}%"></div></div>
-            `;
+            hsTile.innerHTML = `<span class="label">HS%</span><div class="value accent">${s.hs}%</div><div class="progress-wrap"><div class="progress-fill" style="width:${s.hs}%"></div></div>`;
             statsGrid.appendChild(hsTile);
 
-            // 4. ADR
             const adrTile = document.createElement('div');
             adrTile.className = 'stat-tile';
-            adrTile.title = 'Средний урон за раунд (Average Damage per Round)';
-            const adrFormatted = formatNumberWithElo(s.adr);
-            adrTile.innerHTML = `
-                <span class="label">ADR</span>
-                <div class="value italic-num">${adrFormatted}</div>
-            `;
+            adrTile.title = 'Средний урон за раунд';
+            adrTile.innerHTML = `<span class="label">ADR</span><div class="value italic-num">${formatNumberWithElo(s.adr)}</div>`;
             statsGrid.appendChild(adrTile);
 
-            // 5. Season 4
             const s4Tile = document.createElement('div');
             s4Tile.className = 'stat-tile';
-            const s4Formatted = formatNumberWithElo(s.season4);
-            s4Tile.innerHTML = `
-                <span class="label">Season 4</span>
-                <div class="value elo-white">${s4Formatted}</div>
-            `;
+            s4Tile.innerHTML = `<span class="label">Season 4</span><div class="value elo-white">${formatNumberWithElo(s.season4)}</div>`;
             statsGrid.appendChild(s4Tile);
 
-            // 6. LVL FACEIT
             const faceitTile = document.createElement('div');
             faceitTile.className = 'stat-tile';
             const lvl = s.faceit_lvl || 0;
-            const iconPath = `https://github.com/mrsiktyyy/bio/raw/main/phx/faceit${lvl}.svg`;
+            const iconPath = `/phx/faceit${lvl}.svg`;
             faceitTile.innerHTML = `
                 <span class="label">LVL FACEIT</span>
                 <div class="value">
@@ -1041,14 +953,11 @@
             const tile = document.createElement('div');
             tile.className = 'stat-tile';
             const formatted = (label === 'K/D' || label === 'Win Rate' || label === 'HS%') ? value : formatNumberWithElo(value);
-            tile.innerHTML = `
-                <span class="label">${label}</span>
-                <div class="${valueClass}">${formatted}</div>
-            `;
+            tile.innerHTML = `<span class="label">${label}</span><div class="${valueClass}">${formatted}</div>`;
             return tile;
         }
 
-        // ── Модальное окно ──
+        // ── Модалка ──
         const overlay = document.getElementById('modalOverlay');
         const closeBtn = document.getElementById('modalClose');
         const modalBackground = document.getElementById('modalBackground');
@@ -1062,28 +971,16 @@
         function openModal(id) {
             const player = players.find(p => p.id === id);
             if (!player) return;
-
-            const bannerUrl = player.banner;
-
-            // Размытый фон
-            modalBackground.style.backgroundImage = `url('${bannerUrl}')`;
-
-            // Четкий баннер
-            profileBannerImg.src = bannerUrl;
-
-            // Аватар
+            modalBackground.style.backgroundImage = `url('${player.banner}')`;
+            profileBannerImg.src = player.banner;
             profileAvatar.src = player.avatar;
             profileAvatar.alt = player.name;
-
-            // Имя и тег
             profileName.textContent = player.name;
             profileTag.textContent = player.tag;
 
-            // Статистика
             const s = player.stats;
             const lvl = s.faceit_lvl || 0;
-            const iconPath = `https://github.com/mrsiktyyy/bio/raw/main/phx/faceit${lvl}.svg`;
-
+            const iconPath = `/phx/faceit${lvl}.svg`;
             profileStats.innerHTML = `
                 <span class="label">K/D</span><span class="value accent">${s.kd}</span>
                 <span class="label">Win Rate</span><span class="value">${s.winrate}%</span>
@@ -1100,10 +997,7 @@
                     </span>
                 </span>
             `;
-
-            // Кнопка Steam
             profileSteam.href = player.steam;
-
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1112,21 +1006,14 @@
             overlay.classList.remove('active');
             document.body.style.overflow = '';
         }
-
         closeBtn.addEventListener('click', closeModal);
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) closeModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
         // ── Гамбургер ──
         const hamburger = document.getElementById('hamburgerBtn');
         const sidebar = document.getElementById('sidebar');
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
+        hamburger.addEventListener('click', () => sidebar.classList.toggle('open'));
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 992) {
                 if (!sidebar.contains(e.target) && e.target !== hamburger && !hamburger.contains(e.target)) {
@@ -1137,13 +1024,8 @@
 
         // ── Курсор ──
         const glow = document.getElementById('cursorGlow');
-        let mx = 0,
-            my = 0,
-            gx = 0,
-            gy = 0;
-        document.addEventListener('mousemove', (e) => { mx = e.clientX;
-            my = e.clientY; });
-
+        let mx = 0, my = 0, gx = 0, gy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
         function animateGlow() {
             gx += (mx - gx) * 0.12;
             gy += (my - gy) * 0.12;
