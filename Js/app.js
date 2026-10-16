@@ -1,3 +1,24 @@
+/* ---------- Снег (слой из твоего CSS) ---------- */
+(function () {
+  const layer = document.createElement('div');
+  layer.className = 'snow';
+  document.body.prepend(layer);
+  let seed = 20261016;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('span');
+    const size = 3 + rnd() * 5;
+    s.style.cssText =
+      `left:${(rnd() * 100).toFixed(2)}vw;` +
+      `width:${size.toFixed(1)}px;height:${size.toFixed(1)}px;` +
+      `opacity:${(0.3 + rnd() * 0.5).toFixed(2)};` +
+      `animation-duration:${(10 + rnd() * 14).toFixed(2)}s;` +
+      `animation-delay:${(-rnd() * 20).toFixed(2)}s;` +
+      `--drift:${(rnd() * 60 - 30).toFixed(0)}px`;
+    layer.appendChild(s);
+  }
+})();
+
 /* ---------- Бургер ---------- */
 const nav = document.querySelector('.site-nav');
 const toggle = document.querySelector('.nav-toggle');
@@ -6,20 +27,93 @@ toggle.addEventListener('click', () => {
   toggle.setAttribute('aria-expanded', open);
 });
 
-/* ---------- Роутер: разделы без перезагрузки ---------- */
-const navLinks = document.querySelectorAll('.nav-list a');
+/* ---------- Пилл меню (твой CSS: .nav-pill) ---------- */
+const navList = document.querySelector('.nav-list');
+const navPill = document.createElement('span');
+navPill.className = 'nav-pill';
+navList.prepend(navPill);
+
+function placeNavPill(link, instant = false) {
+  if (!link) return;
+  if (instant) navPill.style.transition = 'none';
+  navPill.style.width = link.offsetWidth + 'px';
+  navPill.style.transform = `translate3d(${link.offsetLeft}px, 0, 0)`;
+  navPill.style.opacity = '1';
+  if (instant) { void navPill.offsetWidth; navPill.style.transition = ''; }
+}
+
+/* ---------- Пилл вкладок состава (.tabs-pill) ---------- */
+const tabsEl = document.querySelector('.tabs');
+const tabsPill = tabsEl.querySelector('.tabs-pill');
+
+function placeTabsPill(tab, instant = false) {
+  if (!tab) return;
+  if (instant) tabsPill.style.transition = 'none';
+  tabsPill.style.width = tab.offsetWidth + 'px';
+  tabsPill.style.transform = `translate3d(${tab.offsetLeft}px, 0, 0)`;
+  tabsPill.style.opacity = '1';
+  if (instant) { void tabsPill.offsetWidth; tabsPill.style.transition = ''; }
+}
+
+const fontsReady = document.fonts && document.fonts.ready
+  ? document.fonts.ready
+  : new Promise(r => window.addEventListener('load', r));
+
+function refreshPills() {
+  placeNavPill(navList.querySelector('a.is-active'), true);
+  placeTabsPill(tabsEl.querySelector('.tab.is-active'), true);
+}
+fontsReady.then(refreshPills);
+window.addEventListener('resize', refreshPills);
+
+/* ---------- Роутер: одна страница, разделы без перезагрузки ---------- */
+const ROUTES = ['home', 'news', 'roster', 'discord'];
 const views = document.querySelectorAll('.view');
+const page = document.querySelector('.page');
+let currentView = 'home';
+let routing = false;
+
+function showView(name) {
+  if (name === currentView || routing) return;
+  const next = document.querySelector(`.view[data-view="${name}"]`);
+  const prev = document.querySelector(`.view[data-view="${currentView}"]`);
+  if (!next) return;
+
+  routing = true;
+  page.classList.add('is-leaving');
+
+  setTimeout(() => {
+    prev.hidden = true;
+    next.hidden = false;
+    currentView = name;
+    page.classList.remove('is-leaving');
+    // перезапуск drop-in анимации для нового раздела
+    page.classList.remove('drop-in');
+    void page.offsetWidth;
+    page.classList.add('drop-in');
+    window.scrollTo({ top: 0 });
+    refreshPills();
+    routing = false;
+  }, 500);
+}
+
+function setActiveNav(name) {
+  navList.querySelectorAll('a').forEach(a =>
+    a.classList.toggle('is-active', a.dataset.route === name));
+  placeNavPill(navList.querySelector(`a[data-route="${name}"]`));
+}
 
 function route() {
-  const name = (location.hash.replace('#', '')) || 'home';
-  const target = ['home', 'news', 'roster', 'discord'].includes(name) ? name : 'home';
-  views.forEach(v => v.hidden = v.dataset.view !== target);
-  navLinks.forEach(a => a.classList.toggle('is-active', a.dataset.route === target));
+  const hash = location.hash.replace('#', '') || 'home';
+  const name = ROUTES.includes(hash) ? hash : 'home';
+  setActiveNav(name);
+  showView(name);
   nav.classList.remove('is-open');
-  toggle.setAttribute('aria-expanded', false);
-  window.scrollTo({ top: 0 });
+  toggle.setAttribute('aria-expanded', 'false');
 }
+
 window.addEventListener('hashchange', route);
+document.querySelector('.brand').addEventListener('click', () => setActiveNav('home'));
 route();
 
 /* ---------- Аккордеон на главной ---------- */
@@ -31,62 +125,79 @@ document.querySelectorAll('.person-head').forEach(head => {
   });
 });
 
-/* ---------- Состав: карточки из данных ---------- */
-const ROSTERS = {
-  main: [
-    { img: 'Avatar1.png', nick: 'mrsiktyyy', role: 'Основатель / IGL', kd: '1.15', hs: '65%' },
-    { img: 'Avatar2.png', nick: 'Novich0k42', role: 'Рифлер', kd: '1.08', hs: '61%' },
-    { img: 'Avatar3.png', nick: 'myrvell', role: 'Рифлер', kd: '1.04', hs: '59%' },
-    { img: 'Avatar4.png', nick: 'EgorVdadika', role: 'AWP / тренер', kd: '0.98', hs: '55%' },
-    { img: 'Avatar_Zenlo.png', nick: 'Zenlo.', role: 'AWP', kd: '1.10', hs: '63%' },
-  ],
-  reserve: [
-    { img: 'Avatar6.png', nick: 'Резервный состав', role: 'Запасной', kd: '—', hs: '—' },
-    { img: 'Avatar7.png', nick: 'Запасной слот', role: 'Запасной', kd: '—', hs: '—' },
-    { img: 'Avatar8.png', nick: 'Community', role: 'Запасной', kd: '—', hs: '—' },
-  ],
-};
+/* ---------- Состав: Основной / Запасные ---------- */
+const rosterSub = document.getElementById('roster-sub');
+const rosterTabs = tabsEl.querySelectorAll('.tab[data-roster]');
+const panels = document.querySelectorAll('[data-panel]');
+let rosterBusy = false;
 
-const cards = document.getElementById('cards');
-
-function renderRoster(key) {
-  cards.innerHTML = ROSTERS[key].map(p => `
-    <article class="card glass">
-      <div class="card-media"><img src="/phx/${p.img}" alt="${p.nick}" loading="lazy" decoding="async"></div>
-      <div class="card-body">
-        <h3>${p.nick}</h3>
-        <p>${p.role}</p>
-        <div class="stats">
-          <div class="stat"><small>K/D</small><b class="accent">${p.kd}</b></div>
-          <div class="stat"><small>HS</small><b>${p.hs}</b></div>
-        </div>
-      </div>
-    </article>`).join('');
-
-  document.querySelectorAll('[data-roster]').forEach(b =>
-    b.classList.toggle('is-active', b.dataset.roster === key));
+function showRoster(key) {
+  panels.forEach(p => { p.hidden = p.dataset.panel !== key; });
 }
 
-document.querySelectorAll('[data-roster]').forEach(btn =>
-  btn.addEventListener('click', () => renderRoster(btn.dataset.roster)));
+rosterTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const key = tab.dataset.roster;
+    if (rosterBusy || tab.classList.contains('is-active')) return;
+    rosterBusy = true;
 
-renderRoster('main');
+    rosterTabs.forEach(t => t.classList.toggle('is-active', t === tab));
+    placeTabsPill(tab);
+    rosterSub.textContent = key === 'main' ? 'Основной состав' : 'Запасные игроки';
 
-/* ---------- Снег ---------- */
-(function () {
-  const layer = document.createElement('div');
-  layer.className = 'snow';
-  document.body.prepend(layer);
-  let seed = 20261016;
-  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  for (let i = 0; i < 40; i++) {
-    const s = document.createElement('span');
-    const size = 3 + rnd() * 5;
-    s.style.cssText =
-      `width:${size}px;height:${size}px;left:${(rnd()*100).toFixed(2)}vw;` +
-      `opacity:${(0.3+rnd()*0.5).toFixed(2)};` +
-      `animation-duration:${(10+rnd()*14).toFixed(2)}s;` +
-      `animation-delay:${(-rnd()*20).toFixed(2)}s`;
-    layer.appendChild(s);
-  }
-})();
+    const current = document.querySelector('[data-panel]:not([hidden])');
+    current.classList.add('is-hiding');
+
+    setTimeout(() => {
+      current.classList.remove('is-hiding');
+      showRoster(key);
+      const next = document.querySelector(`[data-panel="${key}"]`);
+      next.classList.add('is-showing');
+      setTimeout(() => next.classList.remove('is-showing'), 600);
+      rosterBusy = false;
+    }, 500);
+  });
+});
+showRoster('main');
+
+/* ---------- Новости: модальное окно ---------- */
+const overlay = document.getElementById('newsOverlay');
+const modal = document.getElementById('newsModal');
+const modalImg = document.getElementById('newsModalImg');
+const modalTag = document.getElementById('newsModalTag');
+const modalTitle = document.getElementById('newsModalTitle');
+const modalText = document.getElementById('newsModalText');
+
+function openNews(card) {
+  modalImg.src = card.querySelector('.news-cover img').src;
+  modalTag.textContent = card.querySelector('.news-tag').textContent;
+  modalTitle.textContent = card.querySelector('h2').textContent;
+  modalText.innerHTML = '';
+  (card.dataset.full || '').split('\n').forEach(par => {
+    const p = document.createElement('p');
+    p.textContent = par;
+    modalText.appendChild(p);
+  });
+  overlay.classList.add('is-open');
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeNews() {
+  overlay.classList.remove('is-open');
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+document.querySelectorAll('.news-card').forEach(card => {
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'button');
+  card.addEventListener('click', () => openNews(card));
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openNews(card); }
+  });
+});
+
+overlay.addEventListener('click', closeNews);
+modal.querySelector('.news-close').addEventListener('click', closeNews);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNews(); });
