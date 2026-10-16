@@ -9,7 +9,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/Css/style.css">
 </head>
-<body>
+<body class="fc-page">
 
   <header class="site-header">
     <div class="site-header-inner">
@@ -23,7 +23,7 @@
         <ul class="nav-list" id="main-nav">
           <li><a href="/">Главная</a></li>
           <li><a href="/news">Новости</a></li>
-          <li><a href="/phoenix">Phoenix</a></li>
+          <li><a href="/phoenix" aria-current="page">Phoenix</a></li>
           <li><a href="/phxzapas">Запасные</a></li>
           <li><a href="/unskillteam">Discord</a></li>
         </ul>
@@ -32,80 +32,107 @@
   </header>
 
   <main class="page">
-    <div class="page-header">
-      <h1 class="page-title"><span>Phoenix</span> Team</h1>
-      <a class="btn" href="/phxzapas">Запасные</a>
+
+    <div class="fc-head">
+      <div>
+        <h1 class="fc-title">Phoenix <span>Team</span></h1>
+        <p class="fc-sub">Основной состав</p>
+      </div>
+      <nav class="fc-tabs" aria-label="Разделы состава">
+        <a class="fc-tab is-active" href="/phoenix" aria-current="page">Основной</a>
+        <a class="fc-tab" href="/phxzapas">Запасные</a>
+      </nav>
     </div>
 
-    <section class="grid" aria-label="Основной состав">
+    <section class="fc-roster" aria-label="Основной состав">
 
-      <article class="card">
-        <div class="card-media">
-          <img src="/phx/Avatar1.png" alt="mrsiktyyy" width="400" height="250" loading="lazy" decoding="async">
-        </div>
-        <div class="card-body">
-          <h3>mrsiktyyy</h3>
-          <p>Основатель / IGL</p>
-          <div class="stats">
-            <div class="stat"><small>K/D</small><b class="accent">1.15</b></div>
-            <div class="stat"><small>HS</small><b>65%</b></div>
+      <!-- Игрок 1 -->
+      <article class="fc-card">
+        <div class="fc-bg" style="background-image: url('/phx/bg/player1.jpg');">
+          <div class="fc-identity">
+            <img class="fc-avatar" src="/phx/Avatar1.png" alt="Аватар mrsiktyyy" width="96" height="96" loading="lazy">
+            <div class="fc-nick">mrsiktyyy</div>
+            <div class="fc-role">Основатель / IGL</div>
           </div>
+        </div>
+        <div class="fc-stats">
+          <div class="fc-stat"><small>K/D</small><b class="is-accent">—</b></div>
+          <div class="fc-stat"><small>HS</small><b>—</b></div>
+          <div class="fc-stat"><small>Win rate</small><b>—</b></div>
+          <div class="fc-stat"><small>ADR</small><b>—</b></div>
+          <div class="fc-stat" style="grid-column: 1 / -1;"><small>Рейтинг Premier</small><b>—</b></div>
         </div>
       </article>
 
-      <article class="card">
-        <div class="card-media">
-          <img src="/phx/Avatar2.png" alt="Novich0k42" width="400" height="250" loading="lazy" decoding="async">
-        </div>
-        <div class="card-body">
-          <h3>Novich0k42</h3>
-          <p>Рифлер</p>
-          <div class="stats">
-            <div class="stat"><small>K/D</small><b class="accent">1.08</b></div>
-            <div class="stat"><small>HS</small><b>61%</b></div>
+      <!-- Игрок 2 -->
+      <article class="fc-card">
+        <div class="fc-bg" style="background-image: url('/phx/bg/player2.jpg');">
+          <div class="fc-identity">
+            <img class="fc-avatar" src="/phx/Avatar2.png" alt="Аватар Novich0k42" width="96" height="96" loading="lazy">
+            <div class="fc-nick">Novich0k42</div>
+            <div class="fc-role">Рифлер</div>
           </div>
+        </div>
+        <div class="fc-stats">
+          <div class="fc-stat"><small>K/D</small><b class="is-accent">—</b></div>
+          <div class="fc-stat"><small>HS</small><b>—</b></div>
+          <div class="fc-stat"><small>Win rate</small><b>—</b></div>
+          <div class="fc-stat"><small>ADR</small><b>—</b></div>
+          <div class="fc-stat" style="grid-column: 1 / -1;"><small>Рейтинг Premier</small><b>—</b></div>
         </div>
       </article>
 
-      <article class="card">
-        <div class="card-media">
-          <img src="/phx/Avatar3.png" alt="myrvell" width="400" height="250" loading="lazy" decoding="async">
-        </div>
-        <div class="card-body">
-          <h3>myrvell</h3>
-          <p>Рифлер</p>
-          <div class="stats">
-            <div class="stat"><small>K/D</small><b class="accent">1.04</b></div>
-            <div class="stat"><small>HS</small><b>59%</b></div>
+      <!-- Игрок 3 -->
+      <article class="fc-card">
+        <div class="fc-bg" style="background-image: url('/phx/bg/player3.jpg');">
+          <div class="fc-identity">
+            <img class="fc-avatar" src="/phx/Avatar3.png" alt="Аватар myrvell" width="96" height="96" loading="lazy">
+            <div class="fc-nick">myrvell</div>
+            <div class="fc-role">Рифлер</div>
           </div>
+        </div>
+        <div class="fc-stats">
+          <div class="fc-stat"><small>K/D</small><b class="is-accent">—</b></div>
+          <div class="fc-stat"><small>HS</small><b>—</b></div>
+          <div class="fc-stat"><small>Win rate</small><b>—</b></div>
+          <div class="fc-stat"><small>ADR</small><b>—</b></div>
+          <div class="fc-stat" style="grid-column: 1 / -1;"><small>Рейтинг Premier</small><b>—</b></div>
         </div>
       </article>
 
-      <article class="card">
-        <div class="card-media">
-          <img src="/phx/Avatar4.png" alt="EgorVdadika" width="400" height="250" loading="lazy" decoding="async">
-        </div>
-        <div class="card-body">
-          <h3>EgorVdadika</h3>
-          <p>AWP / тренер</p>
-          <div class="stats">
-            <div class="stat"><small>K/D</small><b class="accent">0.98</b></div>
-            <div class="stat"><small>HS</small><b>55%</b></div>
+      <!-- Игрок 4 -->
+      <article class="fc-card">
+        <div class="fc-bg" style="background-image: url('/phx/bg/player4.jpg');">
+          <div class="fc-identity">
+            <img class="fc-avatar" src="/phx/Avatar4.png" alt="Аватар EgorVdadika" width="96" height="96" loading="lazy">
+            <div class="fc-nick">EgorVdadika</div>
+            <div class="fc-role">AWP / тренер</div>
           </div>
+        </div>
+        <div class="fc-stats">
+          <div class="fc-stat"><small>K/D</small><b class="is-accent">—</b></div>
+          <div class="fc-stat"><small>HS</small><b>—</b></div>
+          <div class="fc-stat"><small>Win rate</small><b>—</b></div>
+          <div class="fc-stat"><small>ADR</small><b>—</b></div>
+          <div class="fc-stat" style="grid-column: 1 / -1;"><small>Рейтинг Premier</small><b>—</b></div>
         </div>
       </article>
 
-      <article class="card">
-        <div class="card-media">
-          <img src="/phx/Avatar_Zenlo.png" alt="Zenlo." width="400" height="250" loading="lazy" decoding="async">
-        </div>
-        <div class="card-body">
-          <h3>Zenlo.</h3>
-          <p>AWP</p>
-          <div class="stats">
-            <div class="stat"><small>K/D</small><b class="accent">1.10</b></div>
-            <div class="stat"><small>HS</small><b>63%</b></div>
+      <!-- Игрок 5 -->
+      <article class="fc-card">
+        <div class="fc-bg" style="background-image: url('/phx/bg/player5.jpg');">
+          <div class="fc-identity">
+            <img class="fc-avatar" src="/phx/Avatar_Zenlo.png" alt="Аватар Zenlo." width="96" height="96" loading="lazy">
+            <div class="fc-nick">Zenlo.</div>
+            <div class="fc-role">AWP</div>
           </div>
+        </div>
+        <div class="fc-stats">
+          <div class="fc-stat"><small>K/D</small><b class="is-accent">—</b></div>
+          <div class="fc-stat"><small>HS</small><b>—</b></div>
+          <div class="fc-stat"><small>Win rate</small><b>—</b></div>
+          <div class="fc-stat"><small>ADR</small><b>—</b></div>
+          <div class="fc-stat" style="grid-column: 1 / -1;"><small>Рейтинг Premier</small><b>—</b></div>
         </div>
       </article>
 
