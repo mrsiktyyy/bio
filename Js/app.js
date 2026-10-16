@@ -7,34 +7,27 @@ document.querySelectorAll('.nav-toggle').forEach(btn => {
   });
 });
 
-// ---------- Снег выключен до перезагрузки страницы ----------
-// Флаг хранится в sessionStorage: переход по меню не возвращает снег.
+// ---------- Снег выключен до перезагрузки ----------
 const SNOW_KEY = 'phx-snow-off';
 if (sessionStorage.getItem(SNOW_KEY) === '1') {
   document.body.classList.add('snow-off');
 }
 
-// ---------- Переход между страницами по меню ----------
-const NAV_KEY = 'phx-drop-in';
-if (sessionStorage.getItem(NAV_KEY) === '1') {
-  sessionStorage.removeItem(NAV_KEY);
-  document.querySelector('.page')?.classList.add('drop-in');
-}
-
+// ---------- Переход по меню: страница падает, затем открывается ----------
 document.querySelectorAll('.nav-list a').forEach(link => {
   link.addEventListener('click', e => {
     const href = link.getAttribute('href');
     if (!href || link.classList.contains('is-active')) return;
     e.preventDefault();
 
-    sessionStorage.setItem(NAV_KEY, '1');
-    document.querySelector('.page').classList.add('is-leaving');
+    sessionStorage.setItem(SNOW_KEY, '1');
+    document.body.classList.add('snow-off');
+    document.querySelector('.page')?.classList.add('is-leaving');
     setTimeout(() => { window.location.href = href; }, 500);
   });
 });
 
 // ---------- Вкладки Основной / Запасные ----------
-// 1) снег гаснет за 300 мс  2) страница падает  3) обновление страницы
 (function () {
   const tabs = document.querySelectorAll('.tabs .tab[data-roster]');
   if (!tabs.length) return;
@@ -48,31 +41,27 @@ document.querySelectorAll('.nav-list a').forEach(link => {
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const current = document.querySelector('.tabs .tab.is-active');
-      if (busy || tab === current) return;
+      if (busy || tab.classList.contains('is-active')) return;
       busy = true;
 
-      // Сохраняем выбранную вкладку, чтобы после обновления открыть её же
       sessionStorage.setItem('phx-roster-tab', tab.dataset.roster);
       sessionStorage.setItem(SNOW_KEY, '1');
 
-      // 1) снег гаснет
+      // 1) снег гаснет за 300 мс
       document.body.classList.add('snow-off');
 
-      // 2) через 300 мс страница падает
+      // 2) страница падает
       setTimeout(() => {
-        document.querySelector('.page').classList.add('is-leaving');
+        document.querySelector('.page')?.classList.add('is-leaving');
       }, 300);
 
-      // 3) после падения — обновление страницы
-      setTimeout(() => {
-        window.location.reload();
-      }, 300 + 500);
+      // 3) обновление страницы
+      setTimeout(() => window.location.reload(), 800);
     });
   });
 })();
 
-// ---------- Новости: раскрытие в большое окно ----------
+// ---------- Новости: раскрытие в окно ----------
 (function () {
   const cards = document.querySelectorAll('.news-card');
   if (!cards.length) return;
@@ -89,28 +78,25 @@ document.querySelectorAll('.nav-list a').forEach(link => {
     <button class="news-close" type="button" aria-label="Закрыть">✕</button>
     <div class="news-modal-cover"><img alt=""></div>
     <div class="news-modal-body">
-      <span class="news-tag"></span>
+      <span class="date"></span>
       <h2></h2>
       <div class="news-modal-text"></div>
     </div>`;
   document.body.appendChild(modal);
 
   const img = modal.querySelector('img');
-  const tag = modal.querySelector('.news-tag');
+  const tag = modal.querySelector('.date');
   const title = modal.querySelector('h2');
   const text = modal.querySelector('.news-modal-text');
 
   function open(card) {
-    img.src = card.querySelector('.news-cover img').src;
-    tag.textContent = card.querySelector('.news-tag').textContent;
+    img.src = card.querySelector('.cover img').src;
+    tag.textContent = card.querySelector('.date').textContent;
     title.textContent = card.querySelector('h2').textContent;
     text.innerHTML = '';
-    const full = card.dataset.full || card.querySelector('p').textContent;
-    full.split('\n').forEach(par => {
-      const p = document.createElement('p');
-      p.textContent = par;
-      text.appendChild(p);
-    });
+    const p = document.createElement('p');
+    p.textContent = card.querySelector('.body p').textContent;
+    text.appendChild(p);
     overlay.classList.add('is-open');
     modal.classList.add('is-open');
   }
@@ -125,21 +111,16 @@ document.querySelectorAll('.nav-list a').forEach(link => {
     card.setAttribute('role', 'button');
     card.addEventListener('click', () => open(card));
     card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        open(card);
-      }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(card); }
     });
   });
 
   overlay.addEventListener('click', close);
   modal.querySelector('.news-close').addEventListener('click', close);
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') close();
-  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 
-// ---------- Снег: фиксированная раскладка (одинаковая на всех страницах) ----------
+// ---------- Снег: одинаковая раскладка на всех страницах ----------
 (function () {
   const layer = document.createElement('div');
   layer.className = 'snow';
