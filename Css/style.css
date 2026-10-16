@@ -1,6 +1,6 @@
 /* ==========================================================
    Phoenix Team — единая тема сайта
-   Основные цвета: #8cb6ff (акцент), #8c9fff (вторичный акцент)
+   Акцент: #8cb6ff · Вторичный: #8c9fff
    ========================================================== */
 
 :root {
@@ -82,6 +82,7 @@ ul {
 }
 
 .site-nav-inner {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
@@ -166,7 +167,8 @@ ul {
   border-bottom: 1px solid var(--line);
 }
 
-.page-title {
+.page-title,
+.hero-title {
   font-size: 32px;
   font-weight: 800;
   letter-spacing: -.02em;
@@ -174,7 +176,8 @@ ul {
   line-height: 1.1;
 }
 
-.page-title span {
+.page-title span,
+.hero-title span {
   color: var(--accent);
 }
 
@@ -184,7 +187,11 @@ ul {
   color: var(--text-3);
 }
 
-/* Вкладки раздела (Основной / Запасные) */
+.hero-title {
+  margin-bottom: 32px;
+}
+
+/* Вкладки раздела */
 .tabs {
   display: flex;
   gap: 4px;
@@ -216,7 +223,6 @@ ul {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
-  justify-items: stretch;
 }
 
 .player-card {
@@ -481,18 +487,6 @@ ul {
   object-fit: cover;
 }
 
-.hero-title {
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -.02em;
-  text-transform: uppercase;
-  margin-bottom: 24px;
-}
-
-.hero-title span {
-  color: var(--accent);
-}
-
 /* ---------- Discord ---------- */
 
 .discord-wrap {
@@ -590,9 +584,6 @@ ul {
   }
   .site-nav.is-open .nav-list {
     display: flex;
-  }
-  .site-nav-inner {
-    position: relative;
   }
   .page {
     padding: 32px 16px 48px;
