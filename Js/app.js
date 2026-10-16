@@ -1,125 +1,107 @@
 const DUR = 500;
 
-// ---------- Бургер ----------
-document.querySelectorAll('.nav-toggle').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const nav = btn.closest('.site-nav');
-    const open = nav.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', open);
-  });
+/* ---------- Бургер ---------- */
+const nav = document.querySelector('.site-nav');
+const toggle = document.querySelector('.nav-toggle');
+toggle.addEventListener('click', () => {
+  const open = nav.classList.toggle('is-open');
+  toggle.setAttribute('aria-expanded', open);
 });
 
-// ---------- Пилл: привязан к ширине и позиции текста ----------
-// Берём реальные offsetLeft/offsetWidth кнопки, поэтому фон
-// всегда точно обтягивает текст вкладки.
-function placePill(pill, target) {
-  if (!pill || !target) return;
-  pill.style.opacity = '1';
-  pill.style.width = target.offsetWidth + 'px';
-  pill.style.transform = `translate3d(${target.offsetLeft}px, 0, 0)`;
-}
-
-function makePill(container, className) {
-  const pill = document.createElement('span');
-  pill.className = className;
-  container.prepend(pill);
-  const active = container.querySelector('.is-active');
-  pill.style.transition = 'none';
-  placePill(pill, active);
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    pill.style.transition = '';
-  }));
-  return pill;
-}
-
-// Пилл навигации сайта
+/* ---------- Пилл меню ---------- */
 const navList = document.querySelector('.nav-list');
-let navPill = null;
-if (navList) navPill = makePill(navList, 'nav-pill');
+const navPill = document.createElement('span');
+navPill.className = 'nav-pill';
+navList.prepend(navPill);
 
-// Пилл вкладок состава
+function placeNavPill(link, instant = false) {
+  if (!link) return;
+  if (instant) navPill.style.transition = 'none';
+  navPill.style.width = link.offsetWidth + 'px';
+  navPill.style.transform = `translate3d(${link.offsetLeft}px, 0, 0)`;
+  navPill.style.opacity = '1';
+  if (instant) { void navPill.offsetWidth; navPill.style.transition = ''; }
+}
+
+/* ---------- Пилл вкладок состава ---------- */
 const tabsEl = document.querySelector('.tabs');
-let tabsPill = null;
-if (tabsEl) tabsPill = makePill(tabsEl, 'tabs-pill');
+const tabsPill = tabsEl.querySelector('.tabs-pill');
+
+function placeTabsPill(tab, instant = false) {
+  if (!tab) return;
+  if (instant) tabsPill.style.transition = 'none';
+  tabsPill.style.width = tab.offsetWidth + 'px';
+  tabsPill.style.transform = `translate3d(${tab.offsetLeft}px, 0, 0)`;
+  tabsPill.style.opacity = '1';
+  if (instant) { void tabsPill.offsetWidth; tabsPill.style.transition = ''; }
+}
+
+/* Ждём шрифт, иначе ширины пунктов пересчитаются после расчёта пилла */
+const afterFonts = document.fonts && document.fonts.ready ? document.fonts.ready : new Promise(r => window.addEventListener('load', r));
+afterFonts.then(() => {
+  placeNavPill(navList.querySelector('a.is-active'), true);
+  placeTabsPill(tabsEl.querySelector('.tab.is-active'), true);
+});
 
 window.addEventListener('resize', () => {
-  if (navPill) placePill(navPill, navList.querySelector('a.is-active'));
-  if (tabsPill) placePill(tabsPill, tabsEl.querySelector('.tab.is-active'));
+  placeNavPill(navList.querySelector('a.is-active'), true);
+  placeTabsPill(tabsEl.querySelector('.tab.is-active'), true);
 });
 
-// ---------- Переход между страницами по меню ----------
-if (navList) {
-  navList.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', e => {
-      const href = link.getAttribute('href');
-      if (!href || link.classList.contains('is-active')) return;
-      e.preventDefault();
+/* ---------- Роутер (одна страница, разделы без перезагрузки) ---------- */
+const views = document.querySelectorAll('.view');
+let currentView = 'home';
+let routing = false;
 
-      placePill(navPill, link);
-      navList.querySelectorAll('a').forEach(a => a.classList.toggle('is-active', a === link));
+function showView(name) {
+  if (routing || name === currentView) return;
+  const next = document.querySelector(`.view[data-view="${name}"]`);
+  if (!next) return;
+  routing = true;
 
-      const page = document.querySelector('.page');
-      page.classList.add('is-leaving');
-      setTimeout(() => { window.location.href = href; }, DUR);
-    });
-  });
+  const prev = document.querySelector(`.view[data-view="${currentView}"]`);
+  prev.classList.add('is-leaving');
+
+  setTimeout(() => {
+    prev.hidden = true;
+    prev.classList.remove('is-leaving');
+    next.hidden = false;
+    // перезапуск анимации появления
+    next.style.animation = 'none';
+    void next.offsetWidth;
+    next.style.animation = '';
+    currentView = name;
+    routing = false;
+  }, 200);
 }
 
-// ---------- Вкладки состава (Основной / Запасные) ----------
-// Работает на одной странице: панели переключаются через data-panel.
-(function () {
-  const tabs = document.querySelectorAll('.tabs .tab[data-roster]');
-  if (!tabs.length) return;
+function setActiveNav(name) {
+  const links = navList.querySelectorAll('a');
+  links.forEach(a => a.classList.toggle('is-active', a.dataset.route === name));
+  placeNavPill(navList.querySelector(`a[data-route="${name}"]`));
+}
 
-  const sub = document.getElementById('roster-sub');
-  const panels = document.querySelectorAll('[data-panel]');
-  const snow = document.querySelector('.snow');
-  let busy = false;
+function route() {
+  const hash = location.hash.replace('#', '') || 'home';
+  const name = ['home', 'news', 'roster', 'discord'].includes(hash) ? hash : 'home';
+  setActiveNav(name);
+  showView(name);
+  nav.classList.remove('is-open');
+  toggle.setAttribute('aria-expanded', false);
+}
 
-  function showPanel(key) {
-    panels.forEach(p => { p.hidden = p.dataset.panel !== key; });
-  }
-
-  // Старт: показываем панель активной вкладки
-  const initial = document.querySelector('.tabs .tab.is-active');
-  showPanel(initial ? initial.dataset.roster : 'main');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const key = tab.dataset.roster;
-      const current = document.querySelector('.tabs .tab.is-active');
-      if (busy || tab === current) return;
-      busy = true;
-
-      // Пилл и подсветка текста — сразу
-      tabs.forEach(t => t.classList.toggle('is-active', t === tab));
-      placePill(tabsPill, tab);
-      if (sub) sub.textContent = key === 'main' ? 'Основной состав' : 'Резервный состав';
-
-      // Снег гаснет за 500 мс (как и остальные анимации)
-      if (snow) snow.classList.add('is-fading');
-
-      // Текущая панель уезжает вверх и гаснет
-      const visible = document.querySelector(`[data-panel]:not([hidden])`);
-      if (visible) visible.classList.add('is-leaving');
-
-      setTimeout(() => {
-        // Переключаем панели
-        showPanel(key);
-        const next = document.querySelector(`[data-panel="${key}"]`);
-        if (visible) visible.classList.remove('is-leaving');
-        if (next) {
-          next.classList.remove('is-entering');
-          void next.offsetWidth; // перезапуск анимации
-          next.classList.add('is-entering');
-        }
-        busy = false;
-      }, DUR);
-    });
+navList.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', e => {
+    // позволяем hash-навигацию, но даём сразу сдвинуть пилл
+    setActiveNav(a.dataset.route);
   });
-})();
+});
+document.querySelector('.brand').addEventListener('click', () => setActiveNav('home'));
 
-// ---------- Аккордеон на главной ----------
+window.addEventListener('hashchange', route);
+route();
+
+/* ---------- Аккордеон на главной ---------- */
 document.querySelectorAll('.person-head').forEach(head => {
   head.addEventListener('click', () => {
     const card = head.closest('.person');
@@ -128,96 +110,72 @@ document.querySelectorAll('.person-head').forEach(head => {
   });
 });
 
-// ---------- Новости: раскрытие в окно ----------
-(function () {
-  const cards = document.querySelectorAll('.news-card');
-  if (!cards.length) return;
+/* ---------- Переключение Основной / Запасные ---------- */
+const sub = document.getElementById('roster-sub');
+const tabs = tabsEl.querySelectorAll('.tab[data-roster]');
+let rosterBusy = false;
 
-  const overlay = document.createElement('div');
-  overlay.className = 'news-overlay';
-  document.body.appendChild(overlay);
-
-  const modal = document.createElement('div');
-  modal.className = 'news-modal';
-  modal.setAttribute('role', 'dialog');
-  modal.setAttribute('aria-modal', 'true');
-  modal.innerHTML = `
-    <button class="news-close" type="button" aria-label="Закрыть">✕</button>
-    <div class="news-modal-cover"><img alt=""></div>
-    <div class="news-modal-body">
-      <span class="news-tag"></span>
-      <h2></h2>
-      <div class="news-modal-text"></div>
-    </div>`;
-  document.body.appendChild(modal);
-
-  const img = modal.querySelector('img');
-  const tag = modal.querySelector('.news-tag');
-  const title = modal.querySelector('h2');
-  const text = modal.querySelector('.news-modal-text');
-
-  function open(card) {
-    img.src = card.querySelector('.news-cover img').src;
-    tag.textContent = card.querySelector('.news-tag').textContent;
-    title.textContent = card.querySelector('h2').textContent;
-    text.innerHTML = '';
-    const full = card.dataset.full || card.querySelector('p').textContent;
-    full.split('\n').forEach(par => {
-      const p = document.createElement('p');
-      p.textContent = par;
-      text.appendChild(p);
-    });
-    overlay.classList.add('is-open');
-    modal.classList.add('is-open');
-  }
-
-  function close() {
-    overlay.classList.remove('is-open');
-    modal.classList.remove('is-open');
-  }
-
-  cards.forEach(card => {
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'button');
-    card.addEventListener('click', () => open(card));
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        open(card);
-      }
-    });
+function showRoster(key) {
+  document.querySelectorAll('[data-panel]').forEach(p => {
+    p.hidden = p.dataset.panel !== key;
   });
+}
 
-  overlay.addEventListener('click', close);
-  modal.querySelector('.news-close').addEventListener('click', close);
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') close();
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const key = tab.dataset.roster;
+    if (rosterBusy || tab.classList.contains('is-active')) return;
+    rosterBusy = true;
+
+    tabs.forEach(t => t.classList.toggle('is-active', t === tab));
+    placeTabsPill(tab);
+    sub.textContent = key === 'main' ? 'Основной состав' : 'Запасные игроки';
+
+    const visible = document.querySelector('[data-panel]:not([hidden])');
+    if (visible) visible.style.animation = 'none';
+
+    setTimeout(() => {
+      showRoster(key);
+      const next = document.querySelector(`[data-panel="${key}"]`);
+      next.style.animation = 'none';
+      void next.offsetWidth;
+      next.style.animation = '';
+      rosterBusy = false;
+    }, 200);
   });
-})();
+});
+showRoster('main');
 
-// ---------- Снег: фиксированная раскладка ----------
+/* ---------- Новости: модальное окно ---------- */
+const newsCards = document.querySelectorAll('.news-card');
+const overlay = document.createElement('div');
+overlay.className = 'news-overlay';
+document.body.appendChild(overlay);
+
+function openNews(card) {
+  overlay.classList.add('is-open');
+}
+newsCards.forEach(card => {
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openNews(card); }
+  });
+});
+overlay.addEventListener('click', () => overlay.classList.remove('is-open'));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') overlay.classList.remove('is-open');
+});
+
+/* ---------- Снег ---------- */
 (function () {
   const layer = document.createElement('div');
   layer.className = 'snow';
   document.body.prepend(layer);
-
   let seed = 20261016;
-  const rnd = () => {
-    seed = (seed * 16807) % 2147483647;
-    return (seed - 1) / 2147483646;
-  };
-
-  const count = 40;
-  for (let i = 0; i < count; i++) {
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  for (let i = 0; i < 40; i++) {
     const s = document.createElement('span');
     const size = 3 + rnd() * 5;
-    s.style.width = size + 'px';
-    s.style.height = size + 'px';
-    s.style.left = (rnd() * 100).toFixed(2) + 'vw';
-    s.style.setProperty('--drift', (rnd() * 80 - 40).toFixed(1) + 'px');
-    s.style.animationDuration = (10 + rnd() * 14).toFixed(2) + 's';
-    s.style.animationDelay = (-rnd() * 20).toFixed(2) + 's';
-    s.style.opacity = (0.3 + rnd() * 0.5).toFixed(2);
+    s.style.cssText = `width:${size}px;height:${size}px;left:${(rnd()*100).toFixed(2)}vw;opacity:${(0.3+rnd()*0.5).toFixed(2)};animation-duration:${(10+rnd()*14).toFixed(2)}s;animation-delay:${(-rnd()*20).toFixed(2)}s`;
     layer.appendChild(s);
   }
 })();
