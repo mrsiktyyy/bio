@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Главная | Phoenix Team</title>
   <link rel="icon" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,38 +12,34 @@
   <link rel="stylesheet" href="/Css/style.css">
 </head>
 <body>
-  <div class="cursor-glow"></div>
 
   <nav class="site-nav">
-    <a class="brand" href="/"><img src="logo.png" alt="Phoenix Team"></a>
-    <button class="nav-toggle" aria-label="Меню">☰</button>
-    <ul class="nav-list">
-      <li><a href="/">⌂ <span>Главная</span></a></li>
-      <li><a href="/news">▤ <span>Новости</span></a></li>
-      <li><a href="/phoenix">◆ <span>Phoenix</span></a></li>
-      <li><a href="/phxzapas">♟ <span>Запасные</span></a></li>
-      <li><a href="/unskillteam">✚ <span>Discord</span></a></li>
-    </ul>
+    <div class="site-nav-inner">
+      <a class="brand" href="/"><img src="/logo.png" alt="Phoenix Team" width="140" height="28"></a>
+      <button class="nav-toggle" type="button" aria-label="Меню" aria-expanded="false">☰</button>
+      <ul class="nav-list">
+        <li><a class="is-active" href="/">Главная</a></li>
+        <li><a href="/news">Новости</a></li>
+        <li><a href="/phoenix">Состав</a></li>
+        <li><a href="/unskillteam">Discord</a></li>
+      </ul>
+    </div>
   </nav>
 
-  <main class="page">
-    <header class="topbar">
-      <h1 class="title">Главная <span>Phoenix Team</span></h1>
-      <nav class="actions" aria-label="Разделы">
-        <a class="action is-active" href="/">⌂ <span>Главная</span></a>
-        <a class="action" href="/news">▤ <span>Новости</span></a>
-        <a class="action" href="/phoenix">◆ <span>Phoenix</span></a>
-        <a class="action" href="/phxzapas">♟ <span>Запасные</span></a>
-        <a class="action" href="/unskillteam">✚ <span>Discord</span></a>
-      </nav>
-    </header>
+  <main class="page drop-in">
+    <h1 class="hero-title">Главная <span>Phoenix Team</span></h1>
 
-    <section class="hero-grid">
-      <div class="stack">
-        <article class="person glass">
-          <h1>Привет, я <span class="accent">mrsiktyyy</span> — <span class="accent">Иван Акбашев</span></h1>
+    <section class="people">
+
+      <article class="person">
+        <button class="person-head" type="button" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar1.png" alt="" width="40" height="40">
+          <span class="person-name">mrsiktyyy</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
           <div class="role">Основатель Phoenix Team · Стример · Разработчик</div>
-          <p>Я создал этот сайт и команду Phoenix. Здесь ты найдёшь всё о нашей деятельности, новости и состав.</p>
+          <p>Иван Акбашев. Я создал этот сайт и команду Phoenix. Здесь ты найдёшь всё о нашей деятельности, новости и состав.</p>
           <div class="links">
             <a href="https://t.me/mrsiktyyy">Telegram</a>
             <a href="https://www.instagram.com/mrsiktyyy/">Instagram</a>
@@ -51,53 +47,74 @@
             <a href="https://www.youtube.com/@MrS1kyyy">YouTube</a>
             <a href="https://steamcommunity.com/id/mrsikty/">Steam</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="person glass">
-          <h1>Я <span class="accent">Novich0k42</span> — Вадим</h1>
+      <article class="person">
+        <button class="person-head" type="button" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar2.png" alt="" width="40" height="40">
+          <span class="person-name">Novich0k42</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
           <div class="role">Игрок Phoenix Team · Рифлер · Командир</div>
-          <p>Играю в CS с 2018 года. В CS2 наиграл около 800 часов и дошёл почти до 17 000 рейтинга в Премьере.</p>
+          <p>Вадим. Играю в CS с 2018 года. В CS2 наиграл около 800 часов и дошёл почти до 17 000 рейтинга в Премьере.</p>
           <div class="links">
             <a href="https://t.me/Novichok42">Telegram</a>
             <a href="https://steamcommunity.com/profiles/76561199182259553">Steam</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="person glass">
-          <h1><span class="accent">EgorVdadika</span> — Егор</h1>
+      <article class="person">
+        <button class="person-head" type="button" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar4.png" alt="" width="40" height="40">
+          <span class="person-name">EgorVdadika</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
           <div class="role">Тренер · Снайпер · Душа команды</div>
-          <p>Тренируюсь, хочу стать хорошим капитаном и вести команду к победам.</p>
+          <p>Егор. Тренируюсь, хочу стать хорошим капитаном и вести команду к победам.</p>
           <div class="links">
             <a href="https://steamcommunity.com/id/EgorVdadika/">Steam</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="person glass">
-          <h1><span class="accent">myrvell</span> — Евгений</h1>
+      <article class="person">
+        <button class="person-head" type="button" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar3.png" alt="" width="40" height="40">
+          <span class="person-name">myrvell</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
           <div class="role">Стрелятель · убиватель · позитивный</div>
-          <p>Стреляю исключительно в союзников... Ну короче играю по настроению.</p>
+          <p>Евгений. Стреляю исключительно в союзников... Ну короче играю по настроению.</p>
           <div class="links">
             <a href="https://steamcommunity.com/profiles/76561198345950475/">Steam</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="person glass">
-          <h1><span class="accent">Zenlo.</span> — Кирилл</h1>
+      <article class="person">
+        <button class="person-head" type="button" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar_Zenlo.png" alt="" width="40" height="40">
+          <span class="person-name">Zenlo.</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
           <div class="role">Симпл · убиватель · пьяница</div>
-          <p>Люблю Сашу Симпла и AWP. А ещё люблю улучшать свои скины.</p>
+          <p>Кирилл. Люблю Сашу Симпла и AWP. А ещё люблю улучшать свои скины.</p>
           <div class="links">
             <a href="https://steamcommunity.com/id/zenlo-official/">Steam</a>
           </div>
-        </article>
-      </div>
+        </div>
+      </article>
 
-      <div class="hero-media glass">
-        <img src="/5447617324774005331.jpg" alt="Phoenix Team">
-      </div>
     </section>
   </main>
 
-  <footer>© 2026 — Phoenix Team · Все права защищены.</footer>
+  <footer class="site-footer">© 2026 — Phoenix Team · Все права защищены.</footer>
 
   <script src="/Js/app.js"></script>
 </body>
