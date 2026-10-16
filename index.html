@@ -1,33 +1,114 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Главная | Phoenix Team</title>
-<link rel="icon" href="/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="/Css/style.css"></head><body>
-<div class="cursor-glow"></div>
-<nav class="site-nav">
-  <a class="brand" href="/"><img src="logo.png" alt="Phoenix Team"></a>
-  <button class="nav-toggle" aria-label="Меню">☰</button>
-  <ul class="nav-list">
-    <li><a href="/">⌂ <span>Главная</span></a></li>
-    <li><a href="/news">▤ <span>Новости</span></a></li>
-    <li><a href="/phoenix">◆ <span>Phoenix</span></a></li>
-    <li><a href="/phxzapas">♟ <span>Запасные</span></a></li>
-    <li><a href="/unskillteam">✚ <span>Discord</span></a></li>
-  </ul>
-</nav>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Главная | Phoenix Team</title>
+  <link rel="icon" href="/favicon.png">
 
-<main class="page">
-<header class="topbar"><h1 class="title">Главная <span>Phoenix Team</span></h1><div class="actions"><a class="action" href="/news">▤ <span>Новости</span></a></div></header>
-<section class="hero-grid">
-<div class="stack">
-<article class="person glass"><h1>Привет, я <span class="accent">mrsiktyyy</span> — <span class="accent">Иван Акбашев</span></h1><div class="role">Основатель Phoenix Team · Стример · Разработчик</div><p>Я создал этот сайт и команду Phoenix. Здесь ты найдёшь всё о нашей деятельности, новости и состав.</p><div class="links"><a href="https://t.me/mrsiktyyy">Telegram</a><a href="https://www.instagram.com/mrsiktyyy/">Instagram</a><a href="https://twitch.tv/mrsiktyyy">Twitch</a><a href="https://www.youtube.com/@MrS1kyyy">YouTube</a><a href="https://steamcommunity.com/id/mrsikty/">Steam</a></div></article>
-<article class="person glass"><h1>Я <span class="accent">Novich0k42</span> — Вадим</h1><div class="role">Игрок Phoenix Team · Рифлер · Командир</div><p>Играю в CS с 2018 года. В CS2 наиграл около 800 часов и дошёл почти до 17 000 рейтинга в Премьере.</p><div class="links"><a href="https://t.me/Novichok42">Telegram</a><a href="https://steamcommunity.com/profiles/76561199182259553">Steam</a></div></article>
-<article class="person glass"><h1><span class="accent">EgorVdadika</span> — Егор</h1><div class="role">Тренер · Снайпер · Душа команды</div><p>Тренируюсь, хочу стать хорошим капитаном и вести команду к победам.</p><div class="links"><a href="https://steamcommunity.com/id/EgorVdadika/">Steam</a></div></article>
-<article class="person glass"><h1><span class="accent">myrvell</span> — Евгений</h1><div class="role">Стрелятель · убиватель · позитивный</div><p>Стреляю исключительно в союзников... Ну короче играю по настроению.</p><div class="links"><a href="https://steamcommunity.com/profiles/76561198345950475/">Steam</a></div></article>
-<article class="person glass"><h1><span class="accent">Zenlo.</span> — Кирилл</h1><div class="role">Симпл · убиватель · пьяница</div><p>Люблю Сашу Симпла и AWP. А ещё люблю улучшать свои скины.</p><div class="links"><a href="https://steamcommunity.com/id/zenlo-official/">Steam</a></div></article>
-</div>
-<div class="hero-media glass"><img src="/5447617324774005331.jpg" alt="Phoenix Team"></div>
-</section></main><footer>© 2026 — Phoenix Team · Все права защищены.</footer><script src="/Js/app.js"></script></body></html>
+  <!-- Шрифты: preconnect + preload основного начертания (раздел 7.2) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/Css/style.css">
+</head>
+<body>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a class="brand" href="/">
+      <img src="logo.png" alt="Phoenix Team" width="160" height="52">
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Меню" aria-controls="main-nav">☰</button>
+    <ul class="nav-list" id="main-nav">
+      <li><a href="/">⌂ <span>Главная</span></a></li>
+      <li><a href="/news">▤ <span>Новости</span></a></li>
+      <li><a href="/phoenix">◆ <span>Phoenix</span></a></li>
+      <li><a href="/phxzapas">♟ <span>Запасные</span></a></li>
+      <li><a href="/unskillteam">✚ <span>Discord</span></a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+    <header class="topbar">
+      <h1 class="title">Главная <span>Phoenix Team</span></h1>
+      <div class="actions">
+        <a class="action" href="/news">▤ <span>Новости</span></a>
+      </div>
+    </header>
+
+    <section class="hero-grid" aria-label="Участники команды">
+      <div class="stack">
+
+        <article class="person glass">
+          <h2>Привет, я <span class="accent">mrsiktyyy</span> — <span class="accent">Иван&nbsp;Акбашев</span></h2>
+          <div class="role">Основатель Phoenix Team · Стример · Разработчик</div>
+          <p>Я создал этот сайт и команду Phoenix. Здесь ты найдёшь всё о нашей деятельности, новости и состав.</p>
+          <div class="links">
+            <a href="https://t.me/mrsiktyyy">Telegram</a>
+            <a href="https://www.instagram.com/mrsiktyyy/">Instagram</a>
+            <a href="https://twitch.tv/mrsiktyyy">Twitch</a>
+            <a href="https://www.youtube.com/@MrS1kyyy">YouTube</a>
+            <a href="https://steamcommunity.com/id/mrsikty/">Steam</a>
+          </div>
+        </article>
+
+        <article class="person glass">
+          <h2>Я <span class="accent">Novich0k42</span> — Вадим</h2>
+          <div class="role">Игрок Phoenix Team · Рифлер · Командир</div>
+          <p>Играю в CS с 2018 года. В CS2 наиграл около 800 часов и дошёл почти до 17&nbsp;000 рейтинга в Премьере.</p>
+          <div class="links">
+            <a href="https://t.me/Novichok42">Telegram</a>
+            <a href="https://steamcommunity.com/profiles/76561199182259553">Steam</a>
+          </div>
+        </article>
+
+        <article class="person glass">
+          <h2><span class="accent">EgorVdadika</span> — Егор</h2>
+          <div class="role">Тренер · Снайпер · Душа команды</div>
+          <p>Тренируюсь, хочу стать хорошим капитаном и вести команду к победам.</p>
+          <div class="links">
+            <a href="https://steamcommunity.com/id/EgorVdadika/">Steam</a>
+          </div>
+        </article>
+
+        <article class="person glass">
+          <h2><span class="accent">myrvell</span> — Евгений</h2>
+          <div class="role">Стрелятель · убиватель · позитивный</div>
+          <p>Стреляю исключительно в союзников... Ну короче играю по настроению.</p>
+          <div class="links">
+            <a href="https://steamcommunity.com/profiles/76561198345950475/">Steam</a>
+          </div>
+        </article>
+
+        <article class="person glass">
+          <h2><span class="accent">Zenlo.</span> — Кирилл</h2>
+          <div class="role">Симпл · убиватель · пьяница</div>
+          <p>Люблю Сашу Симпла и AWP. А ещё люблю улучшать свои скины.</p>
+          <div class="links">
+            <a href="https://steamcommunity.com/id/zenlo-official/">Steam</a>
+          </div>
+        </article>
+
+      </div>
+
+      <figure class="hero-media glass">
+        <img src="/5447617324774005331.jpg"
+             alt="Phoenix Team"
+             width="800"
+             height="1000"
+             loading="eager"
+             decoding="async">
+      </figure>
+    </section>
+  </main>
+
+  <footer>© 2026 — Phoenix Team · Все права защищены.</footer>
+
+  <script src="/Js/app.js"></script>
+</body>
+</html>
