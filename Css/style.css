@@ -27,7 +27,18 @@
 *::before,
 *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { -webkit-text-size-adjust: 100%; }
+/* [правка 1] скрытие полосы прокрутки */
+html {
+  -webkit-text-size-adjust: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
 
 body {
   min-height: 100vh;
@@ -556,10 +567,21 @@ ul { list-style: none; }
 
 /* ---------- Состав: карточки ---------- */
 
+/* [правка 2] центровка при 4 и меньше карточках */
 .roster {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
+}
+
+.roster:not(:has(> .player-card:nth-child(5))) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.roster:not(:has(> .player-card:nth-child(5))) > .player-card {
+  width: min(100%, 260px);
 }
 
 .roster.is-hiding {
@@ -799,6 +821,21 @@ ul { list-style: none; }
 
 @media (max-width: 420px) {
   .roster { grid-template-columns: 1fr; }
+}
+
+/* [правка 3] подпись под «PHOENIX TEAM» — плавное появление и исчезание */
+#roster-sub {
+  transition: opacity 400ms var(--ease-soft), transform 400ms var(--ease-soft);
+}
+
+#roster-sub.is-hiding {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+}
+
+#roster-sub.is-showing {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
