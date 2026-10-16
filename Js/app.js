@@ -30,9 +30,7 @@ function makePill(container, className, activeSelector) {
 
 const navList = document.querySelector('.nav-list');
 let navPill = null;
-if (navList) {
-  navPill = makePill(navList, 'nav-pill', 'a.is-active');
-}
+if (navList) navPill = makePill(navList, 'nav-pill', 'a.is-active');
 
 document.querySelectorAll('.tabs').forEach(tabs => {
   tabs._pill = makePill(tabs, 'tabs-pill', '.tab.is-active');
@@ -43,7 +41,10 @@ window.addEventListener('resize', () => {
   document.querySelectorAll('.tabs').forEach(t => placePill(t._pill, t.querySelector('.tab.is-active')));
 });
 
-// ---------- Переход между страницами ----------
+// ---------- Снег: ссылка на слой ----------
+const snowLayer = document.querySelector('.snow');
+
+// ---------- Переход между страницами по меню ----------
 const NAV_KEY = 'phx-drop-in';
 if (sessionStorage.getItem(NAV_KEY) === '1') sessionStorage.removeItem(NAV_KEY);
 
@@ -58,21 +59,11 @@ document.querySelectorAll('.nav-list a').forEach(link => {
 
     sessionStorage.setItem(NAV_KEY, '1');
     document.querySelector('.page').classList.add('is-leaving');
-
     setTimeout(() => { window.location.href = href; }, 500);
   });
 });
 
-// ---------- Главная: аккордеон игроков ----------
-document.querySelectorAll('.person-head').forEach(head => {
-  head.addEventListener('click', () => {
-    const card = head.closest('.person');
-    const isOpen = card.classList.toggle('is-open');
-    head.setAttribute('aria-expanded', isOpen);
-  });
-});
-
-// ---------- Состав: Основной / Запасные (только прозрачность) ----------
+// ---------- Вкладки Основной / Запасные: снег гаснет 300 мс → страница падает → обновление ----------
 (function () {
   const tabs = document.querySelectorAll('.tabs .tab[data-roster]');
   if (!tabs.length) return;
@@ -94,28 +85,24 @@ document.querySelectorAll('.person-head').forEach(head => {
 
       tabs.forEach(t => t.classList.toggle('is-active', t === tab));
       placePill(tab.parentElement._pill, tab);
+      if (sub) sub.textContent = key === 'main' ? 'Основной состав' : 'Резервный состав';
 
-      const outPanel = document.querySelector('[data-panel]:not([hidden])');
-      const inPanel = document.querySelector(`[data-panel="${key}"]`);
+      // 1) снег гаснет за 300 мс
+      if (snowLayer) snowLayer.classList.add('is-fading');
 
-      outPanel.classList.remove('is-showing');
-      outPanel.classList.add('is-hiding');
-
+      // 2) через 300 мс — страница падает вниз (500 мс)
       setTimeout(() => {
-        outPanel.hidden = true;
-        outPanel.classList.remove('is-hiding');
+        const page = document.querySelector('.page');
+        page.classList.add('is-leaving');
+      }, 300);
 
-        inPanel.hidden = false;
-        void inPanel.offsetWidth;
-        inPanel.classList.add('is-showing');
-
-        if (sub) sub.textContent = key === 'main' ? 'Основной состав' : 'Резервный состав';
-
-        setTimeout(() => {
-          inPanel.classList.remove('is-showing');
-          busy = false;
-        }, 600);
-      }, 500);
+      // 3) после падения — переключаем панели в новом состоянии
+      setTimeout(() => {
+        panels.forEach(p => { p.hidden = p.dataset.panel !== key; });
+        page.classList.remove('is-leaving');
+        page.classList.add('drop-in-once');
+        busy = false;
+      }, 800);
     });
   });
 })();
@@ -187,13 +174,12 @@ document.querySelectorAll('.person-head').forEach(head => {
   });
 })();
 
-// ---------- Снег: фиксированные позиции (детерминированный seed), не меняются между страницами ----------
+// ---------- Снег: фиксированная раскладка (одинаковая на всех страницах) ----------
 (function () {
   const layer = document.createElement('div');
   layer.className = 'snow';
   document.body.prepend(layer);
 
-  // простой генератор с фиксированным seed — каждая страница получает одинаковую раскладку
   let seed = 20261016;
   const rnd = () => {
     seed = (seed * 16807) % 2147483647;
