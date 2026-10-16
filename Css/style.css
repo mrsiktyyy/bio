@@ -732,16 +732,38 @@ ul { list-style: none; }
 
 .stat b.is-accent { color: var(--accent); }
 
-/* ---------- Discord ---------- */
+/* ---------- Discord (с фоном discord.png, соотношение 686×386) ---------- */
 
 .discord-card {
-  max-width: 560px;
+  position: relative;
+  max-width: 686px;
   margin: 0 auto;
   padding: 48px 32px;
   text-align: center;
   border-radius: var(--radius);
   background: var(--panel);
   border: 1px solid var(--line);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.discord-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: url("/discord.png") center / cover no-repeat;
+  opacity: .35;
+}
+
+.discord-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom,
+              rgba(13, 13, 15, .55) 0%,
+              rgba(13, 13, 15, .85) 100%);
 }
 
 .discord-card h2 {
