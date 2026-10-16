@@ -1,29 +1,94 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Новости | Phoenix Team</title>
-<link rel="icon" href="/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="/css/style.css"></head><body>
-<div class="cursor-glow"></div>
-<nav class="site-nav">
-  <a class="brand" href="/"><img src="logo.png" alt="Phoenix Team"></a>
-  <button class="nav-toggle" aria-label="Меню">☰</button>
-  <ul class="nav-list">
-    <li><a href="/">⌂ <span>Главная</span></a></li>
-    <li><a href="/news">▤ <span>Новости</span></a></li>
-    <li><a href="/phoenix">◆ <span>Phoenix</span></a></li>
-    <li><a href="/phxzapas">♟ <span>Запасные</span></a></li>
-    <li><a href="/unskillteam">✚ <span>Discord</span></a></li>
-  </ul>
-</nav>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Новости | Phoenix Team</title>
+  <link rel="icon" href="/favicon.png">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/Css/style.css">
+</head>
+<body>
 
-<main class="page">
-<header class="topbar"><h1 class="title">Новости <span>Phoenix Team</span></h1></header>
-<section class="news-grid">
-<article class="news-card glass"><div class="cover"><img src="/posts/post7.png" alt=""></div><div class="body"><div class="date">Phoenix Team</div><h2>Новости команды</h2><p>Следи за последними событиями, составом и новостями Phoenix Team.</p></div></article>
-<article class="news-card glass"><div class="cover"><img src="/posts/post6_1.png" alt=""></div><div class="body"><div class="date">CS2</div><h2>Матчи и результаты</h2><p>Здесь появляются обновления о наших играх, тренировках и результатах.</p></div></article>
-<article class="news-card glass"><div class="cover"><img src="/posts/post5.png" alt=""></div><div class="body"><div class="date">Community</div><h2>Новые публикации</h2><p>Мемы, события и другие материалы команды в одном месте.</p></div></article>
-<article class="news-card glass"><div class="cover"><img src="/posts/post3_1.png" alt=""></div><div class="body"><div class="date">Phoenix</div><h2>Обновления сайта</h2><p>Сайт постепенно получает новые страницы, анимации и улучшения интерфейса.</p></div></article>
-</section></main><footer>© 2026 — Phoenix Team · Все права защищены.</footer><script src="/js/app.js"></script></body></html>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="/">
+        <img src="logo.png" alt="Phoenix Team" width="128" height="32">
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="Меню" aria-controls="main-nav">☰</button>
+
+      <nav aria-label="Основная навигация">
+        <ul class="nav-list" id="main-nav">
+          <li><a href="/">Главная</a></li>
+          <li><a href="/news">Новости</a></li>
+          <li><a href="/phoenix">Phoenix</a></li>
+          <li><a href="/phxzapas">Запасные</a></li>
+          <li><a href="/unskillteam">Discord</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-header">
+      <h1 class="page-title">Новости <span>Phoenix Team</span></h1>
+    </div>
+
+    <section class="grid grid--news" aria-label="Список новостей">
+
+      <article class="card">
+        <div class="card-media">
+          <img src="/posts/post7.png" alt="" width="640" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="card-body">
+          <span class="card-date">Phoenix Team</span>
+          <h2>Новости команды</h2>
+          <p>Следи за последними событиями, составом и новостями Phoenix Team.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media">
+          <img src="/posts/post6_1.png" alt="" width="640" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="card-body">
+          <span class="card-date">CS2</span>
+          <h2>Матчи и результаты</h2>
+          <p>Здесь появляются обновления о наших играх, тренировках и результатах.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media">
+          <img src="/posts/post5.png" alt="" width="640" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="card-body">
+          <span class="card-date">Community</span>
+          <h2>Новые публикации</h2>
+          <p>Мемы, события и другие материалы команды в одном месте.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media">
+          <img src="/posts/post3_1.png" alt="" width="640" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="card-body">
+          <span class="card-date">Phoenix</span>
+          <h2>Обновления сайта</h2>
+          <p>Сайт постепенно получает новые страницы, анимации и улучшения интерфейса.</p>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 — Phoenix Team · Все права защищены.
+  </footer>
+
+  <script src="/Js/app.js"></script>
+</body>
+</html>
