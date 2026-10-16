@@ -11,21 +11,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/Css/style.css">
   <link rel="preload" as="image" href="/loader.png">
-  <script>
-    /* Интро показываем только при первом открытии вкладки.
-       Класс ставим до отрисовки, чтобы не было мерцания. */
-    (function () {
-      try {
-        if (!sessionStorage.getItem('phxIntroShown')) {
-          document.documentElement.classList.add('intro-active');
-        }
-      } catch (e) {}
-    })();
-  </script>
 </head>
 <body>
 
-  <!-- ===== ИНТРО ===== -->
+  <!-- ===== ИНТРО (поверх всего, блокирует клики) ===== -->
   <div class="intro" id="intro" aria-hidden="true">
     <img class="intro-spinner" src="/loader.png" alt="" width="120" height="120">
   </div>
@@ -351,43 +340,42 @@
   </div>
 
   <script>
-    /* Управление интро: 2.4 c загрузки, затем плавное исчезновение
-       спиннера, через 200 мс — уход тёмного экрана. */
+    /* Интро при каждой загрузке/обновлении страницы.
+       Переключение вкладок (hash-навигация) интро не запускает. */
     (function () {
-      var intro = document.getElementById('intro');
       var root = document.documentElement;
-      if (!intro || !root.classList.contains('intro-active')) {
-        if (intro) intro.remove();
-        root.classList.remove('intro-active');
-        return;
-      }
-
+      var intro = document.getElementById('intro');
       var spinner = intro.querySelector('.intro-spinner');
+
       var LOAD_MS = 2400;
       var GAP_MS = 200;
       var FADE_SPINNER_MS = 400;
       var FADE_INTRO_MS = 600;
 
-      /* 1. Плавное появление спиннера (CSS: .intro-spinner) */
+      /* Блокируем клики и прокрутку, пока идёт интро */
+      root.classList.add('intro-active');
+
+      /* Появление спиннера */
       requestAnimationFrame(function () {
-        intro.classList.add('is-visible');
+        requestAnimationFrame(function () {
+          intro.classList.add('is-visible');
+        });
       });
 
-      /* 2. Загрузка 2.4 с, затем исчезновение спиннера */
+      /* Загрузка 2.4 с → исчезновение спиннера */
       setTimeout(function () {
         spinner.classList.add('is-hiding');
       }, LOAD_MS);
 
-      /* 3. Через 200 мс после исчезновения спиннера — уход интро */
+      /* Через 200 мс после исчезновения спиннера → уход тёмного экрана */
       setTimeout(function () {
         intro.classList.add('is-leaving');
       }, LOAD_MS + FADE_SPINNER_MS + GAP_MS);
 
-      /* 4. Полное удаление интро из DOM */
+      /* Снятие блокировки и удаление интро */
       setTimeout(function () {
         intro.remove();
         root.classList.remove('intro-active');
-        try { sessionStorage.setItem('phxIntroShown', '1'); } catch (e) {}
       }, LOAD_MS + FADE_SPINNER_MS + GAP_MS + FADE_INTRO_MS);
     })();
   </script>
