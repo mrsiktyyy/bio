@@ -10,8 +10,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/Css/style.css">
+  <link rel="preload" as="image" href="/loader.png">
+  <script>
+    /* Интро показываем только при первом открытии вкладки.
+       Класс ставим до отрисовки, чтобы не было мерцания. */
+    (function () {
+      try {
+        if (!sessionStorage.getItem('phxIntroShown')) {
+          document.documentElement.classList.add('intro-active');
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
+
+  <!-- ===== ИНТРО ===== -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <img class="intro-spinner" src="/loader.png" alt="" width="120" height="120">
+  </div>
 
   <nav class="site-nav">
     <div class="site-nav-inner">
@@ -332,6 +349,48 @@
       <div id="newsModalText"></div>
     </div>
   </div>
+
+  <script>
+    /* Управление интро: 2.4 c загрузки, затем плавное исчезновение
+       спиннера, через 200 мс — уход тёмного экрана. */
+    (function () {
+      var intro = document.getElementById('intro');
+      var root = document.documentElement;
+      if (!intro || !root.classList.contains('intro-active')) {
+        if (intro) intro.remove();
+        root.classList.remove('intro-active');
+        return;
+      }
+
+      var spinner = intro.querySelector('.intro-spinner');
+      var LOAD_MS = 2400;
+      var GAP_MS = 200;
+      var FADE_SPINNER_MS = 400;
+      var FADE_INTRO_MS = 600;
+
+      /* 1. Плавное появление спиннера (CSS: .intro-spinner) */
+      requestAnimationFrame(function () {
+        intro.classList.add('is-visible');
+      });
+
+      /* 2. Загрузка 2.4 с, затем исчезновение спиннера */
+      setTimeout(function () {
+        spinner.classList.add('is-hiding');
+      }, LOAD_MS);
+
+      /* 3. Через 200 мс после исчезновения спиннера — уход интро */
+      setTimeout(function () {
+        intro.classList.add('is-leaving');
+      }, LOAD_MS + FADE_SPINNER_MS + GAP_MS);
+
+      /* 4. Полное удаление интро из DOM */
+      setTimeout(function () {
+        intro.remove();
+        root.classList.remove('intro-active');
+        try { sessionStorage.setItem('phxIntroShown', '1'); } catch (e) {}
+      }, LOAD_MS + FADE_SPINNER_MS + GAP_MS + FADE_INTRO_MS);
+    })();
+  </script>
 
   <script src="/Js/app.js"></script>
 </body>
