@@ -18,6 +18,7 @@
   --radius-sm: 8px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-soft: cubic-bezier(0.45, 0, 0.25, 1);
+  --dur: 500ms;
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
@@ -53,7 +54,7 @@ ul { list-style: none; }
   border-radius: 999px;
 }
 
-/* ---------- Снег (фиксированный слой) ---------- */
+/* ---------- Снег ---------- */
 
 .snow {
   position: fixed;
@@ -62,22 +63,15 @@ ul { list-style: none; }
   pointer-events: none;
   overflow: hidden;
   opacity: 0;
-  animation: snowIn 600ms var(--ease-soft) 100ms forwards;
+  animation: snowIn var(--dur) var(--ease-soft) 100ms forwards;
 }
 
 .snow.is-fading {
-  animation: snowOut 300ms var(--ease-soft) forwards;
+  animation: snowOut var(--dur) var(--ease-soft) forwards;
 }
 
-@keyframes snowIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes snowOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
+@keyframes snowIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes snowOut { from { opacity: 1; } to { opacity: 0; } }
 
 .snow span {
   position: absolute;
@@ -123,7 +117,6 @@ ul { list-style: none; }
 
 .brand img { height: 28px; width: auto; }
 
-/* Капсула меню — по центру шапки, не касается границ */
 .nav-list {
   position: absolute;
   left: 50%;
@@ -146,7 +139,7 @@ ul { list-style: none; }
   height: 36px;
   border-radius: 999px;
   background: var(--capsule-hi);
-  transition: transform 500ms var(--ease-out), width 500ms var(--ease-out), opacity 300ms var(--ease-soft);
+  transition: transform var(--dur) var(--ease-out), width var(--dur) var(--ease-out), opacity var(--dur) var(--ease-soft);
   opacity: 0;
   pointer-events: none;
   z-index: 0;
@@ -165,14 +158,11 @@ ul { list-style: none; }
   color: var(--text-2);
   font-size: 14px;
   font-weight: 500;
-  transition: color 300ms var(--ease-soft);
+  transition: color var(--dur) var(--ease-soft);
 }
 
 .nav-list a:hover { color: var(--text); }
 .nav-list a.is-active { color: var(--accent); }
-
-/* Иконки в пунктах меню скрываем для компактности капсулы */
-.nav-list a > span:first-child:not(:last-child) { display: none; }
 
 .nav-toggle {
   display: none;
@@ -202,24 +192,20 @@ ul { list-style: none; }
   padding: 48px 24px 64px;
 }
 
+/* Вход страницы — один раз при загрузке */
 .drop-in > * {
-  animation: dropDown 600ms var(--ease-soft) both;
+  animation: dropDown var(--dur) var(--ease-soft) both;
 }
 .drop-in > *:nth-child(2) { animation-delay: 60ms; }
-.drop-in > *:nth-child(3) { animation-delay: 120ms; }
-.drop-in > *:nth-child(4) { animation-delay: 180ms; }
-
-/* Карточки состава не падают — только прозрачность */
-.drop-in > .roster { animation: none; }
 
 @keyframes dropDown {
   from { transform: translate3d(0, -24px, 0); opacity: 0; }
   to   { transform: translate3d(0, 0, 0);     opacity: 1; }
 }
 
-/* Уход страницы вниз при переходе */
+/* Уход страницы при переходе по меню */
 .page.is-leaving {
-  animation: dropOut 500ms var(--ease-soft) both;
+  animation: dropOut var(--dur) var(--ease-soft) both;
 }
 
 @keyframes dropOut {
@@ -260,20 +246,18 @@ ul { list-style: none; }
   text-align: center;
 }
 
-/* ---------- Переключатель Основной / Запасные (по центру страницы) ---------- */
+/* ---------- Переключатель Основной / Запасные ---------- */
 
 .tabs {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 4px;
-  width: fit-content;
   height: 44px;
-  margin: 0 auto 32px;
   padding: 4px;
   border-radius: 999px;
   background: var(--capsule);
+  flex-shrink: 0;
 }
 
 .tabs-pill {
@@ -283,7 +267,7 @@ ul { list-style: none; }
   height: 36px;
   border-radius: 999px;
   background: var(--capsule-hi);
-  transition: transform 500ms var(--ease-out), width 500ms var(--ease-out), opacity 300ms var(--ease-soft);
+  transition: transform var(--dur) var(--ease-out), width var(--dur) var(--ease-out), opacity var(--dur) var(--ease-soft);
   opacity: 0;
   pointer-events: none;
   z-index: 0;
@@ -304,8 +288,12 @@ ul { list-style: none; }
   text-transform: uppercase;
   letter-spacing: .04em;
   color: var(--text-2);
+  text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
-  transition: color 300ms var(--ease-soft);
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--dur) var(--ease-soft);
 }
 
 .tab:hover { color: var(--text); }
@@ -327,7 +315,7 @@ ul { list-style: none; }
   background: var(--panel);
   border: 1px solid var(--line);
   overflow: hidden;
-  transition: border-color 500ms var(--ease-soft), box-shadow 500ms var(--ease-soft);
+  transition: border-color var(--dur) var(--ease-soft), box-shadow var(--dur) var(--ease-soft);
 }
 
 .person:hover,
@@ -373,7 +361,7 @@ ul { list-style: none; }
   border-right: 2px solid var(--accent);
   border-bottom: 2px solid var(--accent);
   transform: rotate(45deg) translate(-2px, -2px);
-  transition: transform 500ms var(--ease-soft);
+  transition: transform var(--dur) var(--ease-soft);
 }
 
 .person.is-open .chevron {
@@ -384,7 +372,7 @@ ul { list-style: none; }
   max-height: 0;
   overflow: hidden;
   padding: 0 24px;
-  transition: max-height 500ms var(--ease-soft), padding 500ms var(--ease-soft);
+  transition: max-height var(--dur) var(--ease-soft), padding var(--dur) var(--ease-soft);
 }
 
 .person.is-open .person-body {
@@ -421,138 +409,10 @@ ul { list-style: none; }
   color: var(--text-2);
   font-size: 13px;
   font-weight: 500;
-  transition: color 300ms var(--ease-soft);
+  transition: color var(--dur) var(--ease-soft);
 }
 
 .links a:hover { color: var(--accent); }
-
-/* ---------- Новости ---------- */
-
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-.news-card {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  cursor: pointer;
-  transition: border-color 500ms var(--ease-soft);
-}
-
-.news-card:hover { border-color: var(--accent); }
-
-.news-cover {
-  aspect-ratio: 16 / 9;
-  background: var(--panel-2);
-  overflow: hidden;
-}
-
-.news-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.news-body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-}
-
-.news-tag {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--accent-2);
-}
-
-.news-body h2 { font-size: 18px; font-weight: 700; line-height: 1.3; }
-.news-body p { font-size: 14px; color: var(--text-2); }
-
-.news-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: rgba(8, 8, 10, .75);
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 500ms var(--ease-soft);
-}
-
-.news-overlay.is-open { opacity: 1; pointer-events: auto; }
-
-.news-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 101;
-  width: min(880px, calc(100vw - 32px));
-  max-height: calc(100vh - 64px);
-  overflow-y: auto;
-  border-radius: var(--radius);
-  background: var(--panel);
-  border: 1px solid var(--accent);
-  transform: translate(-50%, -50%) scale(.96);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 600ms var(--ease-out), opacity 500ms var(--ease-soft);
-}
-
-.news-modal.is-open {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.news-modal-cover {
-  aspect-ratio: 16 / 9;
-  background: var(--panel-2);
-}
-
-.news-modal-cover img { width: 100%; height: 100%; object-fit: cover; }
-
-.news-modal-body { padding: 32px; }
-.news-modal-body .news-tag { margin-bottom: 8px; display: block; }
-
-.news-modal-body h2 {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}
-
-.news-modal-body p {
-  font-size: 16px;
-  color: var(--text-2);
-  margin-bottom: 14px;
-  max-width: 70ch;
-}
-
-.news-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 40px;
-  height: 40px;
-  border-radius: 999px;
-  border: 0;
-  background: var(--capsule);
-  color: var(--text);
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.news-close:hover { color: var(--accent); }
 
 /* ---------- Состав: карточки ---------- */
 
@@ -562,34 +422,34 @@ ul { list-style: none; }
   gap: 12px;
 }
 
-.roster.is-hiding {
-  animation: fadeOut 500ms var(--ease-soft) both;
+/* Панель появляется плавно: прозрачность + лёгкий подъём */
+.roster.is-entering {
+  animation: panelIn var(--dur) var(--ease-soft) both;
+}
+
+.roster.is-leaving {
+  animation: panelOut var(--dur) var(--ease-soft) both;
   pointer-events: none;
 }
 
-.roster.is-showing {
-  animation: fadeIn 600ms var(--ease-soft) both;
+@keyframes panelIn {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+@keyframes panelOut {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, -16px, 0); }
 }
 
 .player-card {
-  --bg-img: none;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   border-radius: var(--radius);
   background: var(--panel);
   border: 1px solid var(--line);
-  transition: border-color 500ms var(--ease-soft);
+  transition: border-color var(--dur) var(--ease-soft);
 }
 
 .player-card:hover { border-color: var(--accent); }
@@ -597,7 +457,6 @@ ul { list-style: none; }
 .player-bg {
   position: relative;
   aspect-ratio: 4 / 3;
-  background-image: var(--bg-img);
   background-size: cover;
   background-position: center;
   background-color: var(--panel-2);
@@ -654,36 +513,15 @@ ul { list-style: none; }
 }
 
 .player-stats {
-  position: relative;
-  overflow: hidden;
   border-top: 1px solid var(--line);
-  isolation: isolate;
-}
-
-.player-stats::before {
-  content: "";
-  position: absolute;
-  inset: -12px;
-  z-index: -2;
-  background-image: var(--bg-img);
-  background-size: cover;
-  background-position: center;
-  filter: blur(14px);
-}
-
-.player-stats::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: rgba(0, 0, 0, .33);
+  background: var(--panel);
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
-  background: rgba(38, 38, 45, .6);
+  background: var(--line);
 }
 
 .stat {
@@ -691,7 +529,7 @@ ul { list-style: none; }
   flex-direction: column;
   gap: 4px;
   padding: 12px;
-  background: rgba(22, 22, 26, .35);
+  background: var(--panel);
 }
 
 .stat small {
@@ -709,6 +547,145 @@ ul { list-style: none; }
 }
 
 .stat b.is-accent { color: var(--accent); }
+
+.slot-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+/* ---------- Новости ---------- */
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.news-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease-soft);
+}
+
+.news-card:hover { border-color: var(--accent); }
+
+.news-cover {
+  aspect-ratio: 16 / 9;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+
+.news-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+}
+
+.news-tag {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--accent-2);
+}
+
+.news-body h2 { font-size: 18px; font-weight: 700; line-height: 1.3; }
+.news-body p { font-size: 14px; color: var(--text-2); }
+
+.news-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(8, 8, 10, .75);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease-soft);
+}
+
+.news-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.news-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 101;
+  width: min(880px, calc(100vw - 32px));
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  transform: translate(-50%, -50%) scale(.96);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--dur) var(--ease-out), opacity var(--dur) var(--ease-soft);
+}
+
+.news-modal.is-open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.news-modal-cover {
+  aspect-ratio: 16 / 9;
+  background: var(--panel-2);
+}
+
+.news-modal-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+.news-modal-body { padding: 32px; }
+.news-modal-body .news-tag { margin-bottom: 8px; display: block; }
+
+.news-modal-body h2 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.news-modal-body p {
+  font-size: 16px;
+  color: var(--text-2);
+  margin-bottom: 14px;
+  max-width: 70ch;
+}
+
+.news-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--capsule);
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.news-close:hover { color: var(--accent); }
 
 /* ---------- Discord ---------- */
 
@@ -750,7 +727,7 @@ ul { list-style: none; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .04em;
-  transition: background 300ms var(--ease-soft);
+  transition: background var(--dur) var(--ease-soft);
 }
 
 .cta:hover { background: var(--accent-2); color: #0d0d0f; }
@@ -785,7 +762,6 @@ ul { list-style: none; }
     border-radius: 24px;
     white-space: normal;
   }
-  .site-nav { height: 64px; }
   .site-nav.is-open .nav-list { display: flex; }
   .nav-pill { display: none; }
   .nav-list a { height: 44px; }
