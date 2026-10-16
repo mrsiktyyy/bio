@@ -8,6 +8,8 @@
   --bg: #0d0d0f;
   --panel: #16161a;
   --panel-2: #1e1e24;
+  --capsule: #1a1a20;
+  --capsule-hi: #2a2a33;
   --line: #26262d;
   --text: #f5f5f7;
   --text-2: #a1a1aa;
@@ -48,10 +50,10 @@ ul { list-style: none; }
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 6px;
+  border-radius: 999px;
 }
 
-/* ---------- Снежинки ---------- */
+/* ---------- Снег (фиксированный слой, появляется прозрачностью) ---------- */
 
 .snow {
   position: fixed;
@@ -59,6 +61,12 @@ ul { list-style: none; }
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  opacity: 0;
+  animation: snowIn 600ms var(--ease-soft) 100ms forwards;
+}
+
+@keyframes snowIn {
+  to { opacity: 1; }
 }
 
 .snow span {
@@ -68,7 +76,6 @@ ul { list-style: none; }
   height: 6px;
   border-radius: 50%;
   background: #fff;
-  opacity: .7;
   filter: blur(1.5px);
   animation: snowfall linear infinite;
   will-change: transform, opacity;
@@ -108,21 +115,26 @@ ul { list-style: none; }
 .brand { display: flex; align-items: center; flex-shrink: 0; }
 .brand img { height: 28px; width: auto; }
 
+/* Овальная капсула меню — стиль как у поля ввода ИИ */
 .nav-list {
   position: relative;
+  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-left: auto;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--capsule);
+  border: 0;
 }
 
 .nav-pill {
   position: absolute;
-  top: 14px;
+  top: 4px;
   left: 0;
   height: 36px;
-  border-radius: var(--radius-sm);
-  background: var(--panel-2);
+  border-radius: 999px;
+  background: var(--capsule-hi);
   transition: transform 500ms var(--ease-out), width 500ms var(--ease-out), opacity 300ms var(--ease-soft);
   opacity: 0;
   pointer-events: none;
@@ -135,12 +147,14 @@ ul { list-style: none; }
   z-index: 1;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   height: 36px;
-  padding: 0 14px;
-  border-radius: var(--radius-sm);
+  padding: 0 18px;
+  border-radius: 999px;
   color: var(--text-2);
   font-size: 14px;
   font-weight: 500;
+  white-space: nowrap;
   transition: color 300ms var(--ease-soft);
 }
 
@@ -152,9 +166,9 @@ ul { list-style: none; }
   margin-left: auto;
   width: 40px;
   height: 40px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: var(--panel-2);
+  border: 0;
+  border-radius: 999px;
+  background: var(--capsule);
   color: var(--text);
   font-size: 18px;
   cursor: pointer;
@@ -179,6 +193,9 @@ ul { list-style: none; }
 .drop-in > *:nth-child(2) { animation-delay: 60ms; }
 .drop-in > *:nth-child(3) { animation-delay: 120ms; }
 .drop-in > *:nth-child(4) { animation-delay: 180ms; }
+
+/* На странице состава карточки не падают — только прозрачность */
+.drop-in > .roster { animation: none; }
 
 @keyframes dropDown {
   from { transform: translate3d(0, -24px, 0); opacity: 0; }
@@ -228,21 +245,25 @@ ul { list-style: none; }
   text-align: center;
 }
 
-/* ---------- Переключатель Основной / Запасные ---------- */
+/* ---------- Переключатель Основной / Запасные (овальная капсула) ---------- */
 
 .tabs {
   position: relative;
   display: flex;
-  gap: 4px;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--capsule);
 }
 
 .tabs-pill {
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 0;
-  height: 100%;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, .08);
+  height: 36px;
+  border-radius: 999px;
+  background: var(--capsule-hi);
   transition: transform 500ms var(--ease-out), width 500ms var(--ease-out), opacity 300ms var(--ease-soft);
   opacity: 0;
   pointer-events: none;
@@ -253,9 +274,10 @@ ul { list-style: none; }
 .tab {
   position: relative;
   z-index: 1;
-  padding: 10px 16px;
+  height: 36px;
+  padding: 0 18px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 999px;
   background: none;
   font: inherit;
   font-size: 13px;
@@ -503,15 +525,15 @@ ul { list-style: none; }
   right: 12px;
   width: 40px;
   height: 40px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--line);
-  background: var(--panel-2);
+  border-radius: 999px;
+  border: 0;
+  background: var(--capsule);
   color: var(--text);
   font-size: 18px;
   cursor: pointer;
 }
 
-.news-close:hover { border-color: var(--accent); color: var(--accent); }
+.news-close:hover { color: var(--accent); }
 
 /* ---------- Состав: карточки ---------- */
 
@@ -521,7 +543,6 @@ ul { list-style: none; }
   gap: 12px;
 }
 
-/* Смена состава — ТОЛЬКО прозрачность, без движения */
 .roster.is-hiding {
   animation: fadeOut 500ms var(--ease-soft) both;
   pointer-events: none;
@@ -552,9 +573,7 @@ ul { list-style: none; }
   transition: border-color 500ms var(--ease-soft);
 }
 
-.player-card:hover {
-  border-color: var(--accent);
-}
+.player-card:hover { border-color: var(--accent); }
 
 .player-bg {
   position: relative;
@@ -705,7 +724,7 @@ ul { list-style: none; }
   justify-content: center;
   height: 44px;
   padding: 0 24px;
-  border-radius: 6px;
+  border-radius: 999px;
   background: var(--accent);
   color: #0d0d0f;
   font-size: 14px;
@@ -739,13 +758,11 @@ ul { list-style: none; }
     display: none;
     position: absolute;
     top: 64px;
-    left: 0;
-    right: 0;
+    left: 24px;
+    right: 24px;
     flex-direction: column;
     align-items: stretch;
-    padding: 8px;
-    background: var(--panel);
-    border-bottom: 1px solid var(--line);
+    border-radius: 24px;
   }
   .site-nav.is-open .nav-list { display: flex; }
   .nav-pill { display: none; }
