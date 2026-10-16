@@ -53,7 +53,7 @@ ul { list-style: none; }
   border-radius: 999px;
 }
 
-/* ---------- Снег (фиксированный слой, появляется прозрачностью) ---------- */
+/* ---------- Снег (фиксированный слой) ---------- */
 
 .snow {
   position: fixed;
@@ -65,8 +65,18 @@ ul { list-style: none; }
   animation: snowIn 600ms var(--ease-soft) 100ms forwards;
 }
 
+.snow.is-fading {
+  animation: snowOut 300ms var(--ease-soft) forwards;
+}
+
 @keyframes snowIn {
-  to { opacity: 1; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes snowOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 
 .snow span {
@@ -97,35 +107,36 @@ ul { list-style: none; }
   position: sticky;
   top: 0;
   z-index: 50;
+  height: 64px;
   background: var(--panel);
   border-bottom: 1px solid var(--line);
 }
 
-.site-nav-inner {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 64px;
+.brand {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
-  gap: 24px;
 }
 
-.brand { display: flex; align-items: center; flex-shrink: 0; }
 .brand img { height: 28px; width: auto; }
 
-/* Овальная капсула меню — стиль как у поля ввода ИИ */
+/* Капсула меню — по центру шапки, не касается границ */
 .nav-list {
-  position: relative;
-  margin-left: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
+  height: 44px;
   padding: 4px;
   border-radius: 999px;
   background: var(--capsule);
-  border: 0;
+  white-space: nowrap;
 }
 
 .nav-pill {
@@ -154,16 +165,21 @@ ul { list-style: none; }
   color: var(--text-2);
   font-size: 14px;
   font-weight: 500;
-  white-space: nowrap;
   transition: color 300ms var(--ease-soft);
 }
 
 .nav-list a:hover { color: var(--text); }
 .nav-list a.is-active { color: var(--accent); }
 
+/* Иконки в пунктах меню скрываем для компактности капсулы */
+.nav-list a > span:first-child:not(:last-child) { display: none; }
+
 .nav-toggle {
   display: none;
-  margin-left: auto;
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 40px;
   height: 40px;
   border: 0;
@@ -186,7 +202,6 @@ ul { list-style: none; }
   padding: 48px 24px 64px;
 }
 
-/* Падение шапки/контента при входе на страницу */
 .drop-in > * {
   animation: dropDown 600ms var(--ease-soft) both;
 }
@@ -194,7 +209,7 @@ ul { list-style: none; }
 .drop-in > *:nth-child(3) { animation-delay: 120ms; }
 .drop-in > *:nth-child(4) { animation-delay: 180ms; }
 
-/* На странице состава карточки не падают — только прозрачность */
+/* Карточки состава не падают — только прозрачность */
 .drop-in > .roster { animation: none; }
 
 @keyframes dropDown {
@@ -245,13 +260,17 @@ ul { list-style: none; }
   text-align: center;
 }
 
-/* ---------- Переключатель Основной / Запасные (овальная капсула) ---------- */
+/* ---------- Переключатель Основной / Запасные (по центру страницы) ---------- */
 
 .tabs {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
+  gap: 4px;
+  width: fit-content;
+  height: 44px;
+  margin: 0 auto 32px;
   padding: 4px;
   border-radius: 999px;
   background: var(--capsule);
@@ -756,16 +775,20 @@ ul { list-style: none; }
   .nav-toggle { display: inline-flex; }
   .nav-list {
     display: none;
-    position: absolute;
-    top: 64px;
-    left: 24px;
-    right: 24px;
+    top: 72px;
+    left: 16px;
+    right: 16px;
+    transform: none;
     flex-direction: column;
     align-items: stretch;
+    height: auto;
     border-radius: 24px;
+    white-space: normal;
   }
+  .site-nav { height: 64px; }
   .site-nav.is-open .nav-list { display: flex; }
   .nav-pill { display: none; }
+  .nav-list a { height: 44px; }
   .page { padding: 32px 16px 48px; }
   .page-head { flex-direction: column; align-items: flex-start; gap: 16px; }
   .page-title, .hero-title { font-size: 24px; }
