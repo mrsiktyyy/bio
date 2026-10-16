@@ -5,112 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Запасные | Phoenix Team</title>
   <link rel="icon" href="/favicon.png">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="/Css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="fc-page">
+<body>
 
-  <header class="site-header">
-    <div class="site-header-inner">
-      <a class="brand" href="/">
-        <img src="logo.png" alt="Phoenix Team" width="128" height="32">
-      </a>
-
-      <button class="nav-toggle" type="button" aria-label="Меню" aria-controls="main-nav">☰</button>
-
-      <nav aria-label="Основная навигация">
-        <ul class="nav-list" id="main-nav">
-          <li><a href="/">Главная</a></li>
-          <li><a href="/news">Новости</a></li>
-          <li><a href="/phoenix">Phoenix</a></li>
-          <li><a href="/phxzapas" aria-current="page">Запасные</a></li>
-          <li><a href="/unskillteam">Discord</a></li>
-        </ul>
-      </nav>
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a class="brand" href="/"><img src="/logo.png" alt="Phoenix Team" width="140" height="28"></a>
+      <button class="nav-toggle" type="button" aria-label="Меню" aria-expanded="false">☰</button>
+      <ul class="nav-list">
+        <li><a href="/">Главная</a></li>
+        <li><a href="/news">Новости</a></li>
+        <li><a href="/phoenix">Phoenix</a></li>
+        <li><a class="is-active" href="/phxzapas">Запасные</a></li>
+        <li><a href="/unskillteam">Discord</a></li>
+      </ul>
     </div>
-  </header>
+  </nav>
 
   <main class="page">
-
-    <div class="fc-head">
+    <div class="page-head">
       <div>
-        <h1 class="fc-title">Запасные <span>Phoenix</span></h1>
-        <p class="fc-sub">Резервный состав</p>
+        <h1 class="page-title">Запасные <span>Phoenix</span></h1>
+        <p class="page-sub">Резервный состав</p>
       </div>
-      <nav class="fc-tabs" aria-label="Разделы состава">
-        <a class="fc-tab" href="/phoenix">Основной</a>
-        <a class="fc-tab is-active" href="/phxzapas" aria-current="page">Запасные</a>
+      <nav class="tabs" aria-label="Разделы состава">
+        <a class="tab" href="/phoenix">Основной</a>
+        <a class="tab is-active" href="/phxzapas">Запасные</a>
       </nav>
     </div>
 
-    <section class="fc-roster" aria-label="Запасные игроки">
+    <section class="roster">
 
-      <!-- Запасной 1 -->
-      <article class="fc-card">
-        <div class="fc-bg" style="background-image: url('/phx/bg/sub1.jpg');">
-          <div class="fc-identity">
-            <img class="fc-avatar" src="/phx/Avatar6.png" alt="Аватар резервного игрока" width="96" height="96" loading="lazy">
-            <div class="fc-nick">Резервный состав</div>
-            <div class="fc-role">Запасной</div>
+      <article class="player-card">
+        <div class="player-bg" style="background-image: url('/phx/bg/sub1.jpg');">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar6.png" alt="Резервный состав" width="96" height="96" loading="lazy">
+            <div class="player-nick">Резервный состав</div>
+            <div class="player-role">Запасной</div>
           </div>
         </div>
-        <div class="fc-stats">
-          <div class="fc-stat"><small>K/D</small><b class="is-accent">—</b></div>
-          <div class="fc-stat"><small>HS</small><b>—</b></div>
-          <div class="fc-stat"><small>Win rate</small><b>—</b></div>
-          <div class="fc-stat"><small>ADR</small><b>—</b></div>
-          <div class="fc-stat" style="grid-column: 1 / -1;"><small>Рейтинг Premier</small><b>—</b></div>
+        <div class="player-stats">
+          <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+          <div class="stat"><small>HS</small><b>—</b></div>
+          <div class="stat"><small>Win rate</small><b>—</b></div>
+          <div class="stat"><small>ADR</small><b>—</b></div>
+          <div class="stat is-wide"><small>Рейтинг Premier</small><b>—</b></div>
         </div>
       </article>
 
-      <!-- Запасной 2 -->
-      <article class="fc-card">
-        <div class="fc-bg" style="background-image: url('/phx/bg/sub2.jpg');">
-          <div class="fc-identity">
-            <img class="fc-avatar" src="/phx/Avatar7.png" alt="Аватар запасного слота" width="96" height="96" loading="lazy">
-            <div class="fc-nick">Запасной слот</div>
-            <div class="fc-role">Запасной</div>
+      <article class="player-card">
+        <div class="player-bg" style="background-image: url('/phx/bg/sub2.jpg');">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar7.png" alt="Запасной слот" width="96" height="96" loading="lazy">
+            <div class="player-nick">Запасной слот</div>
+            <div class="player-role">Запасной</div>
           </div>
         </div>
-        <div class="fc-stats">
-          <div class="fc-stat"><small>K/D</small><b class="is-accent">—</b></div>
-          <div class="fc-stat"><small>HS</small><b>—</b></div>
-          <div class="fc-stat"><small>Win rate</small><b>—</b></div>
-          <div class="fc-stat"><small>ADR</small><b>—</b></div>
-          <div class="fc-stat" style="grid-column: 1 / -1;"><small>Рейтинг Premier</small><b>—</b></div>
+        <div class="player-stats">
+          <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+          <div class="stat"><small>HS</small><b>—</b></div>
+          <div class="stat"><small>Win rate</small><b>—</b></div>
+          <div class="stat"><small>ADR</small><b>—</b></div>
+          <div class="stat is-wide"><small>Рейтинг Premier</small><b>—</b></div>
         </div>
       </article>
 
-      <!-- Запасной 3 -->
-      <article class="fc-card">
-        <div class="fc-bg" style="background-image: url('/phx/bg/sub3.jpg');">
-          <div class="fc-identity">
-            <img class="fc-avatar" src="/phx/Avatar8.png" alt="Аватар Community" width="96" height="96" loading="lazy">
-            <div class="fc-nick">Community</div>
-            <div class="fc-role">Запасной</div>
+      <article class="player-card">
+        <div class="player-bg" style="background-image: url('/phx/bg/sub3.jpg');">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar8.png" alt="Community" width="96" height="96" loading="lazy">
+            <div class="player-nick">Community</div>
+            <div class="player-role">Запасной</div>
           </div>
         </div>
-        <div class="fc-stats">
-          <div class="fc-stat"><small>K/D</small><b class="is-accent">—</b></div>
-          <div class="fc-stat"><small>HS</small><b>—</b></div>
-          <div class="fc-stat"><small>Win rate</small><b>—</b></div>
-          <div class="fc-stat"><small>ADR</small><b>—</b></div>
-          <div class="fc-stat" style="grid-column: 1 / -1;"><small>Рейтинг Premier</small><b>—</b></div>
+        <div class="player-stats">
+          <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+          <div class="stat"><small>HS</small><b>—</b></div>
+          <div class="stat"><small>Win rate</small><b>—</b></div>
+          <div class="stat"><small>ADR</small><b>—</b></div>
+          <div class="stat is-wide"><small>Рейтинг Premier</small><b>—</b></div>
         </div>
       </article>
 
-      <!-- Пустые слоты -->
-      <article class="fc-card fc-card--empty">+ Свободный слот</article>
-      <article class="fc-card fc-card--empty">+ Свободный слот</article>
+      <div class="slot-empty">+ Свободный слот</div>
+      <div class="slot-empty">+ Свободный слот</div>
 
     </section>
   </main>
 
-  <footer class="site-footer">
-    © 2026 — Phoenix Team · Все права защищены.
-  </footer>
+  <footer class="site-footer">© 2026 — Phoenix Team · Все права защищены.</footer>
 
-  <script src="/Js/app.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
