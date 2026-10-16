@@ -14,11 +14,11 @@
   --text-3: #6b6b75;
   --radius: 12px;
   --radius-sm: 8px;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.45, 0, 0.25, 1);
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-/* Важно: атрибут hidden должен всегда скрывать элемент */
 [hidden] { display: none !important; }
 
 *,
@@ -116,7 +116,6 @@ ul { list-style: none; }
   margin-left: auto;
 }
 
-/* Скользящая подсветка пункта меню */
 .nav-pill {
   position: absolute;
   top: 14px;
@@ -124,10 +123,11 @@ ul { list-style: none; }
   height: 36px;
   border-radius: var(--radius-sm);
   background: var(--panel-2);
-  transition: transform .3s var(--ease), width .3s var(--ease), opacity .2s;
+  transition: transform 500ms var(--ease-out), width 500ms var(--ease-out), opacity 300ms var(--ease-soft);
   opacity: 0;
   pointer-events: none;
   z-index: 0;
+  will-change: transform, width;
 }
 
 .nav-list a {
@@ -141,7 +141,7 @@ ul { list-style: none; }
   color: var(--text-2);
   font-size: 14px;
   font-weight: 500;
-  transition: color .2s var(--ease);
+  transition: color 300ms var(--ease-soft);
 }
 
 .nav-list a:hover { color: var(--text); }
@@ -172,27 +172,27 @@ ul { list-style: none; }
   padding: 48px 24px 64px;
 }
 
-/* Падение контента сверху (при открытии страницы) */
+/* Падение шапки/контента при входе на страницу */
 .drop-in > * {
-  animation: dropDown 230ms cubic-bezier(0.33, 0, 0.2, 1) both;
+  animation: dropDown 600ms var(--ease-soft) both;
 }
-.drop-in > *:nth-child(2) { animation-delay: 30ms; }
-.drop-in > *:nth-child(3) { animation-delay: 60ms; }
-.drop-in > *:nth-child(4) { animation-delay: 90ms; }
+.drop-in > *:nth-child(2) { animation-delay: 60ms; }
+.drop-in > *:nth-child(3) { animation-delay: 120ms; }
+.drop-in > *:nth-child(4) { animation-delay: 180ms; }
 
 @keyframes dropDown {
-  from { transform: translate3d(0, -28px, 0); opacity: 0; }
+  from { transform: translate3d(0, -24px, 0); opacity: 0; }
   to   { transform: translate3d(0, 0, 0);     opacity: 1; }
 }
 
-/* Уход страницы вниз (при клике на вкладку, перед переходом) */
+/* Уход страницы вниз при переходе */
 .page.is-leaving {
-  animation: dropOut 260ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  animation: dropOut 500ms var(--ease-soft) both;
 }
 
 @keyframes dropOut {
   from { transform: translate3d(0, 0, 0);    opacity: 1; }
-  to   { transform: translate3d(0, 40px, 0); opacity: 0; }
+  to   { transform: translate3d(0, 32px, 0); opacity: 0; }
 }
 
 .page-head {
@@ -228,7 +228,7 @@ ul { list-style: none; }
   text-align: center;
 }
 
-/* ---------- Переключатель (Основной / Запасные) ---------- */
+/* ---------- Переключатель Основной / Запасные ---------- */
 
 .tabs {
   position: relative;
@@ -243,10 +243,11 @@ ul { list-style: none; }
   height: 100%;
   border-radius: 6px;
   background: rgba(255, 255, 255, .08);
-  transition: transform .3s var(--ease), width .3s var(--ease), opacity .2s;
+  transition: transform 500ms var(--ease-out), width 500ms var(--ease-out), opacity 300ms var(--ease-soft);
   opacity: 0;
   pointer-events: none;
   z-index: 0;
+  will-change: transform, width;
 }
 
 .tab {
@@ -263,7 +264,7 @@ ul { list-style: none; }
   letter-spacing: .04em;
   color: var(--text-2);
   cursor: pointer;
-  transition: color .2s var(--ease);
+  transition: color 300ms var(--ease-soft);
 }
 
 .tab:hover { color: var(--text); }
@@ -285,7 +286,7 @@ ul { list-style: none; }
   background: var(--panel);
   border: 1px solid var(--line);
   overflow: hidden;
-  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+  transition: border-color 500ms var(--ease-soft), box-shadow 500ms var(--ease-soft);
 }
 
 .person:hover,
@@ -331,7 +332,7 @@ ul { list-style: none; }
   border-right: 2px solid var(--accent);
   border-bottom: 2px solid var(--accent);
   transform: rotate(45deg) translate(-2px, -2px);
-  transition: transform .25s var(--ease);
+  transition: transform 500ms var(--ease-soft);
 }
 
 .person.is-open .chevron {
@@ -342,20 +343,12 @@ ul { list-style: none; }
   max-height: 0;
   overflow: hidden;
   padding: 0 24px;
-  transition: max-height .25s var(--ease), padding .25s var(--ease);
+  transition: max-height 500ms var(--ease-soft), padding 500ms var(--ease-soft);
 }
 
 .person.is-open .person-body {
   max-height: 400px;
   padding: 0 24px 24px;
-}
-
-/* Открытие — резкое, закрытие — плавное */
-.person.opening .person-body {
-  transition: max-height .12s cubic-bezier(.5, 0, 1, 1), padding .12s cubic-bezier(.5, 0, 1, 1);
-}
-.person.closing .person-body {
-  transition: max-height .5s var(--ease), padding .5s var(--ease);
 }
 
 .person .role {
@@ -387,6 +380,7 @@ ul { list-style: none; }
   color: var(--text-2);
   font-size: 13px;
   font-weight: 500;
+  transition: color 300ms var(--ease-soft);
 }
 
 .links a:hover { color: var(--accent); }
@@ -407,7 +401,7 @@ ul { list-style: none; }
   background: var(--panel);
   border: 1px solid var(--line);
   cursor: pointer;
-  transition: border-color .25s var(--ease);
+  transition: border-color 500ms var(--ease-soft);
 }
 
 .news-card:hover { border-color: var(--accent); }
@@ -450,7 +444,7 @@ ul { list-style: none; }
   backdrop-filter: blur(8px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity .25s var(--ease);
+  transition: opacity 500ms var(--ease-soft);
 }
 
 .news-overlay.is-open { opacity: 1; pointer-events: auto; }
@@ -469,7 +463,7 @@ ul { list-style: none; }
   transform: translate(-50%, -50%) scale(.96);
   opacity: 0;
   pointer-events: none;
-  transition: transform .35s var(--ease), opacity .3s var(--ease);
+  transition: transform 600ms var(--ease-out), opacity 500ms var(--ease-soft);
 }
 
 .news-modal.is-open {
@@ -527,22 +521,22 @@ ul { list-style: none; }
   gap: 12px;
 }
 
-/* Анимация смены состава: плавное появление/исчезание */
-.roster.is-fading-out {
-  animation: rosterOut 400ms ease both;
+/* Смена состава — ТОЛЬКО прозрачность, без движения */
+.roster.is-hiding {
+  animation: fadeOut 500ms var(--ease-soft) both;
   pointer-events: none;
 }
 
-.roster.is-fading-in {
-  animation: rosterIn 400ms ease both;
+.roster.is-showing {
+  animation: fadeIn 600ms var(--ease-soft) both;
 }
 
-@keyframes rosterOut {
+@keyframes fadeOut {
   from { opacity: 1; }
   to   { opacity: 0; }
 }
 
-@keyframes rosterIn {
+@keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
@@ -555,11 +549,10 @@ ul { list-style: none; }
   border-radius: var(--radius);
   background: var(--panel);
   border: 1px solid var(--line);
-  transition: transform .25s var(--ease), border-color .25s var(--ease);
+  transition: border-color 500ms var(--ease-soft);
 }
 
 .player-card:hover {
-  transform: translateY(-2px);
   border-color: var(--accent);
 }
 
@@ -719,7 +712,7 @@ ul { list-style: none; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .04em;
-  transition: background .2s var(--ease);
+  transition: background 300ms var(--ease-soft);
 }
 
 .cta:hover { background: var(--accent-2); color: #0d0d0f; }
