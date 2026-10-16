@@ -1,512 +1,290 @@
-/* Phoenix Team — нейтральный интерфейс: светлая и тёмная темы. */
+/* ================= FACEIT-стиль: тёмная тема для составов ================= */
 
-:root {
-  color-scheme: light dark;
+.fc-page {
+  --fc-bg: #0d0d0f;
+  --fc-panel: #16161a;
+  --fc-panel-2: #1e1e24;
+  --fc-line: #26262d;
+  --fc-orange: #ff5500;
+  --fc-orange-hover: #ff7a33;
+  --fc-text: #f5f5f7;
+  --fc-text-2: #a1a1aa;
+  --fc-text-3: #6b6b75;
 
-  --bg: #ffffff;
-  --surface: #f4f4f5;
-  --surface-hover: #ebebed;
-  --border: #e4e4e7;
-  --text: #18181b;
-  --text-2: #52525b;
-  --text-3: #71717a;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-text: #ffffff;
-  --focus: #2563eb;
-
-  --radius: 12px;
-  --radius-lg: 16px;
-  --shadow: 0 1px 2px rgba(0, 0, 0, .05);
-
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f0f10;
-    --surface: #1a1a1c;
-    --surface-hover: #242427;
-    --border: #2a2a2e;
-    --text: #f4f4f5;
-    --text-2: #a1a1aa;
-    --text-3: #71717a;
-    --accent: #3b82f6;
-    --accent-hover: #60a5fa;
-    --focus: #60a5fa;
-    --shadow: none;
-  }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  background: var(--bg);
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
+  background: var(--fc-bg);
+  color: var(--fc-text);
   min-height: 100vh;
+}
+
+.fc-page .site-header {
+  background: var(--fc-panel);
+  border-bottom: 1px solid var(--fc-line);
+}
+
+.fc-page .nav-list a {
+  color: var(--fc-text-2);
+}
+
+.fc-page .nav-list a:hover,
+.fc-page .nav-list a[aria-current="page"] {
+  background: var(--fc-panel-2);
+  color: var(--fc-text);
+}
+
+.fc-page .brand img {
+  height: 28px;
+}
+
+.fc-page .page {
+  max-width: 1200px;
+  padding-top: 32px;
+}
+
+/* Заголовок раздела */
+.fc-head {
   display: flex;
-  flex-direction: column;
-  font-family: var(--font);
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--text);
-  background: var(--bg);
-  -webkit-font-smoothing: antialiased;
-}
-
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--accent-hover);
-}
-
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-  border-radius: 6px;
-}
-
-/* ---------- Шапка ---------- */
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-}
-
-.site-header-inner {
-  position: relative;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.brand img {
-  height: 32px;
-  width: auto;
-}
-
-.site-header nav {
-  flex: 1;
-}
-
-.nav-list {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  list-style: none;
-}
-
-.nav-list a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: var(--text-2);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.nav-list a:hover {
-  background: var(--surface);
-  color: var(--text);
-}
-
-.nav-list a[aria-current="page"] {
-  background: var(--surface);
-  color: var(--text);
-}
-
-.nav-toggle {
-  display: none;
-  margin-left: auto;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--text);
-  font-size: 20px;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-toggle:hover {
-  background: var(--surface);
-}
-
-/* ---------- Контент ---------- */
-
-.page {
-  flex: 1;
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 40px 24px 64px;
-}
-
-.page-header {
-  display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--fc-line);
 }
 
-.page-title {
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -.01em;
+.fc-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
 }
 
-.page-title span {
-  color: var(--text-2);
-  font-weight: 500;
+.fc-title span {
+  color: var(--fc-orange);
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
+.fc-sub {
   font-size: 14px;
-  font-weight: 500;
+  color: var(--fc-text-3);
+  margin-top: 4px;
 }
 
-.btn:hover {
-  background: var(--surface);
-  color: var(--text);
+.fc-tabs {
+  display: flex;
+  gap: 4px;
 }
 
-/* ---------- Главная: участники и фото ---------- */
+.fc-tab {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--fc-text-2);
+  background: transparent;
+}
 
-.hero-grid {
+.fc-tab:hover {
+  color: var(--fc-text);
+  background: var(--fc-panel-2);
+}
+
+.fc-tab.is-active {
+  color: var(--fc-orange);
+  box-shadow: inset 0 -2px 0 var(--fc-orange);
+}
+
+/* Сетка игроков: 5 карточек в ряд на десктопе */
+.fc-roster {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
-  gap: 24px;
-  align-items: start;
-}
-
-.people {
-  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
 }
 
-.person {
-  padding: 20px 24px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg);
-  box-shadow: var(--shadow);
-}
-
-.person h2 {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-
-.person .role {
-  font-size: 14px;
-  color: var(--text-3);
-  margin-bottom: 8px;
-}
-
-.person p {
-  font-size: 15px;
-  color: var(--text-2);
-  max-width: 65ch;
-}
-
-.accent {
-  color: var(--accent);
-  font-weight: inherit;
-}
-
-.links {
+.fc-card {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--fc-panel);
+  border: 1px solid var(--fc-line);
+  transition: transform .2s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color .2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.links a {
-  display: inline-flex;
+.fc-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--fc-orange);
+}
+
+/* Фоновое изображение и градиент поверх него */
+.fc-bg {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background-color: var(--fc-panel-2);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.fc-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+              rgba(13, 13, 15, .15) 0%,
+              rgba(13, 13, 15, .55) 55%,
+              rgba(13, 13, 15, .98) 100%);
+}
+
+/* Аватар и ник поверх фона */
+.fc-identity {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  height: 32px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--text-2);
-  font-size: 13px;
-  font-weight: 500;
+  gap: 8px;
+  padding: 16px;
+  text-align: center;
 }
 
-.links a:hover {
-  background: var(--surface-hover);
-  color: var(--text);
-}
-
-.hero-media {
-  position: sticky;
-  top: 88px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--surface);
-}
-
-.hero-media img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
+.fc-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px solid var(--fc-orange);
+  background: var(--fc-panel-2);
   object-fit: cover;
 }
 
-/* ---------- Сетка карточек (новости, состав, запасные) ---------- */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+.fc-nick {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
-.grid--news {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg);
-  overflow: hidden;
-}
-
-.card-media {
-  aspect-ratio: 16 / 10;
-  background: var(--surface);
-  overflow: hidden;
-}
-
-.card-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-body {
-  padding: 16px 20px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-
-.card-body h2,
-.card-body h3 {
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.card-body p {
-  font-size: 14px;
-  color: var(--text-2);
-}
-
-.card-date {
+.fc-role {
   font-size: 12px;
-  font-weight: 500;
-  color: var(--text-3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--fc-orange);
 }
 
-.stats {
+/* Блок статистики */
+.fc-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 12px;
+  gap: 1px;
+  background: var(--fc-line);
+  border-top: 1px solid var(--fc-line);
 }
 
-.stat {
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: var(--surface);
-}
-
-.stat small {
-  display: block;
-  font-size: 12px;
-  color: var(--text-3);
-}
-
-.stat b {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.stat b.accent {
-  color: var(--accent);
-}
-
-/* ---------- Discord ---------- */
-
-.discord-wrap {
+.fc-stat {
   display: flex;
-  justify-content: center;
-  padding: 40px 0;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: var(--fc-panel);
 }
 
-.discord-card {
-  width: 100%;
-  max-width: 520px;
-  padding: 40px 32px;
-  text-align: center;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg);
+.fc-stat small {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--fc-text-3);
 }
 
-.discord-icon {
-  font-size: 48px;
-  color: var(--accent);
-  margin-bottom: 16px;
-}
-
-.discord-card h2 {
-  font-size: 24px;
+.fc-stat b {
+  font-size: 18px;
   font-weight: 700;
-  margin-bottom: 8px;
+  color: var(--fc-text);
 }
 
-.discord-card p {
-  font-size: 15px;
-  color: var(--text-2);
-  margin-bottom: 24px;
+.fc-stat b.is-accent {
+  color: var(--fc-orange);
 }
 
-.cta {
+/* Пустой слот */
+.fc-card--empty {
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  border-style: dashed;
+  color: var(--fc-text-3);
+  font-size: 13px;
+}
+
+.fc-card--empty:hover {
+  transform: none;
+  border-color: var(--fc-line);
+}
+
+/* Кнопка-действие внизу страницы */
+.fc-cta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
   height: 44px;
-  padding: 0 20px;
-  border-radius: 999px;
-  background: var(--accent);
+  padding: 0 24px;
+  margin-top: 24px;
+  border-radius: 6px;
+  background: var(--fc-orange);
   color: #ffffff;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
 }
 
-.cta:hover {
-  background: var(--accent-hover);
+.fc-cta:hover {
+  background: var(--fc-orange-hover);
   color: #ffffff;
 }
 
-/* ---------- Футер ---------- */
-
-.site-footer {
-  border-top: 1px solid var(--border);
-  padding: 24px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-3);
+/* Фокус для клавиатуры */
+.fc-page :focus-visible {
+  outline-color: var(--fc-orange);
 }
 
-/* ---------- Адаптив ---------- */
-
-@media (max-width: 900px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-  .hero-media {
-    position: static;
-    order: -1;
+/* Адаптив */
+@media (max-width: 1100px) {
+  .fc-roster {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 720px) {
-  .nav-toggle {
-    display: inline-flex;
+  .fc-roster {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .site-header nav {
-    display: none;
-    position: absolute;
-    top: 64px;
-    left: 0;
-    right: 0;
-    padding: 8px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-  }
-  .site-header.open nav {
-    display: block;
-  }
-  .nav-list {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .page {
-    padding: 24px 16px 48px;
-  }
-  .page-title {
+  .fc-title {
     font-size: 24px;
   }
-  .grid,
-  .grid--news {
-    grid-template-columns: 1fr;
+  .fc-head {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .discord-card {
-    padding: 32px 20px;
+  .fc-avatar {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (max-width: 420px) {
+  .fc-roster {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation: none !important;
+  .fc-card {
+    transition: none;
   }
 }
