@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Phoenix | Phoenix Team</title>
+  <title>Состав | Phoenix Team</title>
   <link rel="icon" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,29 +20,29 @@
       <ul class="nav-list">
         <li><a href="/">Главная</a></li>
         <li><a href="/news">Новости</a></li>
-        <li><a class="is-active" href="/phoenix">Phoenix</a></li>
-        <li><a href="/phxzapas">Запасные</a></li>
+        <li><a class="is-active" href="/phoenix">Состав</a></li>
         <li><a href="/unskillteam">Discord</a></li>
       </ul>
     </div>
   </nav>
 
-  <main class="page">
+  <main class="page drop-in">
     <div class="page-head">
       <div>
         <h1 class="page-title">Phoenix <span>Team</span></h1>
-        <p class="page-sub">Основной состав</p>
+        <p class="page-sub" id="roster-sub">Основной состав</p>
       </div>
-      <nav class="tabs" aria-label="Разделы состава">
-        <a class="tab is-active" href="/phoenix">Основной</a>
-        <a class="tab" href="/phxzapas">Запасные</a>
+      <nav class="tabs" aria-label="Выбор состава">
+        <button class="tab is-active" type="button" data-roster="main">Основной</button>
+        <button class="tab" type="button" data-roster="reserve">Запасные</button>
       </nav>
     </div>
 
-    <section class="roster">
+    <!-- ОСНОВНОЙ СОСТАВ -->
+    <section class="roster" data-panel="main">
 
-      <article class="player-card">
-        <div class="player-bg" style="background-image: url('/phx/Banner1.png');">
+      <article class="player-card" style="--bg-img: url('/phx/Banner1.png');">
+        <div class="player-bg">
           <div class="player-id">
             <img class="player-avatar" src="/phx/Avatar1.png" alt="mrsiktyyy" width="88" height="88" loading="lazy">
             <div class="player-nick">mrsiktyyy</div>
@@ -50,13 +50,18 @@
           </div>
         </div>
         <div class="player-stats">
-          <div class="stat"><small>K/D</small><b class="is-accent">1.15</b></div>
-          <div class="stat"><small>HS</small><b>65%</b></div>
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">1.15</b></div>
+            <div class="stat"><small>HS</small><b>65%</b></div>
+            <div class="stat"><small>Винрейт</small><b>—</b></div>
+            <div class="stat"><small>ADR</small><b>—</b></div>
+            <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
         </div>
       </article>
 
-      <article class="player-card">
-        <div class="player-bg" style="background-image: url('/phx/Banner2.png');">
+      <article class="player-card" style="--bg-img: url('/phx/Banner2.png');">
+        <div class="player-bg">
           <div class="player-id">
             <img class="player-avatar" src="/phx/Avatar2.png" alt="Novich0k42" width="88" height="88" loading="lazy">
             <div class="player-nick">Novich0k42</div>
@@ -64,13 +69,18 @@
           </div>
         </div>
         <div class="player-stats">
-          <div class="stat"><small>K/D</small><b class="is-accent">1.08</b></div>
-          <div class="stat"><small>HS</small><b>61%</b></div>
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">1.08</b></div>
+            <div class="stat"><small>HS</small><b>61%</b></div>
+            <div class="stat"><small>Винрейт</small><b>—</b></div>
+            <div class="stat"><small>ADR</small><b>—</b></div>
+            <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
         </div>
       </article>
 
-      <article class="player-card">
-        <div class="player-bg" style="background-image: url('/phx/Banner3.png');">
+      <article class="player-card" style="--bg-img: url('/phx/Banner3.png');">
+        <div class="player-bg">
           <div class="player-id">
             <img class="player-avatar" src="/phx/Avatar3.png" alt="myrvell" width="88" height="88" loading="lazy">
             <div class="player-nick">myrvell</div>
@@ -78,13 +88,18 @@
           </div>
         </div>
         <div class="player-stats">
-          <div class="stat"><small>K/D</small><b class="is-accent">1.04</b></div>
-          <div class="stat"><small>HS</small><b>59%</b></div>
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">1.04</b></div>
+            <div class="stat"><small>HS</small><b>59%</b></div>
+            <div class="stat"><small>Винрейт</small><b>—</b></div>
+            <div class="stat"><small>ADR</small><b>—</b></div>
+            <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
         </div>
       </article>
 
-      <article class="player-card">
-        <div class="player-bg" style="background-image: url('/phx/Banner4.png');">
+      <article class="player-card" style="--bg-img: url('/phx/Banner4.png');">
+        <div class="player-bg">
           <div class="player-id">
             <img class="player-avatar" src="/phx/Avatar4.png" alt="EgorVdadika" width="88" height="88" loading="lazy">
             <div class="player-nick">EgorVdadika</div>
@@ -92,13 +107,18 @@
           </div>
         </div>
         <div class="player-stats">
-          <div class="stat"><small>K/D</small><b class="is-accent">0.98</b></div>
-          <div class="stat"><small>HS</small><b>55%</b></div>
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">0.98</b></div>
+            <div class="stat"><small>HS</small><b>55%</b></div>
+            <div class="stat"><small>Винрейт</small><b>—</b></div>
+            <div class="stat"><small>ADR</small><b>—</b></div>
+            <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
         </div>
       </article>
 
-      <article class="player-card">
-        <div class="player-bg" style="background-image: url('/phx/Banner5.png');">
+      <article class="player-card" style="--bg-img: url('/phx/Banner5.png');">
+        <div class="player-bg">
           <div class="player-id">
             <img class="player-avatar" src="/phx/Avatar_Zenlo.png" alt="Zenlo." width="88" height="88" loading="lazy">
             <div class="player-nick">Zenlo.</div>
@@ -106,8 +126,75 @@
           </div>
         </div>
         <div class="player-stats">
-          <div class="stat"><small>K/D</small><b class="is-accent">1.10</b></div>
-          <div class="stat"><small>HS</small><b>63%</b></div>
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">1.10</b></div>
+            <div class="stat"><small>HS</small><b>63%</b></div>
+            <div class="stat"><small>Винрейт</small><b>—</b></div>
+            <div class="stat"><small>ADR</small><b>—</b></div>
+            <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ЗАПАСНЫЕ -->
+    <section class="roster" data-panel="reserve" hidden>
+
+      <article class="player-card" style="--bg-img: url('/phx/Banner6.png');">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar6.png" alt="Резервный состав" width="88" height="88" loading="lazy">
+            <div class="player-nick">Резервный состав</div>
+            <div class="player-role">Запасной</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+            <div class="stat"><small>HS</small><b>—</b></div>
+            <div class="stat"><small>Винрейт</small><b>—</b></div>
+            <div class="stat"><small>ADR</small><b>—</b></div>
+            <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card" style="--bg-img: url('/phx/Banner7.png');">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar7.png" alt="Запасной слот" width="88" height="88" loading="lazy">
+            <div class="player-nick">Запасной слот</div>
+            <div class="player-role">Запасной</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+            <div class="stat"><small>HS</small><b>—</b></div>
+            <div class="stat"><small>Винрейт</small><b>—</b></div>
+            <div class="stat"><small>ADR</small><b>—</b></div>
+            <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card" style="--bg-img: url('/phx/Banner8.png');">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar8.png" alt="Community" width="88" height="88" loading="lazy">
+            <div class="player-nick">Community</div>
+            <div class="player-role">Запасной</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+            <div class="stat"><small>HS</small><b>—</b></div>
+            <div class="stat"><small>Винрейт</small><b>—</b></div>
+            <div class="stat"><small>ADR</small><b>—</b></div>
+            <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
         </div>
       </article>
 
