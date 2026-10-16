@@ -18,6 +18,9 @@
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
+/* Важно: атрибут hidden должен всегда скрывать элемент */
+[hidden] { display: none !important; }
+
 *,
 *::before,
 *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -77,7 +80,6 @@ ul { list-style: none; }
   100% { transform: translate3d(var(--drift, 30px), 110vh, 0); opacity: .2; }
 }
 
-/* Контент выше снежинок */
 .site-nav,
 .page,
 .site-footer { position: relative; z-index: 1; }
@@ -114,10 +116,10 @@ ul { list-style: none; }
   margin-left: auto;
 }
 
-/* Скользящая подсветка активного пункта */
+/* Скользящая подсветка пункта меню */
 .nav-pill {
   position: absolute;
-  top: 0;
+  top: 14px;
   left: 0;
   height: 36px;
   border-radius: var(--radius-sm);
@@ -125,6 +127,7 @@ ul { list-style: none; }
   transition: transform .3s var(--ease), width .3s var(--ease), opacity .2s;
   opacity: 0;
   pointer-events: none;
+  z-index: 0;
 }
 
 .nav-list a {
@@ -169,7 +172,7 @@ ul { list-style: none; }
   padding: 48px 24px 64px;
 }
 
-/* Падение контента при открытии страницы (шапка не двигается) */
+/* Падение контента сверху (при открытии страницы) */
 .drop-in > * {
   animation: dropDown 230ms cubic-bezier(0.33, 0, 0.2, 1) both;
 }
@@ -180,6 +183,16 @@ ul { list-style: none; }
 @keyframes dropDown {
   from { transform: translate3d(0, -28px, 0); opacity: 0; }
   to   { transform: translate3d(0, 0, 0);     opacity: 1; }
+}
+
+/* Уход страницы вниз (при клике на вкладку, перед переходом) */
+.page.is-leaving {
+  animation: dropOut 260ms cubic-bezier(0.5, 0, 0.75, 0) both;
+}
+
+@keyframes dropOut {
+  from { transform: translate3d(0, 0, 0);    opacity: 1; }
+  to   { transform: translate3d(0, 40px, 0); opacity: 0; }
 }
 
 .page-head {
@@ -215,7 +228,7 @@ ul { list-style: none; }
   text-align: center;
 }
 
-/* ---------- Переключатель вкладок (скользящий фон) ---------- */
+/* ---------- Переключатель (Основной / Запасные) ---------- */
 
 .tabs {
   position: relative;
@@ -233,18 +246,23 @@ ul { list-style: none; }
   transition: transform .3s var(--ease), width .3s var(--ease), opacity .2s;
   opacity: 0;
   pointer-events: none;
+  z-index: 0;
 }
 
 .tab {
   position: relative;
   z-index: 1;
   padding: 10px 16px;
+  border: 0;
   border-radius: 6px;
+  background: none;
+  font: inherit;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .04em;
   color: var(--text-2);
+  cursor: pointer;
   transition: color .2s var(--ease);
 }
 
@@ -330,6 +348,14 @@ ul { list-style: none; }
 .person.is-open .person-body {
   max-height: 400px;
   padding: 0 24px 24px;
+}
+
+/* Открытие — резкое, закрытие — плавное */
+.person.opening .person-body {
+  transition: max-height .12s cubic-bezier(.5, 0, 1, 1), padding .12s cubic-bezier(.5, 0, 1, 1);
+}
+.person.closing .person-body {
+  transition: max-height .5s var(--ease), padding .5s var(--ease);
 }
 
 .person .role {
@@ -493,12 +519,32 @@ ul { list-style: none; }
 
 .news-close:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ---------- Карточки игроков ---------- */
+/* ---------- Состав: карточки ---------- */
 
 .roster {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
+}
+
+/* Анимация смены состава: плавное появление/исчезание */
+.roster.is-fading-out {
+  animation: rosterOut 400ms ease both;
+  pointer-events: none;
+}
+
+.roster.is-fading-in {
+  animation: rosterIn 400ms ease both;
+}
+
+@keyframes rosterOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes rosterIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .player-card {
@@ -517,7 +563,6 @@ ul { list-style: none; }
   border-color: var(--accent);
 }
 
-/* Верх: фото 4:3, фон четкий */
 .player-bg {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -577,7 +622,6 @@ ul { list-style: none; }
   text-shadow: 0 2px 8px rgba(0, 0, 0, .6);
 }
 
-/* Низ: тот же фон, размытый и затемнённый на 33% */
 .player-stats {
   position: relative;
   overflow: hidden;
@@ -713,7 +757,7 @@ ul { list-style: none; }
   .site-nav.is-open .nav-list { display: flex; }
   .nav-pill { display: none; }
   .page { padding: 32px 16px 48px; }
-  .page-head { flex-direction: column; align-items: flex-start; }
+  .page-head { flex-direction: column; align-items: flex-start; gap: 16px; }
   .page-title, .hero-title { font-size: 24px; }
   .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .news-grid { grid-template-columns: 1fr; }
