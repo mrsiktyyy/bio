@@ -15,7 +15,6 @@
   --text-2: #a1a1aa;
   --text-3: #6b6b75;
   --radius: 12px;
-  --radius-sm: 8px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-soft: cubic-bezier(0.45, 0, 0.25, 1);
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -53,7 +52,7 @@ ul { list-style: none; }
   border-radius: 999px;
 }
 
-/* ---------- Снег (фиксированный слой) ---------- */
+/* ---------- Снег: один фиксированный слой, гаснет классом на body ---------- */
 
 .snow {
   position: fixed;
@@ -61,22 +60,18 @@ ul { list-style: none; }
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  opacity: 0;
-  animation: snowIn 600ms var(--ease-soft) 100ms forwards;
+  animation: snowIn 600ms var(--ease-soft) 100ms both;
+  transition: opacity 300ms var(--ease-soft);
 }
 
-.snow.is-fading {
-  animation: snowOut 300ms var(--ease-soft) forwards;
+body.snow-off .snow {
+  opacity: 0;
+  animation: none;
 }
 
 @keyframes snowIn {
   from { opacity: 0; }
   to   { opacity: 1; }
-}
-
-@keyframes snowOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
 }
 
 .snow span {
@@ -123,7 +118,7 @@ ul { list-style: none; }
 
 .brand img { height: 28px; width: auto; }
 
-/* Капсула меню — по центру шапки, не касается границ */
+/* Капсула меню. Подсветка — фон самого пункта, поэтому она всегда прикреплена к тексту. */
 .nav-list {
   position: absolute;
   left: 50%;
@@ -139,39 +134,28 @@ ul { list-style: none; }
   white-space: nowrap;
 }
 
-.nav-pill {
-  position: absolute;
-  top: 4px;
-  left: 0;
-  height: 36px;
-  border-radius: 999px;
-  background: var(--capsule-hi);
-  transition: transform 500ms var(--ease-out), width 500ms var(--ease-out), opacity 300ms var(--ease-soft);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 0;
-  will-change: transform, width;
-}
-
 .nav-list a {
-  position: relative;
-  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 36px;
   padding: 0 18px;
   border-radius: 999px;
+  background: transparent;
   color: var(--text-2);
   font-size: 14px;
   font-weight: 500;
-  transition: color 300ms var(--ease-soft);
+  transition: background-color 400ms var(--ease-soft), color 300ms var(--ease-soft);
 }
 
-.nav-list a:hover { color: var(--text); }
-.nav-list a.is-active { color: var(--accent); }
+.nav-list a:hover { color: var(--text); background: rgba(255, 255, 255, .04); }
 
-/* Иконки в пунктах меню скрываем для компактности капсулы */
+.nav-list a.is-active {
+  background: var(--capsule-hi);
+  color: var(--accent);
+}
+
+/* Иконки в пунктах меню скрыты — остается только текст */
 .nav-list a > span:first-child:not(:last-child) { display: none; }
 
 .nav-toggle {
@@ -192,7 +176,7 @@ ul { list-style: none; }
   justify-content: center;
 }
 
-/* ---------- Контейнер ---------- */
+/* ---------- Контейнер страницы ---------- */
 
 .page {
   flex: 1;
@@ -202,6 +186,7 @@ ul { list-style: none; }
   padding: 48px 24px 64px;
 }
 
+/* Падение элементов при первом открытии страницы */
 .drop-in > * {
   animation: dropDown 600ms var(--ease-soft) both;
 }
@@ -209,8 +194,8 @@ ul { list-style: none; }
 .drop-in > *:nth-child(3) { animation-delay: 120ms; }
 .drop-in > *:nth-child(4) { animation-delay: 180ms; }
 
-/* Карточки состава не падают — только прозрачность */
-.drop-in > .roster { animation: none; }
+/* Вкладки и блоки под ними не падают — фиксируем их, чтобы не ломалась подсветка */
+.drop-in > .tabs { animation: none; }
 
 @keyframes dropDown {
   from { transform: translate3d(0, -24px, 0); opacity: 0; }
@@ -249,21 +234,14 @@ ul { list-style: none; }
 .page-title span,
 .hero-title span { color: var(--accent); }
 
-.page-sub {
-  margin-top: 6px;
-  font-size: 14px;
-  color: var(--text-3);
-}
-
 .hero-title {
   margin-bottom: 32px;
   text-align: center;
 }
 
-/* ---------- Переключатель Основной / Запасные (по центру страницы) ---------- */
+/* ---------- Переключатель Основной / Запасные (по центру) ---------- */
 
 .tabs {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -276,28 +254,15 @@ ul { list-style: none; }
   background: var(--capsule);
 }
 
-.tabs-pill {
-  position: absolute;
-  top: 4px;
-  left: 0;
-  height: 36px;
-  border-radius: 999px;
-  background: var(--capsule-hi);
-  transition: transform 500ms var(--ease-out), width 500ms var(--ease-out), opacity 300ms var(--ease-soft);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 0;
-  will-change: transform, width;
-}
-
 .tab {
-  position: relative;
-  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 36px;
   padding: 0 18px;
   border: 0;
   border-radius: 999px;
-  background: none;
+  background: transparent;
   font: inherit;
   font-size: 13px;
   font-weight: 600;
@@ -305,11 +270,15 @@ ul { list-style: none; }
   letter-spacing: .04em;
   color: var(--text-2);
   cursor: pointer;
-  transition: color 300ms var(--ease-soft);
+  transition: background-color 400ms var(--ease-soft), color 300ms var(--ease-soft);
 }
 
-.tab:hover { color: var(--text); }
-.tab.is-active { color: var(--accent); }
+.tab:hover { color: var(--text); background: rgba(255, 255, 255, .04); }
+
+.tab.is-active {
+  background: var(--capsule-hi);
+  color: var(--accent);
+}
 
 /* ---------- Главная: аккордеон игроков ---------- */
 
@@ -361,10 +330,7 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 
-.person-name {
-  flex: 1;
-  color: var(--accent);
-}
+.person-name { flex: 1; color: var(--accent); }
 
 .chevron {
   flex-shrink: 0;
@@ -376,9 +342,7 @@ ul { list-style: none; }
   transition: transform 500ms var(--ease-soft);
 }
 
-.person.is-open .chevron {
-  transform: rotate(225deg) translate(-2px, -2px);
-}
+.person.is-open .chevron { transform: rotate(225deg) translate(-2px, -2px); }
 
 .person-body {
   max-height: 0;
@@ -453,11 +417,7 @@ ul { list-style: none; }
   overflow: hidden;
 }
 
-.news-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.news-cover img { width: 100%; height: 100%; object-fit: cover; }
 
 .news-body {
   display: flex;
@@ -513,11 +473,7 @@ ul { list-style: none; }
   pointer-events: auto;
 }
 
-.news-modal-cover {
-  aspect-ratio: 16 / 9;
-  background: var(--panel-2);
-}
-
+.news-modal-cover { aspect-ratio: 16 / 9; background: var(--panel-2); }
 .news-modal-cover img { width: 100%; height: 100%; object-fit: cover; }
 
 .news-modal-body { padding: 32px; }
@@ -571,15 +527,8 @@ ul { list-style: none; }
   animation: fadeIn 600ms var(--ease-soft) both;
 }
 
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
 
 .player-card {
   --bg-img: none;
@@ -702,12 +651,7 @@ ul { list-style: none; }
   color: var(--text-3);
 }
 
-.stat b {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-}
-
+.stat b { font-size: 18px; font-weight: 700; color: var(--text); }
 .stat b.is-accent { color: var(--accent); }
 
 /* ---------- Discord ---------- */
@@ -785,12 +729,9 @@ ul { list-style: none; }
     border-radius: 24px;
     white-space: normal;
   }
-  .site-nav { height: 64px; }
   .site-nav.is-open .nav-list { display: flex; }
-  .nav-pill { display: none; }
   .nav-list a { height: 44px; }
   .page { padding: 32px 16px 48px; }
-  .page-head { flex-direction: column; align-items: flex-start; gap: 16px; }
   .page-title, .hero-title { font-size: 24px; }
   .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .news-grid { grid-template-columns: 1fr; }
