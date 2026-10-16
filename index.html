@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Phoenix Team</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Главная | Phoenix Team</title>
   <link rel="icon" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,353 +13,303 @@
 </head>
 <body>
 
-  <nav class="site-nav">
-    <div class="site-nav-inner">
-      <a class="brand" href="#home" data-route="home"><img src="/logo.png" alt="Phoenix Team" width="140" height="28"></a>
-      <button class="nav-toggle" type="button" aria-label="Меню" aria-expanded="false">☰</button>
-      <ul class="nav-list">
-        <li><a class="is-active" href="#home"    data-route="home">Главная</a></li>
-        <li><a href="#news"    data-route="news">Новости</a></li>
-        <li><a href="#roster"  data-route="roster">Состав</a></li>
-        <li><a href="#discord" data-route="discord">Discord</a></li>
-      </ul>
-    </div>
-  </nav>
+<!-- Снег -->
+<div class="snow" aria-hidden="true"></div>
 
-  <main class="page drop-in">
+<!-- Шапка -->
+<nav class="site-nav" id="siteNav">
+  <a class="brand" href="/">
+    <img src="logo.png" alt="Phoenix Team">
+  </a>
 
-    <!-- ===== ГЛАВНАЯ ===== -->
-    <section class="view" data-view="home">
-      <h1 class="hero-title">Главная <span>Phoenix Team</span></h1>
-      <section class="people">
+  <button class="nav-toggle" id="navToggle" aria-label="Меню" aria-expanded="false">☰</button>
 
-        <article class="person">
-          <button class="person-head" type="button" aria-expanded="false">
-            <img class="person-avatar" src="/phx/Avatar1.png" alt="" width="40" height="40">
-            <span class="person-name">mrsiktyyy</span>
-            <span class="chevron" aria-hidden="true"></span>
-          </button>
-          <div class="person-body">
-            <div class="role">Основатель Phoenix Team · Стример · Разработчик</div>
-            <p>Иван Акбашев. Я создал этот сайт и команду Phoenix. Здесь ты найдёшь всё о нашей деятельности, новости и состав.</p>
-            <div class="links">
-              <a href="https://t.me/mrsiktyyy">Telegram</a>
-              <a href="https://www.instagram.com/mrsiktyyy/">Instagram</a>
-              <a href="https://twitch.tv/mrsiktyyy">Twitch</a>
-              <a href="https://www.youtube.com/@MrS1kyyy">YouTube</a>
-              <a href="https://steamcommunity.com/id/mrsikty/">Steam</a>
-            </div>
+  <ul class="nav-list" id="navList">
+    <span class="nav-pill" aria-hidden="true"></span>
+    <li><a href="/" data-nav="home">⌂ <span>Главная</span></a></li>
+    <li><a href="/news" data-nav="news">▤ <span>Новости</span></a></li>
+    <li><a href="/phoenix" data-nav="phoenix">◆ <span>Phoenix</span></a></li>
+    <li><a href="/unskillteam" data-nav="discord">✚ <span>Discord</span></a></li>
+  </ul>
+</nav>
+
+<main class="page drop-in" id="page">
+
+  <!-- ===== ГЛАВНАЯ ===== -->
+  <section class="view" data-view="home">
+    <h1 class="hero-title">Главная <span>Phoenix Team</span></h1>
+
+    <div class="people">
+
+      <!-- mrsiktyyy -->
+      <article class="person">
+        <button class="person-head" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar1.png" alt="">
+          <span class="person-name">mrsiktyyy — Иван Акбашев</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
+          <div class="role">Основатель Phoenix Team · Стример · Разработчик</div>
+          <p>Я создал этот сайт и команду Phoenix. Здесь ты найдёшь всё о нашей деятельности, новости и состав.</p>
+          <div class="links">
+            <a href="https://t.me/mrsiktyyy">Telegram</a>
+            <a href="https://www.instagram.com/mrsiktyyy/">Instagram</a>
+            <a href="https://twitch.tv/mrsiktyyy">Twitch</a>
+            <a href="https://www.youtube.com/@MrS1kyyy">YouTube</a>
+            <a href="https://steamcommunity.com/id/mrsikty/">Steam</a>
           </div>
-        </article>
-
-        <article class="person">
-          <button class="person-head" type="button" aria-expanded="false">
-            <img class="person-avatar" src="/phx/Avatar2.png" alt="" width="40" height="40" loading="lazy">
-            <span class="person-name">Novich0k42</span>
-            <span class="chevron" aria-hidden="true"></span>
-          </button>
-          <div class="person-body">
-            <div class="role">Игрок Phoenix Team · Рифлер · Командир</div>
-            <p>Вадим. Играю в CS с 2018 года. В CS2 наиграл около 800 часов и дошёл почти до 17 000 рейтинга в Премьере.</p>
-            <div class="links">
-              <a href="https://t.me/Novichok42">Telegram</a>
-              <a href="https://steamcommunity.com/profiles/76561199182259553">Steam</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="person">
-          <button class="person-head" type="button" aria-expanded="false">
-            <img class="person-avatar" src="/phx/Avatar4.png" alt="" width="40" height="40" loading="lazy">
-            <span class="person-name">EgorVdadika</span>
-            <span class="chevron" aria-hidden="true"></span>
-          </button>
-          <div class="person-body">
-            <div class="role">Тренер · Снайпер · Душа команды</div>
-            <p>Егор. Тренируюсь, хочу стать хорошим капитаном и вести команду к победам.</p>
-            <div class="links">
-              <a href="https://steamcommunity.com/id/EgorVdadika/">Steam</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="person">
-          <button class="person-head" type="button" aria-expanded="false">
-            <img class="person-avatar" src="/phx/Avatar3.png" alt="" width="40" height="40" loading="lazy">
-            <span class="person-name">myrvell</span>
-            <span class="chevron" aria-hidden="true"></span>
-          </button>
-          <div class="person-body">
-            <div class="role">Стрелятель · убиватель · позитивный</div>
-            <p>Евгений. Стреляю исключительно в союзников... Ну короче играю по настроению.</p>
-            <div class="links">
-              <a href="https://steamcommunity.com/profiles/76561198345950475/">Steam</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="person">
-          <button class="person-head" type="button" aria-expanded="false">
-            <img class="person-avatar" src="/phx/Avatar_Zenlo.png" alt="" width="40" height="40" loading="lazy">
-            <span class="person-name">Zenlo.</span>
-            <span class="chevron" aria-hidden="true"></span>
-          </button>
-          <div class="person-body">
-            <div class="role">Симпл · убиватель · пьяница</div>
-            <p>Кирилл. Люблю Сашу Симпла и AWP. А ещё люблю улучшать свои скины.</p>
-            <div class="links">
-              <a href="https://steamcommunity.com/id/zenlo-official/">Steam</a>
-            </div>
-          </div>
-        </article>
-
-      </section>
-    </section>
-
-    <!-- ===== НОВОСТИ ===== -->
-    <section class="view" data-view="news" hidden>
-      <div class="page-head">
-        <div>
-          <h1 class="page-title">Новости <span>Phoenix Team</span></h1>
-          <p class="page-sub">Последние события команды</p>
         </div>
-      </div>
+      </article>
 
-      <section class="news-grid">
-        <article class="news-card" data-full="Следи за последними событиями, составом и новостями Phoenix Team.&#10;Полный текст новости пишется здесь. Абзацы разделяются переносом строки.">
-          <div class="news-cover"><img src="/posts/post7.png" alt="" loading="lazy"></div>
-          <div class="news-body">
-            <span class="news-tag">Phoenix Team</span>
-            <h2>Новости команды</h2>
-            <p>Следи за последними событиями, составом и новостями Phoenix Team.</p>
+      <!-- Novich0k42 -->
+      <article class="person">
+        <button class="person-head" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar2.png" alt="">
+          <span class="person-name">Novich0k42 — Вадим</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
+          <div class="role">Игрок Phoenix Team · Рифлер · Командир</div>
+          <p>Играю в CS с 2018 года. В CS2 наиграл около 800 часов и дошёл почти до 17 000 рейтинга в Премьере.</p>
+          <div class="links">
+            <a href="https://t.me/Novichok42">Telegram</a>
+            <a href="https://steamcommunity.com/profiles/76561199182259553">Steam</a>
           </div>
-        </article>
-
-        <article class="news-card" data-full="Здесь появляются обновления о наших играх, тренировках и результатах.&#10;Полный текст матча пишется здесь.">
-          <div class="news-cover"><img src="/posts/post6_1.png" alt="" loading="lazy"></div>
-          <div class="news-body">
-            <span class="news-tag">CS2</span>
-            <h2>Матчи и результаты</h2>
-            <p>Здесь появляются обновления о наших играх, тренировках и результатах.</p>
-          </div>
-        </article>
-
-        <article class="news-card" data-full="Мемы, события и другие материалы команды в одном месте.&#10;Полный текст публикации пишется здесь.">
-          <div class="news-cover"><img src="/posts/post5.png" alt="" loading="lazy"></div>
-          <div class="news-body">
-            <span class="news-tag">Community</span>
-            <h2>Новые публикации</h2>
-            <p>Мемы, события и другие материалы команды в одном месте.</p>
-          </div>
-        </article>
-
-        <article class="news-card" data-full="Сайт постепенно получает новые страницы, анимации и улучшения интерфейса.&#10;Полный текст обновления пишется здесь.">
-          <div class="news-cover"><img src="/posts/post3_1.png" alt="" loading="lazy"></div>
-          <div class="news-body">
-            <span class="news-tag">Phoenix</span>
-            <h2>Обновления сайта</h2>
-            <p>Сайт постепенно получает новые страницы, анимации и улучшения интерфейса.</p>
-          </div>
-        </article>
-      </section>
-    </section>
-
-    <!-- ===== СОСТАВ ===== -->
-    <section class="view" data-view="roster" hidden>
-      <div class="page-head">
-        <div>
-          <h1 class="page-title">Phoenix <span>Team</span></h1>
-          <p class="page-sub" id="roster-sub">Основной состав</p>
         </div>
-      </div>
+      </article>
 
-      <nav class="tabs" aria-label="Выбор состава">
-        <span class="tabs-pill" aria-hidden="true"></span>
-        <button class="tab is-active" type="button" data-roster="main">Основной</button>
-        <button class="tab" type="button" data-roster="reserve">Запасные</button>
-      </nav>
+      <!-- EgorVdadika -->
+      <article class="person">
+        <button class="person-head" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar4.png" alt="">
+          <span class="person-name">EgorVdadika — Егор</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
+          <div class="role">Тренер · Снайпер · Душа команды</div>
+          <p>Тренируюсь, хочу стать хорошим капитаном и вести команду к победам.</p>
+          <div class="links">
+            <a href="https://steamcommunity.com/id/EgorVdadika/">Steam</a>
+          </div>
+        </div>
+      </article>
 
-      <section class="roster" data-panel="main">
-        <article class="player-card" style="--bg-img: url('/phx/Banner1.png');">
-          <div class="player-bg">
-            <div class="player-id">
-              <img class="player-avatar" src="/phx/Avatar1.png" alt="mrsiktyyy" width="88" height="88" loading="lazy">
-              <div class="player-nick">mrsiktyyy</div>
-              <div class="player-role">Основатель / IGL</div>
-            </div>
+      <!-- myrvell -->
+      <article class="person">
+        <button class="person-head" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar3.png" alt="">
+          <span class="person-name">myrvell — Евгений</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
+          <div class="role">Стрелятель · убиватель · позитивный</div>
+          <p>Стреляю исключительно в союзников... Ну короче играю по настроению.</p>
+          <div class="links">
+            <a href="https://steamcommunity.com/profiles/76561198345950475/">Steam</a>
           </div>
-          <div class="player-stats">
-            <div class="stats-grid">
-              <div class="stat"><small>K/D</small><b class="is-accent">1.15</b></div>
-              <div class="stat"><small>HS</small><b>65%</b></div>
-              <div class="stat"><small>Винрейт</small><b>—</b></div>
-              <div class="stat"><small>ADR</small><b>—</b></div>
-              <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
-            </div>
-          </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="player-card" style="--bg-img: url('/phx/Banner2.png');">
-          <div class="player-bg">
-            <div class="player-id">
-              <img class="player-avatar" src="/phx/Avatar2.png" alt="Novich0k42" width="88" height="88" loading="lazy">
-              <div class="player-nick">Novich0k42</div>
-              <div class="player-role">Рифлер</div>
-            </div>
+      <!-- Zenlo. -->
+      <article class="person">
+        <button class="person-head" aria-expanded="false">
+          <img class="person-avatar" src="/phx/Avatar_Zenlo.png" alt="">
+          <span class="person-name">Zenlo. — Кирилл</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="person-body">
+          <div class="role">Симпл · убиватель · пьяница</div>
+          <p>Люблю Сашу Симпла и AWP. А ещё люблю улучшать свои скины.</p>
+          <div class="links">
+            <a href="https://steamcommunity.com/id/zenlo-official/">Steam</a>
           </div>
-          <div class="player-stats">
-            <div class="stats-grid">
-              <div class="stat"><small>K/D</small><b class="is-accent">1.08</b></div>
-              <div class="stat"><small>HS</small><b>61%</b></div>
-              <div class="stat"><small>Винрейт</small><b>—</b></div>
-              <div class="stat"><small>ADR</small><b>—</b></div>
-              <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
-            </div>
-          </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="player-card" style="--bg-img: url('/phx/Banner3.png');">
-          <div class="player-bg">
-            <div class="player-id">
-              <img class="player-avatar" src="/phx/Avatar3.png" alt="myrvell" width="88" height="88" loading="lazy">
-              <div class="player-nick">myrvell</div>
-              <div class="player-role">Рифлер</div>
-            </div>
-          </div>
-          <div class="player-stats">
-            <div class="stats-grid">
-              <div class="stat"><small>K/D</small><b class="is-accent">1.04</b></div>
-              <div class="stat"><small>HS</small><b>59%</b></div>
-              <div class="stat"><small>Винрейт</small><b>—</b></div>
-              <div class="stat"><small>ADR</small><b>—</b></div>
-              <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="player-card" style="--bg-img: url('/phx/Banner4.png');">
-          <div class="player-bg">
-            <div class="player-id">
-              <img class="player-avatar" src="/phx/Avatar4.png" alt="EgorVdadika" width="88" height="88" loading="lazy">
-              <div class="player-nick">EgorVdadika</div>
-              <div class="player-role">AWP / тренер</div>
-            </div>
-          </div>
-          <div class="player-stats">
-            <div class="stats-grid">
-              <div class="stat"><small>K/D</small><b class="is-accent">0.98</b></div>
-              <div class="stat"><small>HS</small><b>55%</b></div>
-              <div class="stat"><small>Винрейт</small><b>—</b></div>
-              <div class="stat"><small>ADR</small><b>—</b></div>
-              <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="player-card" style="--bg-img: url('/phx/Banner5.png');">
-          <div class="player-bg">
-            <div class="player-id">
-              <img class="player-avatar" src="/phx/Avatar_Zenlo.png" alt="Zenlo." width="88" height="88" loading="lazy">
-              <div class="player-nick">Zenlo.</div>
-              <div class="player-role">AWP</div>
-            </div>
-          </div>
-          <div class="player-stats">
-            <div class="stats-grid">
-              <div class="stat"><small>K/D</small><b class="is-accent">1.10</b></div>
-              <div class="stat"><small>HS</small><b>63%</b></div>
-              <div class="stat"><small>Винрейт</small><b>—</b></div>
-              <div class="stat"><small>ADR</small><b>—</b></div>
-              <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="roster" data-panel="reserve" hidden>
-        <article class="player-card" style="--bg-img: url('/phx/Banner6.png');">
-          <div class="player-bg">
-            <div class="player-id">
-              <img class="player-avatar" src="/phx/Avatar6.png" alt="Резервный состав" width="88" height="88" loading="lazy">
-              <div class="player-nick">Резервный состав</div>
-              <div class="player-role">Запасной</div>
-            </div>
-          </div>
-          <div class="player-stats">
-            <div class="stats-grid">
-              <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
-              <div class="stat"><small>HS</small><b>—</b></div>
-              <div class="stat"><small>Винрейт</small><b>—</b></div>
-              <div class="stat"><small>ADR</small><b>—</b></div>
-              <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="player-card" style="--bg-img: url('/phx/Banner7.png');">
-          <div class="player-bg">
-            <div class="player-id">
-              <img class="player-avatar" src="/phx/Avatar7.png" alt="Запасной слот" width="88" height="88" loading="lazy">
-              <div class="player-nick">Запасной слот</div>
-              <div class="player-role">Запасной</div>
-            </div>
-          </div>
-          <div class="player-stats">
-            <div class="stats-grid">
-              <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
-              <div class="stat"><small>HS</small><b>—</b></div>
-              <div class="stat"><small>Винрейт</small><b>—</b></div>
-              <div class="stat"><small>ADR</small><b>—</b></div>
-              <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="player-card" style="--bg-img: url('/phx/Banner8.png');">
-          <div class="player-bg">
-            <div class="player-id">
-              <img class="player-avatar" src="/phx/Avatar8.png" alt="Community" width="88" height="88" loading="lazy">
-              <div class="player-nick">Community</div>
-              <div class="player-role">Запасной</div>
-            </div>
-          </div>
-          <div class="player-stats">
-            <div class="stats-grid">
-              <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
-              <div class="stat"><small>HS</small><b>—</b></div>
-              <div class="stat"><small>Винрейт</small><b>—</b></div>
-              <div class="stat"><small>ADR</small><b>—</b></div>
-              <div class="stat"><small>Рейтинг Премьер</small><b>—</b></div>
-            </div>
-          </div>
-        </article>
-      </section>
-    </section>
-
-    <!-- ===== DISCORD ===== -->
-    <section class="view" data-view="discord" hidden>
-      <div class="discord-card">
-        <h2>Discord <span>Phoenix Team</span></h2>
-        <p>Наш сервер Discord — общение, поиск игр и новости команды.</p>
-        <a class="cta" href="https://discord.gg/unskillteam" target="_blank" rel="noopener">Открыть Discord</a>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">© 2026 — Phoenix Team · Все права защищены.</footer>
-
-  <div class="news-overlay" id="newsOverlay"></div>
-  <div class="news-modal" id="newsModal" role="dialog" aria-modal="true" aria-hidden="true">
-    <button class="news-close" type="button" aria-label="Закрыть">✕</button>
-    <div class="news-modal-cover"><img id="newsModalImg" src="" alt=""></div>
-    <div class="news-modal-body">
-      <span class="news-tag" id="newsModalTag"></span>
-      <h2 id="newsModalTitle"></h2>
-      <div id="newsModalText"></div>
     </div>
-  </div>
+  </section>
 
-  <script src="/Js/app.js"></script>
+  <!-- ===== НОВОСТИ ===== -->
+  <section class="view" data-view="news" hidden>
+    <div class="news-empty">Новостей нет</div>
+  </section>
+
+  <!-- ===== PHOENIX (состав) ===== -->
+  <section class="view" data-view="phoenix" hidden>
+    <h1 class="hero-title"><span>Phoenix</span> Team</h1>
+
+    <div class="tabs" id="rosterTabs">
+      <span class="tabs-pill" aria-hidden="true"></span>
+      <button class="tab is-active" data-panel="main">Основной</button>
+      <button class="tab" data-panel="reserve">Запасные</button>
+    </div>
+
+    <p class="page-sub roster-sub" id="roster-sub">Основной состав</p>
+
+    <!-- Основной состав -->
+    <div class="roster" data-panel="main">
+      <article class="player-card" style="--bg-img: url('/phx/Avatar1.png')">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar1.png" alt="mrsiktyyy">
+            <div class="player-nick">mrsiktyyy</div>
+            <div class="player-role">Основатель / IGL</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">1.15</b></div>
+            <div class="stat"><small>HS</small><b>65%</b></div>
+            <div class="stat is-wide"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card" style="--bg-img: url('/phx/Avatar2.png')">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar2.png" alt="Novich0k42">
+            <div class="player-nick">Novich0k42</div>
+            <div class="player-role">Рифлер</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">1.08</b></div>
+            <div class="stat"><small>HS</small><b>61%</b></div>
+            <div class="stat is-wide"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card" style="--bg-img: url('/phx/Avatar3.png')">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar3.png" alt="myrvell">
+            <div class="player-nick">myrvell</div>
+            <div class="player-role">Рифлер</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">1.04</b></div>
+            <div class="stat"><small>HS</small><b>59%</b></div>
+            <div class="stat is-wide"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card" style="--bg-img: url('/phx/Avatar4.png')">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar4.png" alt="EgorVdadika">
+            <div class="player-nick">EgorVdadika</div>
+            <div class="player-role">AWP / тренер</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">0.98</b></div>
+            <div class="stat"><small>HS</small><b>55%</b></div>
+            <div class="stat is-wide"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card" style="--bg-img: url('/phx/Avatar_Zenlo.png')">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar_Zenlo.png" alt="Zenlo.">
+            <div class="player-nick">Zenlo.</div>
+            <div class="player-role">AWP</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">1.10</b></div>
+            <div class="stat"><small>HS</small><b>63%</b></div>
+            <div class="stat is-wide"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Запасные -->
+    <div class="roster" data-panel="reserve" hidden>
+      <article class="player-card" style="--bg-img: url('/phx/Avatar6.png')">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar6.png" alt="">
+            <div class="player-nick">Резервный состав</div>
+            <div class="player-role">Запас</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+            <div class="stat"><small>HS</small><b>—</b></div>
+            <div class="stat is-wide"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card" style="--bg-img: url('/phx/Avatar7.png')">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar7.png" alt="">
+            <div class="player-nick">Запасной слот</div>
+            <div class="player-role">Запас</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+            <div class="stat"><small>HS</small><b>—</b></div>
+            <div class="stat is-wide"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card" style="--bg-img: url('/phx/Avatar8.png')">
+        <div class="player-bg">
+          <div class="player-id">
+            <img class="player-avatar" src="/phx/Avatar8.png" alt="">
+            <div class="player-nick">Community</div>
+            <div class="player-role">Запас</div>
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stats-grid">
+            <div class="stat"><small>K/D</small><b class="is-accent">—</b></div>
+            <div class="stat"><small>HS</small><b>—</b></div>
+            <div class="stat is-wide"><small>Рейтинг Премьер</small><b>—</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="player-card is-empty">
+        <div class="player-empty-text">Отсутствует</div>
+      </article>
+
+      <article class="player-card is-empty">
+        <div class="player-empty-text">Отсутствует</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== DISCORD ===== -->
+  <section class="view" data-view="discord" hidden>
+    <div class="discord-card">
+      <h2>Присоединяйся к <span>Discord</span></h2>
+      <p>Общение, поиск игроков и новости команды — всё в одном месте.</p>
+      <a class="cta" href="/unskillteam">Перейти в Discord</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">© 2026 — Phoenix Team · Все права защищены.</footer>
+
+<script src="/Js/app.js"></script>
 </body>
 </html>
