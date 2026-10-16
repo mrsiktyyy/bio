@@ -1,24 +1,63 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Discord | Phoenix Team</title>
-<link rel="icon" href="/favicon2.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="/css/style.css"></head><body>
-<div class="cursor-glow"></div>
-<nav class="site-nav">
-  <a class="brand" href="/"><img src="logo.png" alt="Phoenix Team"></a>
-  <button class="nav-toggle" aria-label="Меню">☰</button>
-  <ul class="nav-list">
-    <li><a href="/">⌂ <span>Главная</span></a></li>
-    <li><a href="/news">▤ <span>Новости</span></a></li>
-    <li><a href="/phoenix">◆ <span>Phoenix</span></a></li>
-    <li><a href="/phxzapas">♟ <span>Запасные</span></a></li>
-    <li><a href="/unskillteam">✚ <span>Discord</span></a></li>
-  </ul>
-</nav>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Discord | Phoenix Team</title>
+  <link rel="icon" href="/favicon2.png">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/Css/style.css">
+</head>
+<body>
 
-<main class="page">
-<header class="topbar"><h1 class="title">Discord <span>Server</span></h1></header>
-<section class="discord-wrap"><div class="discord-card glass"><div class="discord-icon"><i class="fab fa-discord"></i></div><h2>Присоединяйся к нам!</h2><p>Общайся с командой, следи за новостями и участвуй в жизни Phoenix Team.</p><a class="cta" href="https://discord.com/invite/kvd35a3Std" target="_blank"><i class="fab fa-discord"></i> Присоединиться</a></div></section></main><footer>© 2026 — Phoenix Team · Все права защищены.</footer><script src="/js/app.js"></script></body></html>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="/">
+        <img src="logo.png" alt="Phoenix Team" width="128" height="32">
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="Меню" aria-controls="main-nav">☰</button>
+
+      <nav aria-label="Основная навигация">
+        <ul class="nav-list" id="main-nav">
+          <li><a href="/">Главная</a></li>
+          <li><a href="/news">Новости</a></li>
+          <li><a href="/phoenix">Phoenix</a></li>
+          <li><a href="/phxzapas">Запасные</a></li>
+          <li><a href="/unskillteam" aria-current="page">Discord</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-header">
+      <h1 class="page-title">Discord <span>Server</span></h1>
+    </div>
+
+    <section class="discord-wrap">
+      <div class="discord-card">
+        <div class="discord-icon" aria-hidden="true">
+          <i class="fab fa-discord"></i>
+        </div>
+        <h2>Присоединяйся к нам!</h2>
+        <p>Общайся с командой, следи за новостями и участвуй в жизни Phoenix Team.</p>
+        <a class="cta"
+           href="https://discord.com/invite/kvd35a3Std"
+           target="_blank"
+           rel="noopener noreferrer">
+          <i class="fab fa-discord" aria-hidden="true"></i>
+          Присоединиться
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 — Phoenix Team · Все права защищены.
+  </footer>
+
+  <script src="/Js/app.js"></script>
+</body>
+</html>
