@@ -27,7 +27,7 @@
 *::before,
 *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* [правка 1] скрытие полосы прокрутки */
+/* скрытие полосы прокрутки */
 html {
   -webkit-text-size-adjust: 100%;
   scrollbar-width: none;
@@ -38,6 +38,12 @@ html::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
+}
+
+/* Во время интро блокируем прокрутку */
+html.intro-active,
+html.intro-active body {
+  overflow: hidden;
 }
 
 body {
@@ -62,6 +68,60 @@ ul { list-style: none; }
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 999px;
+}
+
+/* ---------- Интро (тёмный экран + спиннер) ---------- */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a1d;
+  opacity: 1;
+  transition: opacity 600ms var(--ease-soft);
+  will-change: opacity;
+}
+
+/* Уход тёмного экрана после исчезновения спиннера */
+.intro.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Скрываем интро мгновенно, если оно не нужно (не первый визит) */
+.intro:not(.is-visible) .intro-spinner {
+  opacity: 0;
+}
+
+.intro-spinner {
+  width: 120px;
+  height: 120px;
+  opacity: 0;
+  transform: scale(.92);
+  transition: opacity 500ms var(--ease-soft), transform 500ms var(--ease-soft);
+  animation: introSpin 1.2s linear infinite;
+  will-change: transform, opacity;
+  filter: invert(1);
+}
+
+/* Плавное появление спиннера */
+.intro.is-visible .intro-spinner {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Плавное исчезновение спиннера */
+.intro-spinner.is-hiding {
+  opacity: 0;
+  transform: scale(.92);
+}
+
+@keyframes introSpin {
+  from { transform: rotate(0deg) scale(1); }
+  to   { transform: rotate(360deg) scale(1); }
 }
 
 /* ---------- Снег (фиксированный слой) ---------- */
@@ -567,7 +627,7 @@ ul { list-style: none; }
 
 /* ---------- Состав: карточки ---------- */
 
-/* [правка 2] центровка при 4 и меньше карточках */
+/* центровка при 4 и меньше карточках */
 .roster {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -845,7 +905,7 @@ ul { list-style: none; }
   .roster { grid-template-columns: 1fr; }
 }
 
-/* [правка 3] подпись под «PHOENIX TEAM» — плавное появление и исчезание */
+/* подпись под «PHOENIX TEAM» — плавное появление и исчезание */
 #roster-sub {
   transition: opacity 400ms var(--ease-soft), transform 400ms var(--ease-soft);
 }
