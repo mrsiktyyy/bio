@@ -7,8 +7,7 @@ document.querySelectorAll('.nav-toggle').forEach(btn => {
   });
 });
 
-// ---------- Подсветка (универсальная) ----------
-// Перемещает пилл под активный элемент; duration — 300 мс
+// ---------- Подсветка (пилл под активным элементом) ----------
 function placePill(pill, target) {
   if (!pill || !target) return;
   pill.style.opacity = '1';
@@ -17,7 +16,6 @@ function placePill(pill, target) {
   pill.style.transform = `translate(${target.offsetLeft}px, ${target.offsetTop}px)`;
 }
 
-// Шапка: пилл-подсветка меню
 const navList = document.querySelector('.nav-list');
 let navPill = null;
 if (navList) {
@@ -25,7 +23,6 @@ if (navList) {
   navPill.className = 'nav-pill';
   navList.prepend(navPill);
   const active = navList.querySelector('a.is-active');
-  // без анимации при первом появлении
   navPill.style.transition = 'none';
   placePill(navPill, active);
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -33,7 +30,6 @@ if (navList) {
   }));
 }
 
-// Переключатели Основной / Запасные
 document.querySelectorAll('.tabs').forEach(tabs => {
   const pill = document.createElement('span');
   pill.className = 'tabs-pill';
@@ -48,17 +44,13 @@ document.querySelectorAll('.tabs').forEach(tabs => {
 });
 
 // ---------- Переход между страницами ----------
-// 1) Подсветка уезжает на новую вкладку (300 мс)
-// 2) Текущая страница уходит вниз (260 мс)
-// 3) Открывается новая страница, на ней контент падает сверху
+// 1) подсветка уезжает на новую вкладку (500 мс)
+// 2) текущая страница уходит вниз (500 мс)
+// 3) новая страница падает сверху (600 мс)
 const NAV_KEY = 'phx-drop-in';
 
-// Если пришли с перехода — включаем падение сверху
 if (sessionStorage.getItem(NAV_KEY) === '1') {
   sessionStorage.removeItem(NAV_KEY);
-  // класс drop-in уже стоит на <main> в HTML, анимация проиграется сама
-} else {
-  // Прямой заход — страница тоже падает сверху (можно отключить, если не нужно)
 }
 
 document.querySelectorAll('.nav-list a').forEach(link => {
@@ -67,16 +59,14 @@ document.querySelectorAll('.nav-list a').forEach(link => {
     if (!href || link.classList.contains('is-active')) return;
     e.preventDefault();
 
-    // подсветка уезжает
     placePill(navPill, link);
     navList.querySelectorAll('a').forEach(a => a.classList.toggle('is-active', a === link));
 
-    // текущая страница уходит вниз
     const main = document.querySelector('.page');
     sessionStorage.setItem(NAV_KEY, '1');
     main.classList.add('is-leaving');
 
-    setTimeout(() => { window.location.href = href; }, 300);
+    setTimeout(() => { window.location.href = href; }, 500);
   });
 });
 
@@ -92,7 +82,7 @@ document.querySelectorAll('.person-head').forEach(head => {
 });
 
 // ---------- Состав: Основной / Запасные ----------
-// Текущий → fade-out 400 мс → переключение → fade-in 400 мс
+// Только прозрачность: текущий состав гаснет (500 мс), затем проявляется новый (600 мс)
 (function () {
   const tabs = document.querySelectorAll('.tabs .tab[data-roster]');
   if (!tabs.length) return;
@@ -101,10 +91,12 @@ document.querySelectorAll('.person-head').forEach(head => {
   const panels = document.querySelectorAll('[data-panel]');
   let busy = false;
 
-  // Инициализация: показываем только активный
   const initial = document.querySelector('.tabs .tab.is-active');
   const initKey = initial ? initial.dataset.roster : 'main';
   panels.forEach(p => { p.hidden = p.dataset.panel !== initKey; });
+
+  // карточки состава НЕ получают класс drop-in — падает только шапка страницы
+  // (класс drop-in стоит на <main>, но на карточках анимации нет: см. .drop-in > *)
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -113,33 +105,31 @@ document.querySelectorAll('.person-head').forEach(head => {
       if (busy || tab === current) return;
       busy = true;
 
-      // подсветка переезжает
       tabs.forEach(t => t.classList.toggle('is-active', t === tab));
-      const container = tab.parentElement;
-      placePill(container._pill, tab);
+      placePill(tab.parentElement._pill, tab);
 
-      const outPanel = document.querySelector(`[data-panel]:not([hidden])`);
+      const outPanel = document.querySelector('[data-panel]:not([hidden])');
+      const inPanel = document.querySelector(`[data-panel="${key}"]`);
 
-      // 1) исчезание текущего состава (400 мс)
-      outPanel.classList.add('is-fading-out');
+      outPanel.classList.remove('is-showing');
+      outPanel.classList.add('is-hiding');
 
       setTimeout(() => {
-        // 2) переключение
         outPanel.hidden = true;
-        outPanel.classList.remove('is-fading-out');
+        outPanel.classList.remove('is-hiding');
 
-        const inPanel = document.querySelector(`[data-panel="${key}"]`);
         inPanel.hidden = false;
-        inPanel.classList.add('is-fading-in');
+        // перерисовка, чтобы анимация стартовала с opacity 0
+        void inPanel.offsetWidth;
+        inPanel.classList.add('is-showing');
 
         if (sub) sub.textContent = key === 'main' ? 'Основной состав' : 'Резервный состав';
 
-        // 3) появление нового состава (400 мс)
         setTimeout(() => {
-          inPanel.classList.remove('is-fading-in');
+          inPanel.classList.remove('is-showing');
           busy = false;
-        }, 400);
-      }, 400);
+        }, 600);
+      }, 500);
     });
   });
 })();
