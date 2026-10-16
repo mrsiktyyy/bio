@@ -7,51 +7,45 @@ document.querySelectorAll('.nav-toggle').forEach(btn => {
   });
 });
 
-// ---------- Подсветка (пилл под активным элементом) ----------
+// ---------- Подсветка-капсула под активным элементом ----------
 function placePill(pill, target) {
   if (!pill || !target) return;
   pill.style.opacity = '1';
   pill.style.width = target.offsetWidth + 'px';
-  pill.style.height = target.offsetHeight + 'px';
-  pill.style.transform = `translate(${target.offsetLeft}px, ${target.offsetTop}px)`;
+  pill.style.transform = `translateX(${target.offsetLeft}px)`;
 }
 
-const navList = document.querySelector('.nav-list');
-let navPill = null;
-if (navList) {
-  navPill = document.createElement('span');
-  navPill.className = 'nav-pill';
-  navList.prepend(navPill);
-  const active = navList.querySelector('a.is-active');
-  navPill.style.transition = 'none';
-  placePill(navPill, active);
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    navPill.style.transition = '';
-  }));
-}
-
-document.querySelectorAll('.tabs').forEach(tabs => {
+function makePill(container, className, activeSelector) {
   const pill = document.createElement('span');
-  pill.className = 'tabs-pill';
-  tabs.prepend(pill);
-  const active = tabs.querySelector('.tab.is-active');
+  pill.className = className;
+  container.prepend(pill);
+  const active = container.querySelector(activeSelector);
   pill.style.transition = 'none';
   placePill(pill, active);
   requestAnimationFrame(() => requestAnimationFrame(() => {
     pill.style.transition = '';
   }));
-  tabs._pill = pill;
+  return pill;
+}
+
+const navList = document.querySelector('.nav-list');
+let navPill = null;
+if (navList) {
+  navPill = makePill(navList, 'nav-pill', 'a.is-active');
+}
+
+document.querySelectorAll('.tabs').forEach(tabs => {
+  tabs._pill = makePill(tabs, 'tabs-pill', '.tab.is-active');
+});
+
+window.addEventListener('resize', () => {
+  if (navPill) placePill(navPill, navList.querySelector('a.is-active'));
+  document.querySelectorAll('.tabs').forEach(t => placePill(t._pill, t.querySelector('.tab.is-active')));
 });
 
 // ---------- Переход между страницами ----------
-// 1) подсветка уезжает на новую вкладку (500 мс)
-// 2) текущая страница уходит вниз (500 мс)
-// 3) новая страница падает сверху (600 мс)
 const NAV_KEY = 'phx-drop-in';
-
-if (sessionStorage.getItem(NAV_KEY) === '1') {
-  sessionStorage.removeItem(NAV_KEY);
-}
+if (sessionStorage.getItem(NAV_KEY) === '1') sessionStorage.removeItem(NAV_KEY);
 
 document.querySelectorAll('.nav-list a').forEach(link => {
   link.addEventListener('click', e => {
@@ -62,9 +56,8 @@ document.querySelectorAll('.nav-list a').forEach(link => {
     placePill(navPill, link);
     navList.querySelectorAll('a').forEach(a => a.classList.toggle('is-active', a === link));
 
-    const main = document.querySelector('.page');
     sessionStorage.setItem(NAV_KEY, '1');
-    main.classList.add('is-leaving');
+    document.querySelector('.page').classList.add('is-leaving');
 
     setTimeout(() => { window.location.href = href; }, 500);
   });
@@ -75,14 +68,11 @@ document.querySelectorAll('.person-head').forEach(head => {
   head.addEventListener('click', () => {
     const card = head.closest('.person');
     const isOpen = card.classList.toggle('is-open');
-    card.classList.toggle('opening', isOpen);
-    card.classList.toggle('closing', !isOpen);
     head.setAttribute('aria-expanded', isOpen);
   });
 });
 
-// ---------- Состав: Основной / Запасные ----------
-// Только прозрачность: текущий состав гаснет (500 мс), затем проявляется новый (600 мс)
+// ---------- Состав: Основной / Запасные (только прозрачность) ----------
 (function () {
   const tabs = document.querySelectorAll('.tabs .tab[data-roster]');
   if (!tabs.length) return;
@@ -94,9 +84,6 @@ document.querySelectorAll('.person-head').forEach(head => {
   const initial = document.querySelector('.tabs .tab.is-active');
   const initKey = initial ? initial.dataset.roster : 'main';
   panels.forEach(p => { p.hidden = p.dataset.panel !== initKey; });
-
-  // карточки состава НЕ получают класс drop-in — падает только шапка страницы
-  // (класс drop-in стоит на <main>, но на карточках анимации нет: см. .drop-in > *)
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -119,7 +106,6 @@ document.querySelectorAll('.person-head').forEach(head => {
         outPanel.classList.remove('is-hiding');
 
         inPanel.hidden = false;
-        // перерисовка, чтобы анимация стартовала с opacity 0
         void inPanel.offsetWidth;
         inPanel.classList.add('is-showing');
 
@@ -201,22 +187,30 @@ document.querySelectorAll('.person-head').forEach(head => {
   });
 })();
 
-// ---------- Снежинки ----------
+// ---------- Снег: фиксированные позиции (детерминированный seed), не меняются между страницами ----------
 (function () {
   const layer = document.createElement('div');
   layer.className = 'snow';
   document.body.prepend(layer);
+
+  // простой генератор с фиксированным seed — каждая страница получает одинаковую раскладку
+  let seed = 20261016;
+  const rnd = () => {
+    seed = (seed * 16807) % 2147483647;
+    return (seed - 1) / 2147483646;
+  };
+
   const count = 40;
   for (let i = 0; i < count; i++) {
     const s = document.createElement('span');
-    const size = 3 + Math.random() * 5;
+    const size = 3 + rnd() * 5;
     s.style.width = size + 'px';
     s.style.height = size + 'px';
-    s.style.left = Math.random() * 100 + 'vw';
-    s.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
-    s.style.animationDuration = (10 + Math.random() * 14) + 's';
-    s.style.animationDelay = (-Math.random() * 20) + 's';
-    s.style.opacity = (0.3 + Math.random() * 0.5).toFixed(2);
+    s.style.left = (rnd() * 100).toFixed(2) + 'vw';
+    s.style.setProperty('--drift', (rnd() * 80 - 40).toFixed(1) + 'px');
+    s.style.animationDuration = (10 + rnd() * 14).toFixed(2) + 's';
+    s.style.animationDelay = (-rnd() * 20).toFixed(2) + 's';
+    s.style.opacity = (0.3 + rnd() * 0.5).toFixed(2);
     layer.appendChild(s);
   }
 })();
