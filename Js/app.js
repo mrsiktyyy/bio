@@ -1,3 +1,5 @@
+const DUR = 500;
+
 // ---------- Бургер ----------
 document.querySelectorAll('.nav-toggle').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -7,19 +9,21 @@ document.querySelectorAll('.nav-toggle').forEach(btn => {
   });
 });
 
-// ---------- Подсветка-капсула под активным элементом ----------
+// ---------- Пилл: привязан к ширине и позиции текста ----------
+// Берём реальные offsetLeft/offsetWidth кнопки, поэтому фон
+// всегда точно обтягивает текст вкладки.
 function placePill(pill, target) {
   if (!pill || !target) return;
   pill.style.opacity = '1';
   pill.style.width = target.offsetWidth + 'px';
-  pill.style.transform = `translateX(${target.offsetLeft}px)`;
+  pill.style.transform = `translate3d(${target.offsetLeft}px, 0, 0)`;
 }
 
-function makePill(container, className, activeSelector) {
+function makePill(container, className) {
   const pill = document.createElement('span');
   pill.className = className;
   container.prepend(pill);
-  const active = container.querySelector(activeSelector);
+  const active = container.querySelector('.is-active');
   pill.style.transition = 'none';
   placePill(pill, active);
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -28,53 +32,57 @@ function makePill(container, className, activeSelector) {
   return pill;
 }
 
+// Пилл навигации сайта
 const navList = document.querySelector('.nav-list');
 let navPill = null;
-if (navList) navPill = makePill(navList, 'nav-pill', 'a.is-active');
+if (navList) navPill = makePill(navList, 'nav-pill');
 
-document.querySelectorAll('.tabs').forEach(tabs => {
-  tabs._pill = makePill(tabs, 'tabs-pill', '.tab.is-active');
-});
+// Пилл вкладок состава
+const tabsEl = document.querySelector('.tabs');
+let tabsPill = null;
+if (tabsEl) tabsPill = makePill(tabsEl, 'tabs-pill');
 
 window.addEventListener('resize', () => {
   if (navPill) placePill(navPill, navList.querySelector('a.is-active'));
-  document.querySelectorAll('.tabs').forEach(t => placePill(t._pill, t.querySelector('.tab.is-active')));
+  if (tabsPill) placePill(tabsPill, tabsEl.querySelector('.tab.is-active'));
 });
-
-// ---------- Снег: ссылка на слой ----------
-const snowLayer = document.querySelector('.snow');
 
 // ---------- Переход между страницами по меню ----------
-const NAV_KEY = 'phx-drop-in';
-if (sessionStorage.getItem(NAV_KEY) === '1') sessionStorage.removeItem(NAV_KEY);
+if (navList) {
+  navList.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href');
+      if (!href || link.classList.contains('is-active')) return;
+      e.preventDefault();
 
-document.querySelectorAll('.nav-list a').forEach(link => {
-  link.addEventListener('click', e => {
-    const href = link.getAttribute('href');
-    if (!href || link.classList.contains('is-active')) return;
-    e.preventDefault();
+      placePill(navPill, link);
+      navList.querySelectorAll('a').forEach(a => a.classList.toggle('is-active', a === link));
 
-    placePill(navPill, link);
-    navList.querySelectorAll('a').forEach(a => a.classList.toggle('is-active', a === link));
-
-    sessionStorage.setItem(NAV_KEY, '1');
-    document.querySelector('.page').classList.add('is-leaving');
-    setTimeout(() => { window.location.href = href; }, 500);
+      const page = document.querySelector('.page');
+      page.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = href; }, DUR);
+    });
   });
-});
+}
 
-// ---------- Вкладки Основной / Запасные: снег гаснет 300 мс → страница падает → обновление ----------
+// ---------- Вкладки состава (Основной / Запасные) ----------
+// Работает на одной странице: панели переключаются через data-panel.
 (function () {
   const tabs = document.querySelectorAll('.tabs .tab[data-roster]');
   if (!tabs.length) return;
 
   const sub = document.getElementById('roster-sub');
   const panels = document.querySelectorAll('[data-panel]');
+  const snow = document.querySelector('.snow');
   let busy = false;
 
+  function showPanel(key) {
+    panels.forEach(p => { p.hidden = p.dataset.panel !== key; });
+  }
+
+  // Старт: показываем панель активной вкладки
   const initial = document.querySelector('.tabs .tab.is-active');
-  const initKey = initial ? initial.dataset.roster : 'main';
-  panels.forEach(p => { p.hidden = p.dataset.panel !== initKey; });
+  showPanel(initial ? initial.dataset.roster : 'main');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -83,31 +91,44 @@ document.querySelectorAll('.nav-list a').forEach(link => {
       if (busy || tab === current) return;
       busy = true;
 
+      // Пилл и подсветка текста — сразу
       tabs.forEach(t => t.classList.toggle('is-active', t === tab));
-      placePill(tab.parentElement._pill, tab);
+      placePill(tabsPill, tab);
       if (sub) sub.textContent = key === 'main' ? 'Основной состав' : 'Резервный состав';
 
-      // 1) снег гаснет за 300 мс
-      if (snowLayer) snowLayer.classList.add('is-fading');
+      // Снег гаснет за 500 мс (как и остальные анимации)
+      if (snow) snow.classList.add('is-fading');
 
-      // 2) через 300 мс — страница падает вниз (500 мс)
-      setTimeout(() => {
-        const page = document.querySelector('.page');
-        page.classList.add('is-leaving');
-      }, 300);
+      // Текущая панель уезжает вверх и гаснет
+      const visible = document.querySelector(`[data-panel]:not([hidden])`);
+      if (visible) visible.classList.add('is-leaving');
 
-      // 3) после падения — переключаем панели в новом состоянии
       setTimeout(() => {
-        panels.forEach(p => { p.hidden = p.dataset.panel !== key; });
-        page.classList.remove('is-leaving');
-        page.classList.add('drop-in-once');
+        // Переключаем панели
+        showPanel(key);
+        const next = document.querySelector(`[data-panel="${key}"]`);
+        if (visible) visible.classList.remove('is-leaving');
+        if (next) {
+          next.classList.remove('is-entering');
+          void next.offsetWidth; // перезапуск анимации
+          next.classList.add('is-entering');
+        }
         busy = false;
-      }, 800);
+      }, DUR);
     });
   });
 })();
 
-// ---------- Новости: раскрытие в большое окно ----------
+// ---------- Аккордеон на главной ----------
+document.querySelectorAll('.person-head').forEach(head => {
+  head.addEventListener('click', () => {
+    const card = head.closest('.person');
+    const open = card.classList.toggle('is-open');
+    head.setAttribute('aria-expanded', open);
+  });
+});
+
+// ---------- Новости: раскрытие в окно ----------
 (function () {
   const cards = document.querySelectorAll('.news-card');
   if (!cards.length) return;
@@ -174,7 +195,7 @@ document.querySelectorAll('.nav-list a').forEach(link => {
   });
 })();
 
-// ---------- Снег: фиксированная раскладка (одинаковая на всех страницах) ----------
+// ---------- Снег: фиксированная раскладка ----------
 (function () {
   const layer = document.createElement('div');
   layer.className = 'snow';
