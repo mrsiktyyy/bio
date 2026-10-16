@@ -7,46 +7,19 @@ document.querySelectorAll('.nav-toggle').forEach(btn => {
   });
 });
 
-// ---------- Подсветка-капсула под активным элементом ----------
-function placePill(pill, target) {
-  if (!pill || !target) return;
-  pill.style.opacity = '1';
-  pill.style.width = target.offsetWidth + 'px';
-  pill.style.transform = `translateX(${target.offsetLeft}px)`;
+// ---------- Снег выключен до перезагрузки страницы ----------
+// Флаг хранится в sessionStorage: переход по меню не возвращает снег.
+const SNOW_KEY = 'phx-snow-off';
+if (sessionStorage.getItem(SNOW_KEY) === '1') {
+  document.body.classList.add('snow-off');
 }
-
-function makePill(container, className, activeSelector) {
-  const pill = document.createElement('span');
-  pill.className = className;
-  container.prepend(pill);
-  const active = container.querySelector(activeSelector);
-  pill.style.transition = 'none';
-  placePill(pill, active);
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    pill.style.transition = '';
-  }));
-  return pill;
-}
-
-const navList = document.querySelector('.nav-list');
-let navPill = null;
-if (navList) navPill = makePill(navList, 'nav-pill', 'a.is-active');
-
-document.querySelectorAll('.tabs').forEach(tabs => {
-  tabs._pill = makePill(tabs, 'tabs-pill', '.tab.is-active');
-});
-
-window.addEventListener('resize', () => {
-  if (navPill) placePill(navPill, navList.querySelector('a.is-active'));
-  document.querySelectorAll('.tabs').forEach(t => placePill(t._pill, t.querySelector('.tab.is-active')));
-});
-
-// ---------- Снег: ссылка на слой ----------
-const snowLayer = document.querySelector('.snow');
 
 // ---------- Переход между страницами по меню ----------
 const NAV_KEY = 'phx-drop-in';
-if (sessionStorage.getItem(NAV_KEY) === '1') sessionStorage.removeItem(NAV_KEY);
+if (sessionStorage.getItem(NAV_KEY) === '1') {
+  sessionStorage.removeItem(NAV_KEY);
+  document.querySelector('.page')?.classList.add('drop-in');
+}
 
 document.querySelectorAll('.nav-list a').forEach(link => {
   link.addEventListener('click', e => {
@@ -54,21 +27,18 @@ document.querySelectorAll('.nav-list a').forEach(link => {
     if (!href || link.classList.contains('is-active')) return;
     e.preventDefault();
 
-    placePill(navPill, link);
-    navList.querySelectorAll('a').forEach(a => a.classList.toggle('is-active', a === link));
-
     sessionStorage.setItem(NAV_KEY, '1');
     document.querySelector('.page').classList.add('is-leaving');
     setTimeout(() => { window.location.href = href; }, 500);
   });
 });
 
-// ---------- Вкладки Основной / Запасные: снег гаснет 300 мс → страница падает → обновление ----------
+// ---------- Вкладки Основной / Запасные ----------
+// 1) снег гаснет за 300 мс  2) страница падает  3) обновление страницы
 (function () {
   const tabs = document.querySelectorAll('.tabs .tab[data-roster]');
   if (!tabs.length) return;
 
-  const sub = document.getElementById('roster-sub');
   const panels = document.querySelectorAll('[data-panel]');
   let busy = false;
 
@@ -78,31 +48,26 @@ document.querySelectorAll('.nav-list a').forEach(link => {
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const key = tab.dataset.roster;
       const current = document.querySelector('.tabs .tab.is-active');
       if (busy || tab === current) return;
       busy = true;
 
-      tabs.forEach(t => t.classList.toggle('is-active', t === tab));
-      placePill(tab.parentElement._pill, tab);
-      if (sub) sub.textContent = key === 'main' ? 'Основной состав' : 'Резервный состав';
+      // Сохраняем выбранную вкладку, чтобы после обновления открыть её же
+      sessionStorage.setItem('phx-roster-tab', tab.dataset.roster);
+      sessionStorage.setItem(SNOW_KEY, '1');
 
-      // 1) снег гаснет за 300 мс
-      if (snowLayer) snowLayer.classList.add('is-fading');
+      // 1) снег гаснет
+      document.body.classList.add('snow-off');
 
-      // 2) через 300 мс — страница падает вниз (500 мс)
+      // 2) через 300 мс страница падает
       setTimeout(() => {
-        const page = document.querySelector('.page');
-        page.classList.add('is-leaving');
+        document.querySelector('.page').classList.add('is-leaving');
       }, 300);
 
-      // 3) после падения — переключаем панели в новом состоянии
+      // 3) после падения — обновление страницы
       setTimeout(() => {
-        panels.forEach(p => { p.hidden = p.dataset.panel !== key; });
-        page.classList.remove('is-leaving');
-        page.classList.add('drop-in-once');
-        busy = false;
-      }, 800);
+        window.location.reload();
+      }, 300 + 500);
     });
   });
 })();
@@ -186,8 +151,7 @@ document.querySelectorAll('.nav-list a').forEach(link => {
     return (seed - 1) / 2147483646;
   };
 
-  const count = 40;
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < 40; i++) {
     const s = document.createElement('span');
     const size = 3 + rnd() * 5;
     s.style.width = size + 'px';
