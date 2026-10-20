@@ -1,23 +1,4 @@
-/* ---------- Снег (слой из твоего CSS) ---------- */
-(function () {
-  const layer = document.createElement('div');
-  layer.className = 'snow';
-  document.body.prepend(layer);
-  let seed = 20261016;
-  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  for (let i = 0; i < 40; i++) {
-    const s = document.createElement('span');
-    const size = 3 + rnd() * 5;
-    s.style.cssText =
-      `left:${(rnd() * 100).toFixed(2)}vw;` +
-      `width:${size.toFixed(1)}px;height:${size.toFixed(1)}px;` +
-      `opacity:${(0.3 + rnd() * 0.5).toFixed(2)};` +
-      `animation-duration:${(10 + rnd() * 14).toFixed(2)}s;` +
-      `animation-delay:${(-rnd() * 20).toFixed(2)}s;` +
-      `--drift:${(rnd() * 60 - 30).toFixed(0)}px`;
-    layer.appendChild(s);
-  }
-})();
+/* Снег и фон теперь в Js/bg.js, проверка «Я не робот» — в Js/gate.js */
 
 /* ---------- Бургер ---------- */
 const nav = document.querySelector('.site-nav');
